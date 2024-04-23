@@ -16,8 +16,8 @@
 </head>
 
 <body class=" relative min-h-screen">
-    <nav>
-        <div id="mainnav" role="main-nav" class=" flex flex-row justify-between bg-slate-950 text-zinc-100 z-30 fixed top-0 left-0 w-full">
+    <nav class=" sticky top-0 w-full">
+        <div id="mainnav" role="main-nav" class=" flex flex-row justify-between bg-slate-950 text-zinc-100 z-30 w-full">
             <div class=" flex flex-1 flex-row justify-between items-center p-4 md:p-0 md:ps-4">
                 <i data-lucide="menu" class=" block md:hidden cursor-pointer" onclick="toggleSide()"></i>
                 <span class=" font-bold">SJCP</span>
@@ -25,14 +25,14 @@
             <div class=" hidden md:block">
                 <ul class=" menu menu-horizontal">
                     <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/">Home</a></li>
-                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">FAQs</a></li>
+                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/faq">FAQs</a></li>
                     <li class=" hover:bg-slate-700 hover:rounded-md">
                         <details close>
                             <summary>Services</summary>
                             <ul class=" bg-slate-950">
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">Services</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">Reserve Event</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">My Reservations</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/services">Services</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/reserve">Reserve Event</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/myreservation">My Reservations</a></li>
                             </ul>
                         </details>
                     </li>
@@ -40,13 +40,13 @@
                         <details close>
                             <summary>Events</summary>
                             <ul class=" bg-slate-950">
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">Announcements</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">Available Time Slots</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/announcement">Announcements</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar">Available Time Slots</a></li>
                             </ul>
                         </details>
                     </li>
-                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">About Us</a></li>
-                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="">Connect With Us</a></li>
+                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/about">About Us</a></li>
+                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/account">Connect With Us</a></li>
                 </ul>
             </div>
         </div>

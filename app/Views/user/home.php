@@ -73,7 +73,7 @@
             <img class=" block w-4/5" src="<?= base_url('./images/events.png') ?>" alt="image" srcset="">
         </div>
         <div class=" flex flex-col justify-around items-center md:items-end gap-4 md:gap-0 px-4">
-            <div class=" flex flex-col gap-4">
+            <div class=" flex flex-col gap-4 items-center md:items-start py-3 md:p-0">
                 <span class=" font-semibold text-xl">About Us</span>
                 <p class=" text-center md:text-left">
                     Read about our history and staff to learn more regarding
@@ -86,12 +86,12 @@
         </div>
     </section>
     <section role="saint" class=" grid grid-cols-1 md:grid-cols-2 bg-slate-950 text-zinc-100">
-        <div>
-            <img src="" alt="image" srcset="" class=" block w-full h-full">
+        <div class=" flex justify-center items-center mt-2 md:mt-0">
+            <img src="<?= base_url("./images/delacruz.png") ?>" alt="image" srcset="" class=" block w-full h-full">
         </div>
-        <div class=" flex flex-col gap-2 p-4">
+        <div class=" flex flex-col gap-2 p-4 justify-center">
             <span class=" font-semibold text-xl">St. John of the Cross</span>
-            <p class=" text-justify text-xs md:text-base">
+            <p class=" text-justify text-xs lg:text-base">
                 St. John of the Cross, born as Juan de Yepes y Álvarez, was a Roman Catholic saint who was a major 
                 figure of the Counter-Reformation. He was also a renowned mystic and a Carmelite friar who is considered, 
                 along with Saint Teresa of Ávila, as a founder of the Discalced Carmelites. Born into a family of descendents 

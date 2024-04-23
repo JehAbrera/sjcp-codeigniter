@@ -2927,6 +2927,10 @@ details.collapse summary::-webkit-details-marker {
   position: relative;
 }
 
+.sticky {
+  position: sticky;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -2983,12 +2987,12 @@ details.collapse summary::-webkit-details-marker {
   height: 40vh;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .max-h-screen {
@@ -3019,20 +3023,12 @@ details.collapse summary::-webkit-details-marker {
   width: 2rem;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-3\/5 {
-  width: 60%;
-}
-
 .w-\[90\%\] {
   width: 90%;
 }
 
-.min-w-96 {
-  min-width: 24rem;
+.w-full {
+  width: 100%;
 }
 
 .flex-1 {
@@ -3124,11 +3120,6 @@ details.collapse summary::-webkit-details-marker {
   border-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-border-opacity)));
 }
 
-.border-base-100 {
-  --tw-border-opacity: 1;
-  border-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-border-opacity)));
-}
-
 .border-b-zinc-100 {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(244 244 245 / var(--tw-border-opacity));
@@ -3183,6 +3174,11 @@ details.collapse summary::-webkit-details-marker {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -3193,21 +3189,12 @@ details.collapse summary::-webkit-details-marker {
   padding-bottom: 2rem;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
 .pb-2 {
   padding-bottom: 0.5rem;
 }
 
 .pe-4 {
   padding-inline-end: 1rem;
-}
-
-.text-left {
-  text-align: left;
 }
 
 .text-center {
@@ -3274,12 +3261,12 @@ details.collapse summary::-webkit-details-marker {
   font-weight: 800;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .font-medium {
   font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .text-slate-950 {
@@ -3326,6 +3313,10 @@ details.collapse summary::-webkit-details-marker {
 }
 
 @media (min-width: 768px) {
+  .md\:mt-0 {
+    margin-top: 0px;
+  }
+
   .md\:block {
     display: block;
   }
@@ -3358,12 +3349,12 @@ details.collapse summary::-webkit-details-marker {
     align-items: center;
   }
 
-  .md\:gap-2 {
-    gap: 0.5rem;
-  }
-
   .md\:gap-0 {
     gap: 0px;
+  }
+
+  .md\:gap-2 {
+    gap: 0.5rem;
   }
 
   .md\:p-0 {
@@ -3377,12 +3368,10 @@ details.collapse summary::-webkit-details-marker {
   .md\:text-left {
     text-align: left;
   }
+}
 
-  .md\:text-center {
-    text-align: center;
-  }
-
-  .md\:text-base {
+@media (min-width: 1024px) {
+  .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
   }
