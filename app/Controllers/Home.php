@@ -5,9 +5,11 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Home extends BaseController
 {
+    private $message = "";
     public function index(): string
     {
-        return view('welcome_message');
+        $data['title'] = "Home"; 
+        return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');;
     }
     public function view($page) : string 
     {
@@ -26,5 +28,8 @@ class Home extends BaseController
         }
         $data['title'] = ucfirst($page);
         return view('templates/navadmin', $data) . view('admin/' . $page, $data);
+    }
+    protected function setMessage($page) {
+        
     }
 }
