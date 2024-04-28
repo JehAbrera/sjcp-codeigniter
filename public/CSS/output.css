@@ -3067,6 +3067,14 @@ details.collapse summary::-webkit-details-marker {
   aspect-ratio: 1 / 1;
 }
 
+.aspect-\[4\/3\] {
+  aspect-ratio: 4/3;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
 .h-\[40vh\] {
   height: 40vh;
 }
@@ -3077,6 +3085,10 @@ details.collapse summary::-webkit-details-marker {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-3\/4 {
+  height: 75%;
 }
 
 .max-h-screen {
@@ -3259,6 +3271,11 @@ details.collapse summary::-webkit-details-marker {
 
 .bg-no-repeat {
   background-repeat: no-repeat;
+}
+
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .p-2 {
