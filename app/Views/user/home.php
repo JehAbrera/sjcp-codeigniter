@@ -1,5 +1,5 @@
 <main class=" w-full">
-    <section role="timearea" class=" flex flex-col gap-4 py-2 px-4">
+    <section role="timearea" class=" flex flex-col gap-4 py-2 px-4 bg-zinc-100">
         <div class=" flex justify-center">
             <span class=" text-3xl font-semibold">Join us for Church</span>
         </div>
