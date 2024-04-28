@@ -1,5 +1,5 @@
 <main class=" w-full">
-    <section class=" w-full grid grid-cols-1 md:grid-cols-2 px-[10%] lg:px-[15%] py-8 gap-10">
+    <section class=" w-full grid grid-cols-1 md:grid-cols-2 px-[10%] lg:px-[15%] py-8 gap-10 bg-zinc-100">
         <div class=" flex items-center justify-center">
             <div class=" card bg-base-100 shadow-xl image-full w-full aspect-video">
                 <figure><img src="<?= base_url('./images/privatewed.jpg') ?>" alt="Image" class=" object-cover w-full h-full" /></figure>
