@@ -75,10 +75,10 @@
         </div>
     </section>
     <section role="map" class="flex bg-zinc-100 text-black py-2">
-        <div class="flex flex-col p-8">
+        <div class="flex flex-col p-8 w-full">
             <h2> Map (Google Maps)</h2>
-            <div class="w-full border-2 border-black">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.952147477856!2d121.05812207465668!3d14.544729178442969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c893b4f02ca1%3A0x571d8fe4a87168cf!2s9%20Sampaguita%20St%2C%20Taguig%2C%201218%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1700128810775!5m2!1sen!2sph" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class=" border-2 border-black">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.952147477856!2d121.05812207465668!3d14.544729178442969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c893b4f02ca1%3A0x571d8fe4a87168cf!2s9%20Sampaguita%20St%2C%20Taguig%2C%201218%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1700128810775!5m2!1sen!2sph" height="450" class=" w-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
