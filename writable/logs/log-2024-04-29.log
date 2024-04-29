@@ -578,3 +578,18 @@ INFO - 2024-04-29 21:11:08 --> Session: Class initialized using 'CodeIgniter\Ses
 INFO - 2024-04-29 21:11:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2024-04-29 21:21:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 >>>>>>> 6b7580dd9ed1604df55b0d9108644589afc720ec
+CRITICAL - 2024-04-29 22:26:45 --> ErrorException: Undefined variable $step
+[Method: GET, Route: calendar]
+in APPPATH\Views\user\calendar.php on line 3.
+ 1 APPPATH\Views\user\calendar.php(3): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $step', 'D:\\xampp\\htdocs\\sjcp-codeigniter\\app\\Views\\user\\calendar.php', 3)
+ 2 SYSTEMPATH\View\View.php(234): include('D:\\xampp\\htdocs\\sjcp-codeigniter\\app\\Views\\user\\calendar.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('user/calendar', [], true)
+ 5 APPPATH\Controllers\Home.php(21): view('user/calendar')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->user('calendar')
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(312): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\Commands\Server\rewrite.php(49): require_once('D:\\xampp\\htdocs\\sjcp-codeigniter\\public\\index.php')

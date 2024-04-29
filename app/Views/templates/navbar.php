@@ -41,7 +41,7 @@
                             <summary>Events</summary>
                             <ul class=" bg-slate-950">
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/announcement">Announcements</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar">Available Time Slots</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Available Time Slots</a></li>
                             </ul>
                         </details>
                     </li>
