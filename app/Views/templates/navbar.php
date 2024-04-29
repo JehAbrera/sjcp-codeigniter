@@ -46,7 +46,7 @@
                         </details>
                     </li>
                     <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/about">About Us</a></li>
-                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/account">Connect With Us</a></li>
+                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/account/login">Connect With Us</a></li>
                 </ul>
             </div>
         </div>

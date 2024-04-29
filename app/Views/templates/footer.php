@@ -1,7 +1,7 @@
         <footer class=" flex flex-col gap-6 md:gap-2 md:flex-row md:items-center justify-between w-full bg-slate-950 text-zinc-100 p-4">
             <div class=" flex flex-col text-sm gap-2">
                 <span class=" flex flex-row text-5xl items-center font-extrabold pb-2 border-b-2">
-                    <img src="./images/logo.png" alt="logo" class=" aspect-square w-32 block">SJCP
+                    <img src="<?= base_url('./images/logo.png') ?>" alt="logo" class=" aspect-square w-32 block">SJCP
                 </span>
                 <span>Catholic Rectory, 9 Sampaguita St, Taguig, 1642 Kalakhang Maynila</span>
                 <span class=" flex flex-row items-center"><i data-lucide="copyright" class=" aspect-square w-3"></i>&nbsp;All rights reserved.</span>
