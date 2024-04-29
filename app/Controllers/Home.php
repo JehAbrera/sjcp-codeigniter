@@ -11,7 +11,7 @@ class Home extends BaseController
         $data['title'] = "Home"; 
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');;
     }
-    public function view($page) : string 
+    public function user($page) : string 
     {
         if (! is_file(APPPATH . 'Views/user/' . $page . '.php')) {
             // Whoops, we don't have a page for that!

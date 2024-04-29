@@ -14,7 +14,7 @@ use CodeIgniter\Router\RouteCollection;
 * Non-action == Does not require data or values to be passed on
 */
 $routes->get('/', [Home::class, 'index']);
-$routes->get('(:segment)', [Home::class, 'view']);
+$routes->get('(:segment)', [Home::class, 'user']);
 $routes->get('/admin/(:segment)', [Home::class, 'admin']);
 /*
 /*
@@ -23,6 +23,7 @@ $routes->get('/admin/(:segment)', [Home::class, 'admin']);
 */
 // Example: $routes->get('/admin/(:segment)/(:segment)', [Home::class, 'some function to handle values'])
 /* Form route area */
+<<<<<<< HEAD
 $routes->get('/account/signup', [Signup::class, 'index']);
 $routes->get('/account/login', [Login::class, 'index']);
 $routes->post('/signup/step2', [Signup::class, 'step1']);
@@ -33,3 +34,10 @@ $routes->post('/signup/finish', [Signup::class, 'step3']);
 $routes->get('/calendar/index', [Calendar::class, 'index']);
 $routes->post('/calendar/step2', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
+=======
+$routes->get('account/signup', [Signup::class, 'index']);
+$routes->get('account/login', [Login::class, 'index']);
+$routes->post('signup/step2', [Signup::class, 'step1']);
+$routes->post('signup/step3', [Signup::class, 'step2']);
+$routes->post('signup/finish', [Signup::class, 'step3']);
+>>>>>>> 6b7580dd9ed1604df55b0d9108644589afc720ec
