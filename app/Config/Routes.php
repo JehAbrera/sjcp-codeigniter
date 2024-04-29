@@ -3,6 +3,7 @@
 use App\Controllers\Home;
 use App\Controllers\Login;
 use App\Controllers\Signup;
+use App\Controllers\Calendar;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -16,6 +17,7 @@ $routes->get('/', [Home::class, 'index']);
 $routes->get('(:segment)', [Home::class, 'view']);
 $routes->get('/admin/(:segment)', [Home::class, 'admin']);
 /*
+/*
 * Get Value routes below
 * For routing pages that pass get values
 */
@@ -26,3 +28,8 @@ $routes->get('/account/login', [Login::class, 'index']);
 $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
+
+/* Form route area for calendar */
+$routes->get('/calendar/index', [Calendar::class, 'index']);
+$routes->post('/calendar/step2', [Calendar::class, 'step1']);
+$routes->post('/calendar/step2', [Calendar::class, 'step2']);
