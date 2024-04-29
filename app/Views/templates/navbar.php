@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?php echo base_url('./CSS/output.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('./CSS/output.css') ?>">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
@@ -15,7 +15,7 @@
     <title><?= esc($title) ?></title>
 </head>
 
-<body class=" relative min-h-screen">
+<body class=" relative min-h-screen flex flex-col">
     <nav class=" sticky top-0 w-full z-50">
         <div id="mainnav" role="main-nav" class=" flex flex-row justify-between bg-slate-950 text-zinc-100 z-30 w-full">
             <div class=" flex flex-1 flex-row justify-between items-center p-4 md:p-0 md:ps-4">

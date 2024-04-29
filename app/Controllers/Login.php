@@ -10,6 +10,6 @@ class Login extends BaseController {
             'title' => "account",
             'mode' => "login",
         ];
-        return view('user/account', $data);
+        return view('templates/navbar', $data) . view('user/account', $data);
     }
 }
