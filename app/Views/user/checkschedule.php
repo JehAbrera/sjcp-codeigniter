@@ -1,18 +1,21 @@
-<div class="bg-gray-100 flex items-center justify-center h-screen ">
+<main class="w-full">
     <!-- for calendar-->
-    <div class="card w-2/5 text-center h-1/5 bg-slate-300 p-9">
-        <div>
-            <p>Step 1 of 3:</p>
-            <b class="card-title" >Select an Event to Reserve</b>
-        </div>
-        <select class="select select-bordered join-item">
-            <option disabled selected>Filter</option>
-            <option>Sci-fi</option>
-            <option>Drama</option>
-            <option>Action</option>
-        </select>
-        <div class="card-actions">
-            <button class="btn btn-wide bg-emerald-400">Next</button>
+    <div class="w-full flex justify-center items-center p-8">
+        <div class="card w-2/5 text-center bg-zinc-100 p-9">
+            <div>
+                <p>Step 1 of 3:</p>
+                <b class="card-title" >Select an Event to Reserve</b>
+            </div>
+            <select class="select select-bordered join-item mb-4">
+                <option disabled selected>Filter</option>
+                <option>Sci-fi</option>
+                <option>Drama</option>
+                <option>Action</option>
+            </select>
+
+            <div class="card-actions flex justify-center items-center">
+                <button class="btn btn-wide bg-emerald-400">Next  <i data-lucid="chevron-right" ></i></button>
+            </div>
         </div>
     </div>
 
@@ -42,7 +45,7 @@
             </div>
         </div>
     </div> -->
-  </div>
+</main>
     <script>
       // Function to generate the calendar for a specific month and year
 function generateCalendar(year, month) {
