@@ -40,10 +40,11 @@ class Calendar extends BaseController{
     public function step3() {
         $data = [
             'title' => "calendar",
-            'step' => 1
+            'step' => 3,
+            'event' => $this->request->getPost('event'),
+            'day'=> $this->request->getPost('day')
         ];
         return view('templates/navbar', $data) . view('user/calendar', $data) . view('templates/footer');
     }
 }
-
 ?>

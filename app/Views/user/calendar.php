@@ -3,7 +3,7 @@
     if($step == 1){ ?>
         <div class="w-full h-full flex justify-center items-center">
             <div class="card w-2/5 text-center bg-zinc-100 p-9">
-            <?= form_open('calendar/step2') ?>
+            <?= form_open('calendar/step1') ?>
                 <div>
                     <p class="mb-4">Step 1 of 2:</p>
                     <b class="card-title" >Select an Event to Reserve</b>
@@ -29,9 +29,8 @@
             <div class="w-full">
                 <button class="btn" onclick="history.back()">Back</button>
                 <?= $event ?>
-                <?= $step ?>
-                <?= $month ?>
                 <?= $day ?>
+                <?= $month ?>
                 <?= $year ?>
             </div>
             <div class="w-full">
