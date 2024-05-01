@@ -34,10 +34,12 @@ $routes->get('/calendar/index', [Calendar::class, 'index']);
 $routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
 
-
-
-$routes->get('account/signup', [Signup::class, 'index']);
+/* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
+$routes->post('login/user', [Login::class, 'login']);
+
+/* Routes for user Account Create */
+$routes->get('account/signup', [Signup::class, 'index']);
 $routes->post('signup/step2', [Signup::class, 'step1']);
 $routes->post('signup/step3', [Signup::class, 'step2']);
 $routes->post('signup/finish', [Signup::class, 'step3']);
