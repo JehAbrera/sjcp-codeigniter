@@ -16,6 +16,7 @@
                 </div>
                 <div class=" form-control px-4 py-4">
                     <?php if ($mode == "login") { ?>
+                        <?= form_open('login/user') ?>
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text">Email Address</span>
@@ -35,6 +36,7 @@
                             <button class="btn btn-success" type="submit">Login</button>
                             <span class=" link">Forgot Password</span>
                         </div>
+                        <?= form_close() ?>
                         <?php } elseif ($mode == "signup") {
                         if ($step == 1) { ?>
                             <?= validation_list_errors() ?>
@@ -123,7 +125,7 @@
                                 </div>
                                 <div class=" flex justify-center text-center text-balance">
                                     <p>
-                                        Please enter the verification code that was sent to your email <strong>juandelacruz@gmail.com</strong>.
+                                        Please enter the verification code that was sent to your email <strong><?= session()->email ?></strong>.
                                     </p>
                                 </div>
                                 <div class="form-control">
