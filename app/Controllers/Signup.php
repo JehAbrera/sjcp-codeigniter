@@ -15,51 +15,68 @@ class Signup extends BaseController
     }
     public function index()
     {
-        $data = [
-            'title' => "account",
-            'mode' => "signup",
-            'step' => 1
-        ];
+        $step = session()->get('step');
+        if ($step === null || $step == 1) {
+            $data = [
+                'title' => "Account",
+                'mode' => "signup",
+                'fn' => session()->get('fn'),
+                'mn' => session()->get('mn'),
+                'ln' => session()->get('ln'),
+                'step' => 1
+            ];
+        } elseif ($step == 2) {
+            $data = [
+                'title' => "Account",
+                'mode' => "signup",
+                'step' => session()->get('step')
+            ];
+        } elseif ($step == 3) {
+            $data = [
+                'title' => "Account",
+                'mode' => "signup",
+                'step' => session()->get('step')
+            ];
+        }
         return view('templates/navbar', $data) . view('user/account', $data);
     }
     public function step1()
     {
-        $fn = $this->request->getPost('fn');
-        $mn = $this->request->getPost('mn');
-        $ln = $this->request->getPost('ln');
-        $data = [
-            'title' => "account",
-            'mode' => "signup",
-            'step' => 2,
-            'fn' => $fn,
-            'mn' => $mn,
-            'ln' => $ln,
-        ];
-        return view('templates/navbar', $data) . view('user/account', $data);
+        session()->set('fn', $this->request->getPost('fn'));
+        session()->set('mn', $this->request->getPost('mn'));
+        session()->set('ln', $this->request->getPost('ln'));
+        if ($this->request->getPost('submit') == "Back") {
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/account/signup');
+        }
+        session()->set('step', 2);
+        return redirect()->to('/account/signup');
     }
     public function step2()
     {
         $mail = $this->request->getPost('email');
+        $pass = $this->request->getPost('pass');
+        session()->set('email', $mail);
+        session()->set('pass', $pass);
         $subject = "Signup OTP";
         $message = "your otp is 123456";
         $this->email->setTo($mail);
         $this->email->setFrom('stjohn.automatedmail@gmail.com', 'Me');
         $this->email->setSubject($subject);
         $this->email->setMessage($message);
-        if (!$this->email->send()) {
-            return view('admin/dashboard');
+        $this->email->send();
+        if ($this->request->getPost('submit') == "Back") {
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/account/signup');
         }
-
-        $data = [
-            'title' => "account",
-            'mode' => "signup",
-            'step' => 3
-        ];
-        return view('templates/navbar', $data) . view('user/account', $data);
+        session()->set('step', 3);
+        return redirect()->to('/account/signup');
     }
     public function step3()
     {
-        $data['title'] = "Home";
-        return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home');
+        if ($this->request->getPost('submit') == "Back") {
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/account/signup');
+        }
     }
 }

@@ -1,2 +1,4 @@
 # Ignore debugbar files
 writable/debugbar/*
+writable/session/*
+writable/logs/*
