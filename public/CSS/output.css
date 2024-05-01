@@ -3742,6 +3742,10 @@ details.collapse summary::-webkit-details-marker {
   white-space: pre-line;
 }
 
+.text-balance {
+  text-wrap: balance;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -3861,6 +3865,11 @@ details.collapse summary::-webkit-details-marker {
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-4 {
@@ -4121,6 +4130,10 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:w-3\/5 {
     width: 60%;
+  }
+
+  .md\:w-4\/5 {
+    width: 80%;
   }
 
   .md\:w-6\/12 {
