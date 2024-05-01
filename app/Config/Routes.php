@@ -31,8 +31,10 @@ $routes->post('/signup/finish', [Signup::class, 'step3']);
 
 /* Form route area for calendar */
 $routes->get('/calendar/index', [Calendar::class, 'index']);
-$routes->post('/calendar/step2', [Calendar::class, 'step1']);
+$routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
+
+
 
 $routes->get('account/signup', [Signup::class, 'index']);
 $routes->get('account/login', [Login::class, 'index']);
