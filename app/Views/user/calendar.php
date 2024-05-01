@@ -154,7 +154,7 @@ function generateCalendar(year, month) {
         // Check if this date is the current date
         const currentDate = new Date();
         if (year === currentDate.getFullYear() && month === currentDate.getMonth() && day === currentDate.getDate()) {
-            dayElement.classList.add('bg-blue-500', 'text-white'); // Add classes for the indicator
+            dayElement.className.add('bg-blue-500', 'text-white'); // Add classes for the indicator
         }
 
         calendarElement.appendChild(dayElement);
