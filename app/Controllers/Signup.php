@@ -54,6 +54,10 @@ class Signup extends BaseController
     }
     public function step2()
     {
+        if ($this->request->getPost('submit') == "Back") {
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/account/signup');
+        }
         $mail = $this->request->getPost('email');
         $pass = $this->request->getPost('pass');
         session()->set('email', $mail);
@@ -65,10 +69,6 @@ class Signup extends BaseController
         $this->email->setSubject($subject);
         $this->email->setMessage($message);
         $this->email->send();
-        if ($this->request->getPost('submit') == "Back") {
-            session()->set('step', session()->get('step') - 1);
-            return redirect()->to('/account/signup');
-        }
         session()->set('step', 3);
         return redirect()->to('/account/signup');
     }
