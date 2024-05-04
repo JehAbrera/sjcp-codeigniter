@@ -20,7 +20,7 @@ class Login extends BaseController
         session()->remove($array);
 
         $data = [
-            'title' => "account",
+            'title' => "Account",
             'mode' => "login",
         ];
         return view('templates/navbar', $data) . view('user/account', $data);
@@ -30,8 +30,11 @@ class Login extends BaseController
         $user = $this->request->getPost('email');
         $pass = $this->request->getPost('password');
         if ($this->valid->index($user,$pass)) {
+            session()->set('user', $user);
+            session()->set('isLogged', true);
             return redirect()->to('/home');
         }
+        session()->setFlashdata('loginErr', "Invalid login details, make sure your details are correct!");
         return redirect()->to('/account/login');
     }
 }
