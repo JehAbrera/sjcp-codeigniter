@@ -47,3 +47,6 @@ $routes->post('signup/finish', [Signup::class, 'step3']);
 
 /* Routes for the user profile */
 $routes->get('user/profile', [Profile::class, 'index']);
+$routes->get('user/view', [Profile::class, 'viewProfile']);
+$routes->get('user/editProfile', [Profile::class, 'editProfile']);
+$routes->get('user/editPass', [Profile::class, 'editPass']);

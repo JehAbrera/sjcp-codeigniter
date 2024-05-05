@@ -54,7 +54,7 @@
                             <details close>
                                 <summary><i data-lucide="circle-user"></i>Profile</summary>
                                 <ul class=" bg-slate-950">
-                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/user/profile">My Profile</a></li>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/user/view">My Profile</a></li>
                                     <li class=" hover:bg-slate-700 hover:rounded-md"><label for="logoutModal">Logout</label></li>
                                 </ul>
                             </details>

@@ -12,7 +12,7 @@ class UpdateProfile extends Model {
         $this->db = db_connect();
     }
 
-    public function index() {
+    public function view() {
         $userInfo = [];
         $query = $this->db->table('liuser')
             ->select('*')
@@ -27,5 +27,8 @@ class UpdateProfile extends Model {
             array_push($userInfo, $result[0]->fn, $result[0]->mn, $result[0]->ln, $result[0]->email);
         }
         return $userInfo;
+    }
+    public function updateProfile() {
+
     }
 }
