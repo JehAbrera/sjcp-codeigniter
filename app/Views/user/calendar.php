@@ -1,5 +1,6 @@
 <main class="w-full h-screen flex justify-center items-center">
     <?php
+    echo session()->get('step');
     if ($step == 1) { ?>
         <div class="w-full h-full flex justify-center items-center">
             <div class="card w-2/5 text-center bg-zinc-100 p-9">
@@ -24,7 +25,7 @@
                 <?= form_close() ?>
             </div>
         </div>
-    <?php } else if ($step >= 2) { ?>
+    <?php } else if ($step == 2) { ?>
             <!-- for calendar-->
             <div class="lg:w-full md:w-9/12 sm:w-10/12 mx-auto h-screen flex flex-col gap-8 p-10">
                 <div class="w-full">
@@ -32,10 +33,7 @@
                     <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i
                             data-lucide="chevron-left"></i> Back</button>
                 <?= form_close() ?>
-                <?= session()->get('event') ?>
-                <?= session()->get('day') ?>
-                <?= session()->get('month') ?>
-                <?= session()->get('year') ?>
+                <?= session()->get('step') ?>
                 </div>
                 <div class="w-full">
                     <p>Step 2 of 2:</p>
@@ -54,62 +52,61 @@
                                 <!-- Calendar Days Go Here -->
                             </div>
                             <input type="hidden" name="daySelected" id="daySelected" value="<?= session()->get('day') ?>">
-                            <input type="hidden" name="event" value="<?= session()->get('event') ?>">
+                            <input type="hidden" id="event" name="event" value="<?= session()->get('event') ?>">
                             <input type="hidden" name="month" id="month" value="<?= session()->get('month') ?>">
                             <input type="hidden" name="year" id="year" value="<?= session()->get('year') ?>">
                         <?= form_close() ?>
                         </div>
                     </div>
                     <div class="flex flex-col gap-8 w-2/6">
+                    <?= form_open('calendar/step3') ?>
                         <div>
                             <b class="card-title">Check available time slots</b>
                         </div>
                         <div class="w-full px-4">
                             <ul class=" flex flex-col w-full gap-2">
-                                <li>
-                                    <input type="radio" id="time1" name="avTime" value="9:00 AM" class="hidden peer" onclick="btnEnable()" required />
-                                    <label for="time1"
-                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer dark:hover:text-black dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black">
-                                        <p>9:00 AM</p>
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="time2" name="avTime" value="10:00 AM" class="hidden peer" onclick="btnEnable()">
-                                    <label for="time2"
-                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer dark:hover:text-black dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black">
-                                        <p>10:00 AM</p>
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="time3" name="avTime" value="11:00 AM" class="hidden peer" onclick="btnEnable()">
-                                    <label for="time3"
-                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer dark:hover:text-black dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black">
-                                        <p>11:00 AM</p>
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="time4" name="avTime" value="2:00 PM" class="hidden peer" onclick="btnEnable()">
-                                    <label for="time4"
-                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer dark:hover:text-black dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black">
-                                        <p>2:00 PM</p>
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="time5" name="avTime" value="3:00 PM" class="hidden peer" onclick="btnEnable()">
-                                    <label for="time5"
-                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer dark:hover:text-black dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-black">
-                                        <p>3:00 PM</p>
-                                    </label>
-                                </li>
+                                <?php
+                                if (session()->get('isClose') == "true") {
+                                    echo "Cannot Schedule Event for this day of the week";
+                                } else {
+                                    $time = session()->get('try');
+                                    $timeArray = explode(',', $time, -1);
+                                    if (count($timeArray) != 0) {
+                                        foreach ($timeArray as $row) { ?>
+                                            <li>
+                                                <input type="radio" id="<?= $row ?>" name="avTime" value="<?= $row ?>" class="hidden peer"
+                                                    onclick="btnEnable()" required />
+                                                <label for="<?= $row ?>"
+                                                    class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
+                                                    <p><?= date('g:i A', strtotime($row)) ?></p>
+                                                </label>
+                                            </li>
+                                    <?php }
+                                    } else {
+                                        echo "No Available Time Slots";
+                                    }
+                                }
+                                ?>
                             </ul>
                         </div>
-                        <div class="w-full flex mt-auto items-end">
-                            <button class="btn" id="btnReserve" disabled> Reserve Event</button>
+                        <div class="w-full flex mt-auto">
+                            <button type="submit" name="toReserve" class="btn" id="btnReserve" disabled> Reserve Event</button>
                         </div>
+                    <?= form_close() ?>
                     </div>
                 </div>
 
             </div>
+    <?php } else if ($step == 3) { ?>
+        <?= session()->get('step') ?>
+        <?= session()->get('event') ?>
+        <?= session()->get('date') ?>
+        <?= session()->get('time') ?>
+        <?= form_open('calendar/step2') ?>
+                <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i
+                        data-lucide="chevron-left"></i> Back</button>
+        <?= form_close() ?>
+
     <?php } ?>
 
 </main>
@@ -146,6 +143,7 @@
     function generateCalendar(year, month) {
         const calendarElement = document.getElementById('calendar');
         const currentMonthElement = document.getElementById('currentMonth');
+        const event = document.getElementById('event');
 
         // Create a date object for the first day of the specified month
         const firstDayOfMonth = new Date(year, month, 1);
@@ -184,12 +182,17 @@
             dayElement.className = 'text-center py-2 border cursor-pointer text-black bg-white rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100';
             dayElement.type = 'submit';
             dayElement.name = 'day';
-            dayElement.value = day;
             dayElement.innerText = day;
+
+            if (day < 10) {
+                dayElement.value = '0' + day;
+            } else {
+                dayElement.value = day;
+            }
 
             //to highlight the selected date
             if (year === selectedyear.value && month === selectedmonth.value && day == selectedday.value) {
-                dayElement.className = 'text-center py-2 border cursor-pointer text-white rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100 bg-blue-500'; // Add classes for the indicator
+                dayElement.className = 'text-center py-2 border cursor-pointer text-white rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100 bg-slate-950'; // Add classes for the indicator
             }
 
             calendarElement.appendChild(dayElement);
@@ -197,7 +200,7 @@
     }
 
     //for enabling the reserve button 
-    function btnEnable(){
+    function btnEnable() {
         let btnReserve = document.getElementById("btnReserve");
         var time = document.getElementsByName("avTime");
         for (var i = 0; i < time.length; i++) {
