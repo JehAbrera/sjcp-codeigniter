@@ -6,6 +6,7 @@ use App\Models\UpdateProfile;
 
 class Profile extends BaseController {
     
+    protected $helpers = ['form'];
     protected $profile;
     public function __construct()
     {
@@ -24,7 +25,11 @@ class Profile extends BaseController {
         return redirect()->to('/user/profile');
     }
     public function editProfile() {
-        session()->set('profileMode', 'edit');
+        if ($this->request->getMethod() === 'POST') {
+            session()->set('profileMode', 'view');
+        } else {
+            session()->set('profileMode', 'edit');
+        }
         return redirect()->to('/user/profile');
     }
     public function editPass() {
@@ -32,6 +37,7 @@ class Profile extends BaseController {
         return redirect()->to('/user/profile');
     }
     public function deleteAcc() {
-
+        session()->set('profileMode', 'delete');
+        return redirect()->to('/user/profile');
     }
 }
