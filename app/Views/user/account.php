@@ -32,6 +32,7 @@
                                 <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
                             </div>
                         </div>
+                        <div class=" label-text-alt text-error"><?= session()->get('loginErr') ?></div>
                         <div class="form-control items-center mt-10 gap-2">
                             <button class="btn btn-success" type="submit">Login</button>
                             <span class=" link">Forgot Password</span>
