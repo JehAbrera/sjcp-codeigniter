@@ -34,6 +34,7 @@ $routes->post('/signup/finish', [Signup::class, 'step3']);
 $routes->get('/calendar/index', [Calendar::class, 'index']);
 $routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
+$routes->post('/calendar/step3', [Calendar::class, 'step3']);
 
 /* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
