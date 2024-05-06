@@ -13,6 +13,9 @@ class Profile extends BaseController {
         $this->profile = new UpdateProfile();
     }
     public function index() {
+        if (!session()->has('profileMode')) {
+            session()->set('profileMode', 'view');
+        }
         $data = [
             'title' => "Profile",
             'info' => $this->profile->view(),
@@ -26,18 +29,39 @@ class Profile extends BaseController {
     }
     public function editProfile() {
         if ($this->request->getMethod() === 'POST') {
-            session()->set('profileMode', 'view');
+            $fn = $this->request->getPost('userfn');
+            $mn = $this->request->getPost('usermn');
+            $ln = $this->request->getPost('userln');
+
+            if($this->profile->isEqual([$fn, $mn, $ln])) {
+                session()->setFlashdata('editErr', "Details are the same with previous user information.");
+            } else {
+                if ($this->profile->updateProfile($fn, $mn, $ln)) {
+                    session()->setFlashdata('profUpdated', "Profile successfully updated!");
+                    session()->set('profileMode', 'view');
+                } else {
+                    session()->setFlashdata('editErr', "Profile update failed, please try again later");
+                }
+            }
         } else {
             session()->set('profileMode', 'edit');
         }
         return redirect()->to('/user/profile');
     }
     public function editPass() {
-        session()->set('profileMode', 'change');
+        if ($this->request->getMethod() === 'POST') {
+            session()->set('profileMode', 'view');
+        } else {
+            session()->set('profileMode', 'change');
+        }
         return redirect()->to('/user/profile');
     }
     public function deleteAcc() {
-        session()->set('profileMode', 'delete');
+        if ($this->request->getMethod() === 'POST') {
+            session()->set('profileMode', 'view');
+        } else {
+            session()->set('profileMode', 'delete');
+        }
         return redirect()->to('/user/profile');
     }
 }

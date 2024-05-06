@@ -21,6 +21,17 @@
                     <span class=" text-xl font-bold">View Profile</span>
             </div>
             <div class=" w-full flex flex-col items-center gap-3">
+                <?php
+                    if (session()->has('profUpdated')) { ?>
+                    <div class=" p-2 bg-green-200 text-success rounded-md w-4/5 label-text-alt">
+                        <?= session()->profUpdated ?>
+                        <?php
+                            print_r(session()->old);
+                            print_r(session()->new);
+                        ?>
+                    </div>
+                <?php }
+                ?>
                 <div class=" w-4/5 flex justify-between"><strong>First Name:</strong><span><?= $info[0] ?></span></div>
                 <div class=" w-4/5 flex justify-between"><strong>Middle Name:</strong><span><?= $info[1] ?></span></div>
                 <div class=" w-4/5 flex justify-between"><strong>Last Name:</strong><span><?= $info[2] ?></span></div>
@@ -31,6 +42,13 @@
             <span class=" text-xl font-bold">Edit Profile</span>
         </div>
         <form action="/user/editProfile" method="post" class=" w-4/5 flex flex-col gap-2">
+            <?php
+                    if (session()->has('editErr')) { ?>
+                <div class=" p-2 bg-red-200 text-error rounded-md w-full label-text-alt">
+                    <?= session()->editErr ?>
+                </div>
+            <?php }
+            ?>
             <div class="flex flex-row justify-between">
                 <label class="label">
                     <span class="label-text">First Name</span>
@@ -41,23 +59,37 @@
                 <label class="label">
                     <span class="label-text">Middle Name</span>
                 </label>
-                <input type="text" placeholder="middle name" name="email" value="<?= $info[1] ?>" class="input input-bordered" required />
+                <input type="text" placeholder="middle name" name="usermn" value="<?= $info[1] ?>" class="input input-bordered" required />
             </div>
             <div class="flex flex-row justify-between">
                 <label class="label">
                     <span class="label-text">Last Name</span>
                 </label>
-                <input type="text" placeholder="last name" name="email" value="<?= $info[2] ?>" class="input input-bordered" required />
+                <input type="text" placeholder="last name" name="userln" value="<?= $info[2] ?>" class="input input-bordered" required />
             </div>
             <div class="flex flex-row justify-between">
                 <label class="label">
                     <span class="label-text">Email Address</span>
                 </label>
-                <input type="text" placeholder="email" name="email" value="<?= $info[3] ?>" class="input input-bordered" disabled/>
+                <input type="text" placeholder="email" name="email" value="<?= $info[3] ?>" class="input input-bordered" disabled />
             </div>
             <div class=" flex justify-center gap-2">
-                <label for="cancelEdit" class="btn btn-outline btn-error">Cancel</label>
+                <label for="cancel" class="btn btn-outline btn-error">Cancel</label>
                 <label for="saveEdit" class="btn btn-success">Save Changes</label>
+                <input type="checkbox" id="saveEdit" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box gap-2">
+                        <div class=" flex justify-center">
+                            <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                        <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                        <div class="modal-action mt-0 justify-center">
+                            <label for="saveEdit" class="btn btn-error btn-outline">No</label>
+                            <button class=" btn btn-success" type="submit">Yes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <?= form_close() ?>
         <?php } elseif ($mode == 'change') { ?>
@@ -83,8 +115,22 @@
                     <input type="password" name="conpass" class="input input-bordered" required />
                 </div>
                 <div class=" flex justify-center gap-2">
-                    <label for="cancelPass" class="btn btn-outline btn-error">Cancel</label>
+                    <label for="cancel" class="btn btn-outline btn-error">Cancel</label>
                     <label for="savePass" class="btn btn-success">Save Changes</label>
+                    <input type="checkbox" id="savePass" class="modal-toggle" />
+                    <div class="modal" role="dialog">
+                        <div class="modal-box gap-2">
+                            <div class=" flex justify-center">
+                                <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                            <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                            <div class="modal-action mt-0 justify-center">
+                                <label for="savePass" class="btn btn-error btn-outline">No</label>
+                                <button class=" btn btn-success" type="submit">Yes</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <?= form_close() ?>
             <?php } elseif ($mode == 'delete') { ?>
@@ -96,12 +142,40 @@
                     </p>
                     <input type="text" name="confirm" class="input input-bordered" />
                     <div class=" flex justify-center gap-2">
-                        <label for="cancelDel" class="btn btn-outline btn-error">Cancel</label>
+                        <label for="cancel" class="btn btn-outline btn-error">Cancel</label>
                         <label for="saveDel" class="btn btn-success">Save Changes</label>
+                        <input type="checkbox" id="saveDel" class="modal-toggle" />
+                        <div class="modal" role="dialog">
+                            <div class="modal-box gap-2">
+                                <div class=" flex justify-center">
+                                    <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                                </div>
+                                <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                                <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                                <div class="modal-action mt-0 justify-center">
+                                    <label for="saveDel" class="btn btn-error btn-outline">No</label>
+                                    <button class=" btn btn-success" type="submit">Yes</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <?= form_close() ?>
                 <?php }
                 ?>
+                </div>
+                <input type="checkbox" id="cancel" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box gap-2">
+                        <div class=" flex justify-center">
+                            <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                        <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                        <div class="modal-action mt-0 justify-center">
+                            <label for="cancel" class="btn btn-error btn-outline">No</label>
+                            <button class=" btn btn-success" onclick="location.href = '/user/view'">Yes</button>
+                        </div>
+                    </div>
                 </div>
     </section>
 </main>

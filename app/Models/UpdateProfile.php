@@ -4,7 +4,8 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UpdateProfile extends Model {
+class UpdateProfile extends Model
+{
     protected $db;
 
     public function __construct()
@@ -12,7 +13,8 @@ class UpdateProfile extends Model {
         $this->db = db_connect();
     }
 
-    public function view() {
+    public function view()
+    {
         $userInfo = [];
         $query = $this->db->table('liuser')
             ->select('*')
@@ -28,7 +30,35 @@ class UpdateProfile extends Model {
         }
         return $userInfo;
     }
-    public function updateProfile() {
-
+    public function updateProfile($fn, $mn, $ln)
+    {
+        $updateVal = [
+            'fn' => $fn,
+            'mn' => $mn,
+            'ln' => $ln,
+        ];
+        $this->db->table('liuser')
+            ->where('email', session()->user)
+            ->update($updateVal);
+        if ($this->db->affectedRows() > 0) {
+            return true;
+        }
+        return false;
+    }
+    public function changePass()
+    {
+    }
+    public function deleteAcc()
+    {
+    }
+    public function isEqual($data = [])
+    {
+        $old = $this->view();
+        for ($i = 0; $i < count($data); $i++) {
+            if ($data[$i] !== $old[$i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
