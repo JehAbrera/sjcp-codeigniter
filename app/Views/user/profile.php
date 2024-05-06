@@ -23,12 +23,8 @@
             <div class=" w-full flex flex-col items-center gap-3">
                 <?php
                     if (session()->has('profUpdated')) { ?>
-                    <div class=" p-2 bg-green-200 text-success rounded-md w-4/5 label-text-alt">
+                    <div class=" p-2 bg-green-200 text-success rounded-md w-4/5 label-text-alt text-center">
                         <?= session()->profUpdated ?>
-                        <?php
-                            print_r(session()->old);
-                            print_r(session()->new);
-                        ?>
                     </div>
                 <?php }
                 ?>
@@ -44,7 +40,7 @@
         <form action="/user/editProfile" method="post" class=" w-4/5 flex flex-col gap-2">
             <?php
                     if (session()->has('editErr')) { ?>
-                <div class=" p-2 bg-red-200 text-error rounded-md w-full label-text-alt">
+                <div class=" p-2 bg-red-200 text-error rounded-md w-full label-text-alt text-center">
                     <?= session()->editErr ?>
                 </div>
             <?php }
