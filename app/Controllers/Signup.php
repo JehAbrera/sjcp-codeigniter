@@ -11,11 +11,12 @@
 namespace App\Controllers;
 
 use App\Models\CreateAccount;
+use App\Libraries\Hash;
 
 class Signup extends BaseController
 {
     protected $helpers = ['form'];
-    public $email, $create;
+    protected $email, $create, $hash;
 
     public function __construct()
     {
@@ -23,6 +24,7 @@ class Signup extends BaseController
         // Add objects at constructor //
         $this->email = \Config\Services::email();
         $this->create = new CreateAccount();
+        $this->hash = new Hash();
     }
 
     // Steps are the process of account creation, different steps collect different info //
@@ -71,6 +73,7 @@ class Signup extends BaseController
     // Step 2 collects the user email and password //
     // Valiadate email and send otp for confirmation //
     // To add: email validation for duplicate emails //
+    // Move email sending to Libraries folder //
     public function step2()
     {
         if ($this->request->getPost('submit') == "Back") {
@@ -107,7 +110,8 @@ class Signup extends BaseController
         $ln = session()->get('ln');
         $em = session()->get('email');
         $pass = session()->get('pass');
-        if ($this->create->index($fn, $mn, $ln, $em, $pass)) {
+        $hashed = $this->hash->hash($pass);
+        if ($this->create->index($fn, $mn, $ln, $em, $hashed)) {
             $array = ['step', 'fn', 'mn', 'ln', 'email', 'pass'];
             session()->remove($array);
             return redirect()->to('/account/login');
