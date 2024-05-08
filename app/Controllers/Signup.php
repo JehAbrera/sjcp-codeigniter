@@ -1,5 +1,13 @@
 <?php
 
+/*
+*
+* Signup.php handles the process of account creation
+* Validate data, send otp for confirmations, and create accounts here
+* For email configuration check 
+*
+*/
+
 namespace App\Controllers;
 
 use App\Models\CreateAccount;
@@ -11,10 +19,13 @@ class Signup extends BaseController
 
     public function __construct()
     {
-        // Initialize the email service
+        // Initialize the email service //
+        // Add objects at constructor //
         $this->email = \Config\Services::email();
         $this->create = new CreateAccount();
     }
+
+    // Steps are the process of account creation, different steps collect different info //
     public function index()
     {
         $step = session()->get('step');
@@ -42,6 +53,8 @@ class Signup extends BaseController
         }
         return view('templates/navbar', $data) . view('user/account', $data);
     }
+    // Step 1 //
+    // To add: input formatting //
     public function step1()
     {
         session()->set('fn', $this->request->getPost('fn'));
@@ -54,6 +67,10 @@ class Signup extends BaseController
         session()->set('step', 2);
         return redirect()->to('/account/signup');
     }
+
+    // Step 2 collects the user email and password //
+    // Valiadate email and send otp for confirmation //
+    // To add: email validation for duplicate emails //
     public function step2()
     {
         if ($this->request->getPost('submit') == "Back") {
@@ -74,6 +91,11 @@ class Signup extends BaseController
         session()->set('step', 3);
         return redirect()->to('/account/signup');
     }
+
+    // Step 3 //
+    // Collect otp sent //
+    // If otp is valid - create account - else - return an error //
+    // To add: otp validation //
     public function step3()
     {
         if ($this->request->getPost('submit') == "Back") {

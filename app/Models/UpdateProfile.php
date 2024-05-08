@@ -13,6 +13,8 @@ class UpdateProfile extends Model
         $this->db = db_connect();
     }
 
+
+    // View query //
     public function view()
     {
         $userInfo = [];
@@ -30,6 +32,7 @@ class UpdateProfile extends Model
         }
         return $userInfo;
     }
+    // Update query //
     public function updateProfile($fn, $mn, $ln)
     {
         $updateVal = [
@@ -45,12 +48,15 @@ class UpdateProfile extends Model
         }
         return false;
     }
+    // Update for password only //
     public function changePass()
     {
     }
+    // Move account details to archive table //
     public function deleteAcc()
     {
     }
+    // For update query - check if account change input is the same as save details //
     public function isEqual($data = [])
     {
         $old = $this->view();

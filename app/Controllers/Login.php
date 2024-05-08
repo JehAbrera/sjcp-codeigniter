@@ -1,5 +1,10 @@
 <?php
 
+/*
+* Validate user login details
+* If valid set logged in to true
+*/
+
 namespace App\Controllers;
 
 use App\Models\ValidateLogin;
