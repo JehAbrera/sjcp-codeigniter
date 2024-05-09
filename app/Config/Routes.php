@@ -25,6 +25,7 @@ $routes->get('/admin/(:segment)', [Home::class, 'admin']);
 */
 // Example: $routes->get('/admin/(:segment)/(:segment)', [Home::class, 'some function to handle values'])
 /* Form route area */
+/* For signup */
 $routes->get('/account/signup', [Signup::class, 'index']);
 $routes->get('/account/login', [Login::class, 'index']);
 $routes->post('/signup/step2', [Signup::class, 'step1']);
@@ -42,14 +43,9 @@ $routes->post('/calendar/step3', [Calendar::class, 'step3']);
 $routes->get('account/login', [Login::class, 'index']);
 $routes->post('login/user', [Login::class, 'login']);
 
-/* Routes for user Account Create */
-$routes->get('account/signup', [Signup::class, 'index']);
-$routes->post('signup/step2', [Signup::class, 'step1']);
-$routes->post('signup/step3', [Signup::class, 'step2']);
-$routes->post('signup/finish', [Signup::class, 'step3']);
-
 /* Routes for the user profile */
 $routes->get('user/profile', [Profile::class, 'index']);
 $routes->get('user/view', [Profile::class, 'viewProfile']);
-$routes->get('user/editProfile', [Profile::class, 'editProfile']);
-$routes->get('user/editPass', [Profile::class, 'editPass']);
+$routes->add('user/editProfile', [Profile::class, 'editProfile'], ['get','post']);
+$routes->add('user/editPass', [Profile::class, 'editPass'], ['get', 'post']);
+$routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
