@@ -102,7 +102,7 @@ class Calendar extends BaseController
         $time = $this->request->getPost('avTime');
         session()->set('time', $time);
         session()->set('step', 3);
-        return redirect()->to('/calendar/index');
+        return view('user/reserve');
     }
 
     //to check the avaibale time for specific date

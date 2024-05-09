@@ -31,7 +31,7 @@
                             <summary>Services</summary>
                             <ul class=" bg-slate-950">
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/services">Services</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/reserve">Reserve Event</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Reserve Event</a></li>
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/myreservation">My Reservations</a></li>
                             </ul>
                         </details>
