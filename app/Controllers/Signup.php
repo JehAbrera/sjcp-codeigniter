@@ -12,6 +12,7 @@ namespace App\Controllers;
 
 use App\Models\CreateAccount;
 use App\Libraries\Hash;
+use App\Libraries\EmailSender;
 
 class Signup extends BaseController
 {
@@ -22,7 +23,7 @@ class Signup extends BaseController
     {
         // Initialize the email service //
         // Add objects at constructor //
-        $this->email = \Config\Services::email();
+        $this->email = new EmailSender();
         $this->create = new CreateAccount();
         $this->hash = new Hash();
     }
@@ -84,13 +85,9 @@ class Signup extends BaseController
         $pass = $this->request->getPost('pass');
         session()->set('email', $mail);
         session()->set('pass', $pass);
-        $subject = "Signup OTP";
-        $message = "your otp is 123456";
-        $this->email->setTo($mail);
-        $this->email->setFrom('stjohn.automatedmail@gmail.com', 'Me');
-        $this->email->setSubject($subject);
-        $this->email->setMessage($message);
-        $this->email->send();
+        // Call email sender library - declare purpose and target as parameters //
+        // purpose values can only be --otp-- or --status-- //
+        $this->email->send('otp', $mail);
         session()->set('step', 3);
         return redirect()->to('/account/signup');
     }
