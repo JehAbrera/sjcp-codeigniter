@@ -72,7 +72,7 @@ class Signup extends BaseController
     }
 
     // Step 2 collects the user email and password //
-    // Valiadate email and send otp for confirmation //
+    // Validate email and send otp for confirmation //
     // To add: email validation for duplicate emails //
     // Move email sending to Libraries folder //
     public function step2()
