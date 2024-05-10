@@ -4,6 +4,8 @@ use App\Controllers\Home;
 use App\Controllers\Login;
 use App\Controllers\Signup;
 use App\Controllers\Calendar;
+use App\Controllers\Reserve;
+use App\Controllers\Profile;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -23,20 +25,27 @@ $routes->get('/admin/(:segment)', [Home::class, 'admin']);
 */
 // Example: $routes->get('/admin/(:segment)/(:segment)', [Home::class, 'some function to handle values'])
 /* Form route area */
+/* For signup */
 $routes->get('/account/signup', [Signup::class, 'index']);
 $routes->get('/account/login', [Login::class, 'index']);
 $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
 
-/* Form route area for calendar */
+/* Form route area for calendar and reserve */
 $routes->get('/calendar/index', [Calendar::class, 'index']);
-$routes->post('/calendar/step2', [Calendar::class, 'step1']);
+$routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
+$routes->post('/calendar/step3', [Calendar::class, 'step3']);
 
-$routes->get('account/signup', [Signup::class, 'index']);
+
+/* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
-$routes->post('signup/step2', [Signup::class, 'step1']);
-$routes->post('signup/step3', [Signup::class, 'step2']);
-$routes->post('signup/finish', [Signup::class, 'step3']);
+$routes->post('login/user', [Login::class, 'login']);
 
+/* Routes for the user profile */
+$routes->get('user/profile', [Profile::class, 'index']);
+$routes->get('user/view', [Profile::class, 'viewProfile']);
+$routes->add('user/editProfile', [Profile::class, 'editProfile'], ['get','post']);
+$routes->add('user/editPass', [Profile::class, 'editPass'], ['get', 'post']);
+$routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);

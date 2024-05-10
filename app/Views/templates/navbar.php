@@ -31,7 +31,7 @@
                             <summary>Services</summary>
                             <ul class=" bg-slate-950">
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/services">Services</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/reserve">Reserve Event</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Reserve Event</a></li>
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/myreservation">My Reservations</a></li>
                             </ul>
                         </details>
@@ -46,7 +46,21 @@
                         </details>
                     </li>
                     <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/about">About Us</a></li>
-                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/account/login">Connect With Us</a></li>
+                    <?php
+                    if (!session()->has('isLogged') || session()->has('isLogged') && !session()->isLogged) { ?>
+                        <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/account/login">Connect With Us</a></li>
+                    <?php } else { ?>
+                        <li class=" hover:bg-slate-700 hover:rounded-md">
+                            <details close>
+                                <summary><i data-lucide="circle-user"></i>Profile</summary>
+                                <ul class=" bg-slate-950">
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/user/view">My Profile</a></li>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><label for="logoutModal">Logout</label></li>
+                                </ul>
+                            </details>
+                        </li>
+                    <?php }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -77,5 +91,19 @@
                 <li><a href="">About Us</a></li>
                 <li><a href="">Connect With Us</a></li>
             </ul>
+        </div>
+        <input type="checkbox" id="logoutModal" class="modal-toggle" />
+        <div class="modal" role="dialog">
+            <div class="modal-box gap-2">
+                <div class=" flex justify-center">
+                    <i data-lucide="log-out" class=" w-16 h-16"></i>
+                </div>
+                <h3 class="font-bold text-lg text-center">Confirm Logout?</h3>
+                <p class="py-4 text-center text-balance">Logging out will require you to sign in again to access your account.</p>
+                <div class="modal-action mt-0 justify-center">
+                    <label for="logoutModal" class="btn btn-error btn-outline">No</label>
+                    <button class=" btn btn-success" onclick="location.href = '/logout'">Yes</button>
+                </div>
+            </div>
         </div>
     </nav>
