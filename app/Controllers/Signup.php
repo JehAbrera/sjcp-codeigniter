@@ -87,7 +87,7 @@ class Signup extends BaseController
         session()->set('pass', $pass);
         // Call email sender library - declare purpose and target as parameters //
         // purpose values can only be --otp-- or --status-- //
-        $this->email->send('otp', $mail);
+        $this->email->send('otp', 'Registration', $mail);
         session()->set('step', 3);
         return redirect()->to('/account/signup');
     }
