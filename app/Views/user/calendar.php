@@ -33,7 +33,6 @@
                     <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i
                             data-lucide="chevron-left"></i> Back</button>
                 <?= form_close() ?>
-                <?= session()->get('step') ?>
                 </div>
                 <div class="w-full">
                     <p>Step 2 of 2:</p>

@@ -1,7 +1,9 @@
 <div class="w-3/4 flex flex-col m-auto py-8">
     <div>
+        <?= form_open('reserve/back') ?>
         <button type="submit" class=" btn btn-error btn-outline" name="submit"
             value="Back"><idata-lucide="chevron-left"></i> Back</button>
+        <?= form_close() ?>
     </div>
     <div class="w-11/12 m-auto p-8">
         <b>Requirements</b>
@@ -9,7 +11,7 @@
         <p>Marriage Contract of parents (photocopy)</p>
         <br>
         <b>Notes:</b>
-        <ul class=" list-disc grid-cols-2 gap-4">
+        <ul class=" list-disc columns-2 gap-4">
             <li>Parents & sponsors are REQUIRED to attend the seminar</li>
             <li>White dress or polo & pants for the child</li>
             <li>The Godfather (Ninong) and Godmother (Ninang) must be 18 years of age or older</li>
@@ -19,11 +21,17 @@
         </ul>
         <br>
         <div>
-            <b>Event: </b> <br>
-            <b>Date: </b> <br>
-            <b>Time: </b> <br>
+            <?php
+            $event = session()->get('event');
+            $date = date_format(date_create(session()->get('date')), 'F j, Y');
+            $time = date_format(date_create(session()->get('time')), 'g:i A');
+            ?>
+            <b>Event: </b> <?= $event ?> <br>
+            <b>Date: </b> <?= $date ?> <br>
+            <b>Time: </b> <?= $time ?><br>
         </div>
     </div>
+    <?= form_open('reserve/baptism') ?>
     <div class="bg-zinc-300">
         <div class="p-8">
             <div class="">
@@ -137,7 +145,7 @@
                     <div class="join">
                         <input type="text" name="mobile1" value="+63" id="" class="input input-bordered join-item w-1/4"
                             disabled>
-                        <input type="text" id="contactNum" name="contactNum" maxlength="10" inputmode="numeric"
+                        <input type="tel" id="contactNum" name="contactNum" maxlength="10"
                             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
                             placeholder="9123456789" pattern="[9]{1}[0-9]{9}" class="input join-item rounded-sm"
                             required><br>
@@ -218,4 +226,5 @@
         <button class="btn btn-error btn-outline"> Clear</button>
         <button class="btn btn-success btn-outline"> Submit</button>
     </div>
+    <?= form_close() ?>
 </div>
