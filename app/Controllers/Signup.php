@@ -72,7 +72,7 @@ class Signup extends BaseController
     }
 
     // Step 2 collects the user email and password //
-    // Valiadate email and send otp for confirmation //
+    // Validate email and send otp for confirmation //
     // To add: email validation for duplicate emails //
     // Move email sending to Libraries folder //
     public function step2()
@@ -87,7 +87,7 @@ class Signup extends BaseController
         session()->set('pass', $pass);
         // Call email sender library - declare purpose and target as parameters //
         // purpose values can only be --otp-- or --status-- //
-        $this->email->send('otp', $mail);
+        $this->email->send('otp', 'Registration', $mail);
         session()->set('step', 3);
         return redirect()->to('/account/signup');
     }

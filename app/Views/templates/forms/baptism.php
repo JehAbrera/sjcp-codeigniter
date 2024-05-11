@@ -137,7 +137,7 @@
                     <div class="join">
                         <input type="text" name="mobile1" value="+63" id="" class="input input-bordered join-item w-1/4"
                             disabled>
-                        <input type="tel" id="contactNum" name="contactNum" maxlength="10"
+                        <input type="text" id="contactNum" name="contactNum" maxlength="10" inputmode="numeric"
                             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
                             placeholder="9123456789" pattern="[9]{1}[0-9]{9}" class="input join-item rounded-sm"
                             required><br>

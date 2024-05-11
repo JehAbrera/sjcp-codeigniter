@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+INFO - 2024-04-30 11:35:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-04-30 11:35:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-04-30 11:35:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+=======
 CRITICAL - 2024-04-30 13:18:05 --> ErrorException: Undefined variable $month
 [Method: POST, Route: calendar/step2]
 in APPPATH\Views\user\calendar.php on line 33.
@@ -166,3 +171,4 @@ in APPPATH\Views\user\calendar.php on line 32.
 10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 12 SYSTEMPATH\Commands\Server\rewrite.php(49): require_once('D:\\xampp\\htdocs\\sjcp-codeigniter\\public\\index.php')
+>>>>>>> 7ce4b1068d451b138f3a76fbf7c4cfa1966893c1
