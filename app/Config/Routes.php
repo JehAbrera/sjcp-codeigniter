@@ -38,6 +38,9 @@ $routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
 $routes->post('/calendar/step3', [Calendar::class, 'step3']);
 
+$routes->get('/reserve/index', [Reserve::class, 'index']);
+$routes->post('/reserve/back', [Reserve::class, 'back']);
+
 
 /* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
