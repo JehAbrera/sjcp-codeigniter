@@ -83,12 +83,16 @@ class Signup extends BaseController
         }
         $mail = $this->request->getPost('email');
         $pass = $this->request->getPost('pass');
-        session()->set('email', $mail);
-        session()->set('pass', $pass);
-        // Call email sender library - declare purpose and target as parameters //
-        // purpose values can only be --otp-- or --status-- //
-        $this->email->send('otp', 'Registration', $mail);
-        session()->set('step', 3);
+        if ($this->create->isExisting($mail)) {
+            session()->setFlashdata('emailErr', "The email you entered is already in use.");
+        } else {
+            session()->set('email', $mail);
+            session()->set('pass', $pass);
+            // Call email sender library - declare purpose and target as parameters //
+            // purpose values can only be --otp-- or --status-- //
+            $this->email->send('otp', 'Registration', $mail);
+            session()->set('step', 3);
+        }
         return redirect()->to('/account/signup');
     }
 
@@ -102,9 +106,14 @@ class Signup extends BaseController
             session()->set('step', session()->get('step') - 1);
             return redirect()->to('/account/signup');
         }
-        $fn = session()->get('fn');
-        $mn = session()->get('mn');
-        $ln = session()->get('ln');
+        $otp = $this->request->getPost('otp');
+        if ($otp != session()->otp) {
+            session()->setFlashdata('otpErr', "Invalid OTP");
+            return redirect()->to('/account/signup');
+        }
+        $fn = ucwords(session()->get('fn'));
+        $mn = ucwords(session()->get('mn'));
+        $ln = ucwords(session()->get('ln'));
         $em = session()->get('email');
         $pass = session()->get('pass');
         $hashed = $this->hash->hash($pass);
@@ -112,7 +121,9 @@ class Signup extends BaseController
             $array = ['step', 'fn', 'mn', 'ln', 'email', 'pass'];
             session()->remove($array);
             return redirect()->to('/account/login');
+        } else {
+            session()->setFlashdata('otpErr', "Account creation failed, please try again later.");
+            return redirect()->to('/account/signup');
         }
-        return redirect()->to('/account/signup');
     }
 }

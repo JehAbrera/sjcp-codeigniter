@@ -26,7 +26,17 @@ class EmailSender {
         return $startText . $nums;
     }
 
-    protected function generateMessage($value, $extra = null) : string {
+
+    /*
+    *
+    * Parameters to Pass
+    * value = Registration, Forget Password, Status
+    * extra = otp value or status value
+    * reference = for status, pass reference number
+    * $reason = leave blank for status changes with no reason, include if status has reason
+    *
+    */
+    protected function generateMessage($value, $extra = null, $reference = null, $reason = null, ) : string {
         $msg = "";
         switch ($value) {
             case 'Registration':

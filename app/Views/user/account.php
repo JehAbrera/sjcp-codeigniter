@@ -90,6 +90,11 @@
                                     <span class="label-text">Email</span>
                                 </label>
                                 <input type="text" placeholder="samplemail@gmail.com" name="email" class="input input-bordered" />
+                                <?php
+                                if (session()->has('emailErr')) { ?>
+                                    <span class=" label-text-alt text-error"><?= session()->emailErr ?></span>
+                                <?php }
+                                ?>
                             </div>
                             <div class="form-control">
                                 <label class="label">
@@ -135,6 +140,7 @@
                                     </label>
                                     <input type="text" name="otp" class="input input-bordered" />
                                 </div>
+                                <span class=" label-text-alt text-error"><?= session()->otpErr ?></span>
                                 <div class=" flex justify-center">
                                     <span class=" text-primary link">Resend Code</span>
                                 </div>
