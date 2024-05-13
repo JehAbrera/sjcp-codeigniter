@@ -31,4 +31,16 @@ class CreateAccount extends Model
         $results = $pQuery->execute($role, $fn, $mn, $ln, $em, $pass);
         return true;
     }
+    public function isExisting($user)
+    {
+        // Check if email already exist 
+        $query = $this->db->table('liuser')->select('*')->where('email', $user)->get();
+        
+        $result = $query->getResult();
+
+        if (!empty($result)) {
+            return true;
+        }
+        return false;
+    }
 }

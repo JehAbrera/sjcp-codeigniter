@@ -92,6 +92,13 @@
             <span class=" text-xl font-bold">Change Password</span>
             </div>
             <form action="/user/editPass" method="post" class=" w-4/5 flex flex-col gap-2">
+                <?php
+                    if (session()->has('passErr')) { ?>
+                    <div class=" p-2 bg-red-200 text-error rounded-md w-full label-text-alt text-center">
+                        <?= session()->passErr ?>
+                    </div>
+                <?php }
+                ?>
                 <div class="flex flex-row justify-between">
                     <label class="label">
                         <span class="label-text">Old Password</span>
