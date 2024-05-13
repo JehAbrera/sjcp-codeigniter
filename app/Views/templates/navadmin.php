@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url('./CSS/output.css') ?>">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         * {
             font-family: "Poppins", sans-serif;
@@ -23,8 +23,26 @@
         </div>
         <ul class=" menu gap-2 mt-8">
             <li><a href=""><i data-lucide="line-chart"></i>Dashboard</a></li>
-            <li><a href=""><i data-lucide="blocks"></i>Content Management</a></li>
-            <li><a href=""><i data-lucide="archive"></i>Records</a></li>
+            <li>
+                <details close>
+                    <summary><i data-lucide="blocks"></i>Content Management</summary>
+                    <ul>
+                        <li><a href="">Announcements</a></li>
+                        <li><a href="">General Content</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details close>
+                    <summary><i data-lucide="archive"></i>Records</summary>
+                    <ul>
+                        <li><a href="">Baptism</a></li>
+                        <li><a href="">Confirmation</a></li>
+                        <li><a href="">Wedding</a></li>
+                        <li><a href="">Funeral</a></li>
+                    </ul>
+                </details>
+            </li>
             <li><a href=""><i data-lucide="list-todo"></i>Reservations</a></li>
             <li><a onclick="logout.showModal()"><i data-lucide="log-out"></i>Logout</a></li>
         </ul>
