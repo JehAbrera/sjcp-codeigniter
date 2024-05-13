@@ -3984,10 +3984,6 @@ details.collapse summary::-webkit-details-marker {
   flex-wrap: wrap;
 }
 
-.content-center {
-  align-content: center;
-}
-
 .items-start {
   align-items: flex-start;
 }

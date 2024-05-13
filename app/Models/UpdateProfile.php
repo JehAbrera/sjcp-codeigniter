@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Libraries\Hash;
 
 class UpdateProfile extends Model
 {
-    protected $db;
+    protected $db, $hash;
 
     public function __construct()
     {
         $this->db = db_connect();
+        $this->hash = new Hash();
     }
 
 
@@ -49,8 +51,16 @@ class UpdateProfile extends Model
         return false;
     }
     // Update for password only //
-    public function changePass()
+    public function changePass($pass)
     {
+        $updateVal = [
+            'pass' => $this->hash->hash($pass)
+        ];
+        $this->db->table('liuser')->where('email',session()->user)->update($updateVal);
+        if ($this->db->affectedRows() > 0) {
+            return true;
+        }
+        return false;
     }
     // Move account details to archive table //
     public function deleteAcc()
@@ -66,5 +76,34 @@ class UpdateProfile extends Model
             }
         }
         return true;
+    }
+    // Some functions for password change //
+    // Include checking if the old password is correct and if old and new password is not the same //
+    // Check if old password is valid
+    public function validOld($pass) {
+        if ($this->getPass() == $this->hash->hash($pass)) {
+            return true;
+        }
+        return false;
+    }
+    // Check if new password is same as the old
+    public function validNew($pass) {
+        if ($this->getPass() == $this->hash->hash($pass)) {
+            return false;
+        }
+        return true;
+    }
+    // Reusable
+    public function getPass() {
+        $query = $this->db->table('liuser')
+            ->select('pass')
+            ->where('email', session()->user)
+            ->limit(1)
+            ->get();
+
+        // Retrieve the result
+        $result = $query->getRow();
+
+        return $result->pass;
     }
 }
