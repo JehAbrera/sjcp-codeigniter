@@ -17,6 +17,16 @@
                 <div class=" form-control px-4 py-4">
                     <?php if ($mode == "login") { ?>
                         <?= form_open('login/user') ?>
+                        <?php
+                        if (session()->has('loginErr')) { ?>
+                            <div role="alert" class="alert alert-error label-text-alt p-2 text-center mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span><?= session()->loginErr ?></span>
+                            </div>
+                        <?php }
+                        ?>
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text">Email Address</span>
@@ -32,7 +42,6 @@
                                 <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
                             </div>
                         </div>
-                        <div class=" label-text-alt text-error"><?= session()->get('loginErr') ?></div>
                         <div class="form-control items-center mt-10 gap-2">
                             <button class="btn btn-success" type="submit">Login</button>
                             <span class=" link">Forgot Password</span>
@@ -40,7 +49,6 @@
                         <?= form_close() ?>
                         <?php } elseif ($mode == "signup") {
                         if ($step == 1) { ?>
-                            <?= validation_list_errors() ?>
                             <?= form_open('signup/step2') ?>
                             <div class=" form-control text-sm breadcrumbs">
                                 <ul>
