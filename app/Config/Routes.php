@@ -40,6 +40,11 @@ $routes->post('/calendar/step3', [Calendar::class, 'step3']);
 
 $routes->get('/reserve/index', [Reserve::class, 'index']);
 $routes->post('/reserve/back', [Reserve::class, 'back']);
+$routes->post('/reserve/wedding', [Reserve::class, 'resWedding']);
+$routes->post('/reserve/baptism', [Reserve::class, 'resBaptism']);
+$routes->post('/reserve/funeral', [Reserve::class, 'resFuneral']);
+$routes->post('/reserve/massintention', [Reserve::class, 'resMassintention']);
+$routes->post('/reserve/blessing', [Reserve::class, 'resBlessing']);
 
 
 /* Routes for User login */

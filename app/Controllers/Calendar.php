@@ -54,11 +54,18 @@ class Calendar extends BaseController
         if ($dayofWeek == "Sunday" || $dayofWeek == "Monday") {
             $isClose = "true";
         } else {
-            //calling the funtion tocheck
-            $data = $this->toCheck($formated_date);
-            session()->set('count', count($data));
+            if(session()->get('event') != "Blessing"){
+                //calling the funtion tocheck
+                $data = $this->toCheck($formated_date);
+                session()->set('count', count($data));
 
-            session()->set('try', $this->printTime($data));
+                session()->set('try', $this->printTime($data));
+            } else {
+                $message1 = "Office is from 8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
+                $message2 = "Office is from 1:30 PM - 5:00 PM";
+                session()->set('message1', $message1);
+                session()->set('message2', $message2);
+            }
 
         }
         session()->set('isClose', $isClose);
@@ -88,21 +95,28 @@ class Calendar extends BaseController
                 $isClose = "false";
             } else {
                 $isClose = "true";
+                $message = "Cannot reserve for this day";
             }
         } else if ($dayofWeek == "Sunday") {
-            if (session()->get('event') == "Mass Intention" || session()->get('event') == "Document Request") {
+            if (session()->get('event') == "Mass Intention" || session()->get('event') == "Document Request" || session()->get('event') == "Blessing") {
                 $isClose = "false";
+                $message = "Office is from 1:30 PM - 5:00 PM";
             } else {
                 $isClose = "true";
             }
         } else {
-            //calling the funtion tocheck
-            $data = $this->toCheck($formated_date);
-            session()->set('count', count($data));
+            if(session()->get('event') != "Blessing"){
+                //calling the funtion tocheck
+                $data = $this->toCheck($formated_date);
+                session()->set('count', count($data));
 
-            session()->set('try', $this->printTime($data));
+                session()->set('try', $this->printTime($data));
+            } else {
+                $message = "Office is from 8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
+            }
 
         }
+        session()->set('message', $message);
         session()->set('isClose', $isClose);
 
         return redirect()->to('/calendar/index');
@@ -124,32 +138,20 @@ class Calendar extends BaseController
         $count = count($this->check->getTime($formated_date));
         $day = date_format(date_create($formated_date), 'l');
         //session()->set('count', $count);
-        if (session()->get('event') == 'Wedding') 
-        {
+        if (session()->get('event') == 'Wedding') {
             $ST = ['09:00:00', '10:30:00', '14:00:00', '15:30:00'];
             $ET = ['10:15:00', '11:45:00', '15:15:00', '16:45:00'];
-        } 
-        else if (session()->get('event') == 'Baptism') 
-        {
+        } else if (session()->get('event') == 'Baptism') {
             $ST = ['09:00:00', '10:00:00', '11:00:00', '14:00:00', '15:00:00'];
             $ET = ['09:45:00', '10:45:00', '11:45:00', '14:45:00', '15:45:00'];
-        } 
-        else if (session()->get('event') == 'Funeral') 
-        {
+        } else if (session()->get('event') == 'Funeral') {
             $ST = ['08:00:00', '13:00:00'];
-        } 
-        else if (session()->get('event') == 'Mass Intention') 
-        {
-            if ($day == "Sunday") 
-            {
+        } else if (session()->get('event') == 'Mass Intention') {
+            if ($day == "Sunday") {
                 $ST = ['06:00:00', '17:00:00', '18:10:00', '19:15:00'];
-            } 
-            else if ($day == "Saturday") 
-            {
+            } else if ($day == "Saturday") {
                 $ST = ['06:00:00', '07:30:00', '09:00:00', '16:30:00', '17:00:00', '18:00:00'];
-            } 
-            else 
-            {
+            } else {
                 $ST = ['18:00:00'];
             }
         }
@@ -161,32 +163,33 @@ class Calendar extends BaseController
         //     }
         // }
 
-        $avtime = $ST;
-        $break = false;
-        //para alisin yung time taken or naapektuhan ng event ng iba
-        if (session()->get('event') != 'Mass Intention') 
-        {
-            for ($x = 0; $x < count($ST); $x++) {
-                for ($y = 0; $y < $count; $y++) {
-                    if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time
-                        unset($avtime[$x]);
-                        break;
-                    } else if (strtotime($ST[$x]) == strtotime($data[$y]['evTEd'])) { //kapag magkaparehas yung start time
-                        unset($avtime[$x]);
-                        break;
-                    } else if (strtotime($ST[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ST[$x]) < strtotime($data[$y]['evTEd'])) {
-                        unset($avtime[$x]);
-                        break;
-                    } else if (strtotime($ET[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ET[$x]) < strtotime($data[$y]['evTEd'])) {
-                        unset($avtime[$x]);
-                        break;
-                    } else {
+        if (session()->get('event') != 'Document Request') {
+            $avtime = $ST;
+            $break = false;
+            //para alisin yung time taken or naapektuhan ng event ng iba
+            if (session()->get('event') != 'Mass Intention') {
+                for ($x = 0; $x < count($ST); $x++) {
+                    for ($y = 0; $y < $count; $y++) {
+                        if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time
+                            unset($avtime[$x]);
+                            break;
+                        } else if (strtotime($ST[$x]) == strtotime($data[$y]['evTEd'])) { //kapag magkaparehas yung start time
+                            unset($avtime[$x]);
+                            break;
+                        } else if (strtotime($ST[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ST[$x]) < strtotime($data[$y]['evTEd'])) {
+                            unset($avtime[$x]);
+                            break;
+                        } else if (strtotime($ET[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ET[$x]) < strtotime($data[$y]['evTEd'])) {
+                            unset($avtime[$x]);
+                            break;
+                        } else {
 
+                        }
                     }
                 }
             }
+            return $avtime;
         }
-        return $avtime;
     }
 
     public function printTime($data)

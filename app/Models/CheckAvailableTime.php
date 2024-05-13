@@ -23,19 +23,10 @@ class CheckAvailableTime extends Model
             ->where('status', 'Accepted')
             ->get();
 
-            //print_r($query);
 
         // Retrieve the result
         $result = $query->getResultArray();
         return $result;
-         
-        // // Check if any rows were returned
-        // if (!empty($result)) {
-        //     return true;
-        // } else {
-        //     // If no rows were returned, return null or handle the case as needed
-        //     return false;
-        // }
     }
 }
 ?>

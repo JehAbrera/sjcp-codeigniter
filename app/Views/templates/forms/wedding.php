@@ -105,7 +105,7 @@
                     </div>
                     <input type="text" id="groomaddress" name="groomaddress" maxlength="120"
                         placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City"
-                        class="input input-bordered w-full w-lg" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
+                        class="input input-bordered w-full w-lg" required />
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-x-8">
@@ -137,14 +137,14 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <div class="grid grid-cols-3 gap-x-8">
+            <!-- <div class="grid grid-cols-3 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">2x2 ID Picture</span>
                     </div>
                     <input type="file" id="groompid" name="groomid" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -152,7 +152,7 @@
                     </div>
                     <input type="file" id="groompsa" name="groompsa" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -160,7 +160,7 @@
                     </div>
                     <input type="file" id="groomcenomar" name="groomcenomar" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -168,7 +168,7 @@
                     </div>
                     <input type="file" id="groombapcert" name="groombapcert" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -176,9 +176,9 @@
                     </div>
                     <input type="file" id="groomconcert" name="groomconcert" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
-            </div>
+            </div> -->
             <br>
             <br>
             <div class="">
@@ -244,7 +244,7 @@
                     </div>
                     <input type="text" id="brideaddress" name="brideaddress" maxlength="120"
                         placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City"
-                        class="input input-bordered w-full w-lg" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
+                        class="input input-bordered w-full w-lg" required />
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-x-8">
@@ -276,14 +276,14 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <div class="grid grid-cols-3 gap-x-8">
+            <!-- <div class="grid grid-cols-3 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">2x2 ID Picture</span>
                     </div>
                     <input type="file" id="bridepid" name="brideid" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -291,7 +291,7 @@
                     </div>
                     <input type="file" id="bridepsa" name="bridepsa" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -299,7 +299,7 @@
                     </div>
                     <input type="file" id="bridecenomar" name="bridecenomar" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -307,7 +307,7 @@
                     </div>
                     <input type="file" id="bridebapcert" name="bridebapcert" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -315,9 +315,9 @@
                     </div>
                     <input type="file" id="brideconcert" name="brideconcert" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
-            </div>
+            </div> -->
             <br>
             <br>
             <div class="">
@@ -325,20 +325,19 @@
             </div>
             <div>
                 <div class="form-control">
-                    <div class="label">
+                    <!-- <div class="label">
                         <span class="label-text">Marriage License or Live-In License (Article 34) or Marriage Contract
                             (Civil Marriage)*</span>
                     </div>
                     <input type="file" id="marriagel" name="marriagel" accept="image/*"
                         onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        class="file-input file-input-bordered w-full max-w-xs bg-white" /> -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="m-auto p-8">
-        <button class="btn btn-error btn-outline"> Clear</button>
-        <button class="btn btn-success btn-outline"> Submit</button>
+    <div class="p-8 flex justify-evenly">
+        <label for="modal_clear" class="btn btn-error btn-wide btn-outline">Clear</label>
+        <label for="modal_submit" class="btn btn-success btn-wide text-white">Submit</label>
     </div>
-    <?= form_close() ?>
 </div>

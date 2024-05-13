@@ -68,21 +68,28 @@
                                 if (session()->get('isClose') == "true") {
                                     echo "Cannot Schedule Event for this day of the week";
                                 } else {
-                                    $time = session()->get('try');
-                                    $timeArray = explode(',', $time, -1);
-                                    if (count($timeArray) != 0) {
-                                        foreach ($timeArray as $row) { ?>
-                                            <li>
-                                                <input type="radio" id="<?= $row ?>" name="avTime" value="<?= $row ?>" class="hidden peer"
-                                                    onclick="btnEnable()" required />
-                                                <label for="<?= $row ?>"
-                                                    class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
-                                                    <p><?= date('g:i A', strtotime($row)) ?></p>
-                                                </label>
-                                            </li>
-                                    <?php }
-                                    } else {
-                                        echo "No Available Time Slots";
+                                    if (session()->get('event') == "Blessing") { ?>
+                                        <input type="radio" id="rdbless" name="avTime" value="" class="hidden peer" onclick="btnEnable()" required />
+                                        <label for="rdbless" class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
+                                            <p><?= session()->get('message') ?></p>
+                                        </label>
+                                <?php } else {
+                                        $time = session()->get('try');
+                                        $timeArray = explode(',', $time, -1);
+                                        if (count($timeArray) != 0) {
+                                            foreach ($timeArray as $row) { ?>
+                                                <li>
+                                                    <input type="radio" id="<?= $row ?>" name="avTime" value="<?= $row ?>" class="hidden peer"
+                                                        onclick="btnEnable()" required />
+                                                    <label for="<?= $row ?>"
+                                                        class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
+                                                        <p><?= date('g:i A', strtotime($row)) ?></p>
+                                                    </label>
+                                                </li>
+                                        <?php }
+                                        } else {
+                                            echo "No Available Time Slots";
+                                        }
                                     }
                                 }
                                 ?>

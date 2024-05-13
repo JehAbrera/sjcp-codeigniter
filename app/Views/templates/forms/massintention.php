@@ -74,9 +74,8 @@
             </div>
         </div>
     </div>
-    <div class="m-auto p-8">
-        <button class="btn btn-error btn-outline"> Clear</button>
-        <button class="btn btn-success text-white"> Submit</button>
+    <div class="p-8 flex justify-evenly">
+        <label for="modal_clear" class="btn btn-error btn-wide btn-outline">Clear</label>
+        <label for="modal_submit" class="btn btn-success btn-wide text-white">Submit</label>
     </div>
-    <?= form_close() ?>
 </div>
