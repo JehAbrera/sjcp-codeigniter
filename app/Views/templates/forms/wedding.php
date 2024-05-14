@@ -39,7 +39,7 @@
             <b>Time: </b> <?= $time ?><br>
         </div>
     </div>
-    <?= form_open('reserve/wedding') ?>
+    <?= form_open_multipart('reserve/wedding') ?>
     <div class="bg-zinc-300">
         <div class="p-8">
             <div class="">
@@ -137,48 +137,38 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <!-- <div class="grid grid-cols-3 gap-x-8">
+            <div class="grid grid-cols-3 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">2x2 ID Picture</span>
                     </div>
-                    <input type="file" id="groompid" name="groomid" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="groompid" name="groomid" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">PSA Birth Certificate</span>
                     </div>
-                    <input type="file" id="groompsa" name="groompsa" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="groompsa" name="groompsa" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Cenomar(Certificate of No Marriage)</span>
                     </div>
-                    <input type="file" id="groomcenomar" name="groomcenomar" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="groomcenomar" name="groomcenomar" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Baptismal Certificate</span>
                     </div>
-                    <input type="file" id="groombapcert" name="groombapcert" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="groombapcert" name="groombapcert" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Confirmation Certificate</span>
                     </div>
-                    <input type="file" id="groomconcert" name="groomconcert" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="groomconcert" name="groomconcert" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
-            </div> -->
+            </div>
             <br>
             <br>
             <div class="">
@@ -276,48 +266,38 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <!-- <div class="grid grid-cols-3 gap-x-8">
+            <div class="grid grid-cols-3 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">2x2 ID Picture</span>
                     </div>
-                    <input type="file" id="bridepid" name="brideid" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="bridepid" name="brideid" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">PSA Birth Certificate</span>
                     </div>
-                    <input type="file" id="bridepsa" name="bridepsa" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="bridepsa" name="bridepsa" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Cenomar(Certificate of No Marriage)</span>
                     </div>
-                    <input type="file" id="bridecenomar" name="bridecenomar" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="bridecenomar" name="bridecenomar" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Baptismal Certificate</span>
                     </div>
-                    <input type="file" id="bridebapcert" name="bridebapcert" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="bridebapcert" name="bridebapcert" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Confirmation Certificate</span>
                     </div>
-                    <input type="file" id="brideconcert" name="brideconcert" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" />
+                    <input type="file" id="brideconcert" name="brideconcert" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
-            </div> -->
+            </div>
             <br>
             <br>
             <div class="">
@@ -325,13 +305,11 @@
             </div>
             <div>
                 <div class="form-control">
-                    <!-- <div class="label">
+                    <div class="label">
                         <span class="label-text">Marriage License or Live-In License (Article 34) or Marriage Contract
                             (Civil Marriage)*</span>
                     </div>
-                    <input type="file" id="marriagel" name="marriagel" accept="image/*"
-                        onchange="validateFileType(this.id)"
-                        class="file-input file-input-bordered w-full max-w-xs bg-white" /> -->
+                    <input type="file" id="marriagel" name="marriagel" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" />
                 </div>
             </div>
         </div>

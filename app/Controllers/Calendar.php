@@ -32,12 +32,28 @@ class Calendar extends BaseController
                 'title' => "calendar",
                 'step' => session()->get('step')
             ];
+        } elseif ($step == 4) {
+            $data = [
+                'title' => "calendar",
+                'step' => session()->get('step')
+            ];
             return redirect()->to('/reserve/index');
         }
         return view('templates/navbar', $data) . view('user/calendar', $data) . view('templates/footer');
     }
     //function after clicking next button
     public function step1()
+    {
+        if ($this->request->getPost('selectEvent') == "Document Request") {
+            session()->set('step', 2);
+            session()->set('event', $this->request->getPost('selectEvent'));
+        } else {
+            session()->set('step', 3);
+        }
+        return redirect()->to('/calendar/index');
+    }
+
+    public function step2()
     {
         date_default_timezone_set('Asia/Manila');
         //setting the current date as chosen date to check available times
@@ -47,43 +63,48 @@ class Calendar extends BaseController
         session()->set('event', $this->request->getPost('selectEvent'));
         $formated_date = date('Y-m-d');
         session()->set('date', $formated_date);
-        session()->set('step', 2);
+        session()->set('step', 3);
         //to check if the selected date is sunday or monday
         $dayofWeek = date_format(date_create($formated_date), 'l');
         $isClose = "false";
-        if ($dayofWeek == "Sunday" || $dayofWeek == "Monday") {
-            $isClose = "true";
+        if ($dayofWeek == "Monday") {
+            if (session()->get('event') == "Mass Intention") {
+                $isClose = "false";
+            } else {
+                $isClose = "true";
+                $message = "Cannot reserve for this day";
+            }
+        } else if ($dayofWeek == "Sunday") {
+            if (session()->get('event') == "Mass Intention" || session()->get('event') == "Document Request" || session()->get('event') == "Blessing") {
+                $isClose = "false";
+                $message = "1:30 PM - 5:00 PM";
+            } else {
+                $isClose = "true";
+            }
         } else {
-            if(session()->get('event') != "Blessing"){
+            if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
                 //calling the funtion tocheck
                 $data = $this->toCheck($formated_date);
                 session()->set('count', count($data));
 
                 session()->set('try', $this->printTime($data));
             } else {
-                $message1 = "Office is from 8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
-                $message2 = "Office is from 1:30 PM - 5:00 PM";
-                session()->set('message1', $message1);
-                session()->set('message2', $message2);
+                $message = "8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
             }
 
         }
         session()->set('isClose', $isClose);
-
         return redirect()->to('/calendar/index');
     }
+
     //function after clicking day buttons in calendar
-    public function step2()
+    public function step3()
     {
-        if ($this->request->getPost('submit') == "Back") {
-            session()->set('step', session()->get('step') - 1);
-            return redirect()->to('/calendar/index');
-        }
 
         session()->set('month', $this->request->getPost('month'));
         session()->set('year', $this->request->getPost('year'));
         session()->set('day', $this->request->getPost('day'));
-        session()->set('step', 2);
+        session()->set('step', 3);
         $date = $this->request->getPost('year') . "-" . ($this->request->getPost('month') + 1) . "-" . $this->request->getPost('day');
         $formated_date = date('Y-m-d', strtotime($date));
         session()->set('date', $formated_date);
@@ -98,21 +119,21 @@ class Calendar extends BaseController
                 $message = "Cannot reserve for this day";
             }
         } else if ($dayofWeek == "Sunday") {
-            if (session()->get('event') == "Mass Intention" || session()->get('event') == "Document Request" || session()->get('event') == "Blessing") {
+            if (session()->get('event') != "Wedding" || session()->get('event') != "Baptism" || session()->get('event') != "Funeral") {
                 $isClose = "false";
-                $message = "Office is from 1:30 PM - 5:00 PM";
+                $message = "1:30 PM - 5:00 PM";
             } else {
                 $isClose = "true";
             }
         } else {
-            if(session()->get('event') != "Blessing"){
+            if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
                 //calling the funtion tocheck
                 $data = $this->toCheck($formated_date);
                 session()->set('count', count($data));
 
                 session()->set('try', $this->printTime($data));
             } else {
-                $message = "Office is from 8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
+                $message = "8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
             }
 
         }
@@ -122,11 +143,11 @@ class Calendar extends BaseController
         return redirect()->to('/calendar/index');
     }
 
-    public function step3()
+    public function step4()
     {
         $time = $this->request->getPost('avTime');
         session()->set('time', $time);
-        session()->set('step', 3);
+        session()->set('step', 4);
         return redirect()->to('/calendar/index');
     }
 
@@ -155,40 +176,40 @@ class Calendar extends BaseController
                 $ST = ['18:00:00'];
             }
         }
-        // else if (session()->get('event') == 'Document Request')
-        // {
-        //     if($day == 'Sunday')
-        //     {
 
-        //     }
-        // }
 
-        if (session()->get('event') != 'Document Request') {
-            $avtime = $ST;
-            $break = false;
-            //para alisin yung time taken or naapektuhan ng event ng iba
-            if (session()->get('event') != 'Mass Intention') {
-                for ($x = 0; $x < count($ST); $x++) {
-                    for ($y = 0; $y < $count; $y++) {
-                        if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time
-                            unset($avtime[$x]);
-                            break;
-                        } else if (strtotime($ST[$x]) == strtotime($data[$y]['evTEd'])) { //kapag magkaparehas yung start time
-                            unset($avtime[$x]);
-                            break;
-                        } else if (strtotime($ST[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ST[$x]) < strtotime($data[$y]['evTEd'])) {
-                            unset($avtime[$x]);
-                            break;
-                        } else if (strtotime($ET[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ET[$x]) < strtotime($data[$y]['evTEd'])) {
-                            unset($avtime[$x]);
-                            break;
-                        } else {
+        $avtime = $ST;
+        $break = false;
+        //para alisin yung time taken or naapektuhan ng event ng iba
+        if (session()->get('event') != 'Mass Intention') {
+            for ($x = 0; $x < count($ST); $x++) {
+                for ($y = 0; $y < $count; $y++) {
+                    if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time
+                        unset($avtime[$x]);
+                        break;
+                    } else if (strtotime($ST[$x]) == strtotime($data[$y]['evTEd'])) { //kapag magkaparehas yung start time
+                        unset($avtime[$x]);
+                        break;
+                    } else if (strtotime($ST[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ST[$x]) < strtotime($data[$y]['evTEd'])) {
+                        unset($avtime[$x]);
+                        break;
+                    } else if (strtotime($ET[$x]) > strtotime($data[$y]['evTSt']) && strtotime($ET[$x]) < strtotime($data[$y]['evTEd'])) {
+                        unset($avtime[$x]);
+                        break;
+                    } else {
 
-                        }
                     }
                 }
             }
-            return $avtime;
+        }
+        return $avtime;
+    }
+
+    public function back()
+    {
+        if ($this->request->getPost('submit') == "Back") {
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/calendar/index');
         }
     }
 

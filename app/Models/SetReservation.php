@@ -37,7 +37,7 @@ class SetReservation extends Model
         return true;
     }
 
-    public function setinWedDet($forId, $evDate, $evTSt, $evTEd, $gln, $gfn, $gmn, $gcn, $gdob, $gpob, $gadd, $gfather, $gmother, $grelig, $bln, $bfn, $bmn, $bcn, $bdob, $bpob, $badd, $bfather, $bmother, $brelig)
+    public function setinWedDet($forId, $evDate, $evTSt, $evTEd, $gln, $gfn, $gmn, $gcn, $gdob, $gpob, $gadd, $gfather, $gmother, $grelig, $gid, $gpsa, $gcen, $gbapcert, $gconcert, $bln, $bfn, $bmn, $bcn, $bdob, $bpob, $badd, $bfather, $bmother, $brelig, $bid, $bpsa, $bcen, $bbapcert, $bconcert, $cml)
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
@@ -81,7 +81,7 @@ class SetReservation extends Model
             ]);
         });
         // Run the Query
-        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $gfn, $gmn, $gln, $gcn, $gdob, $gpob, $gadd, $gfather, $gmother, $grelig, '', '', '', '', '', $bln, $bfn, $bmn, $bcn, $bdob, $bpob, $badd, $bfather, $bmother, $brelig, '', '', '', '', '', '');
+        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $gln, $gfn, $gmn, $gcn, $gdob, $gpob, $gadd, $gfather, $gmother, $grelig, $gid, $gpsa, $gcen, $gbapcert, $gconcert, $bln, $bfn, $bmn, $bcn, $bdob, $bpob, $badd, $bfather, $bmother, $brelig, $bid, $bpsa, $bcen, $bbapcert, $bconcert, $cml);
         return true;
     }
 
@@ -190,6 +190,34 @@ class SetReservation extends Model
         });
         // Run the Query
         $results = $pQuery->execute('', $forId, $num, $evDate, $evTSt, $purpose, $add);
+        return true;
+    }
+
+    public function setinDocudet($forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthC, $brgyC, $kawanC)
+    {
+        // Prepare the Query
+        $pQuery = $this->db->prepare(static function ($db) {
+            return $db->table('docreqdet')->insert([
+                'drID' => '1',
+                'forID' => 'b',
+                'date' => 'd',
+                'type' => 'f',
+                'fn' => 'e',
+                'mn' => 'f',
+                'ln' => 'f',
+                'dob' => 'f',
+                'fatN' => 'f',
+                'motN' => 'f',
+                'num' => 'f',
+                'purp' => 'f',
+                'addr' => 'f',
+                'birthC' => 'f',
+                'brgyC' => 'f',
+                'kawanC' => 'f'
+            ]);
+        });
+        // Run the Query
+        $results = $pQuery->execute('', $forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthC, $brgyC, $kawanC);
         return true;
     }
 
