@@ -3423,6 +3423,10 @@ details.collapse summary::-webkit-details-marker {
   border-top-width: 4px;
 }
 
+.btn-wide {
+  width: 16rem;
+}
+
 .indicator :where(.indicator-item) {
   bottom: auto;
   inset-inline-end: 0px;
@@ -4136,6 +4140,10 @@ details.collapse summary::-webkit-details-marker {
 
 .justify-around {
   justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-1 {

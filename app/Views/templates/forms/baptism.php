@@ -100,7 +100,7 @@
                     </div>
                     <input type="text" id="address" name="address" maxlength="120"
                         placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City"
-                        class="input input-bordered w-full w-lg" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
+                        class="input input-bordered w-full w-lg" required />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-x-8">
@@ -143,7 +143,7 @@
                         <span class="label-text">Parent/Guardian's Contact Number</span>
                     </div>
                     <div class="join">
-                        <input type="text" name="mobile1" value="+63" id="" class="input input-bordered join-item w-1/4"
+                        <input type="text" name="mobile1" class="input input-bordered join-item w-1/4"
                             disabled>
                         <input type="tel" id="contactNum" name="contactNum" maxlength="10"
                             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
@@ -203,7 +203,7 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <div class="grid grid-cols-2 gap-x-8">
+            <!-- <div class="grid grid-cols-2 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Child's PSA Birth Certificate</span>
@@ -219,12 +219,11 @@
                         onchange="validateFileType(this.id)"
                         class="file-input file-input-bordered w-full max-w-xs bg-white" required />
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
-    <div class="m-auto p-8">
-        <button class="btn btn-error btn-outline"> Clear</button>
-        <button class="btn btn-success btn-outline"> Submit</button>
+    <div class="p-8 flex justify-evenly">
+        <label for="modal_clear" class="btn btn-error btn-wide btn-outline">Clear</label>
+        <label for="modal_submit" class="btn btn-success btn-wide text-white">Submit</label>
     </div>
-    <?= form_close() ?>
 </div>

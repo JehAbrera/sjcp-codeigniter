@@ -23,7 +23,6 @@
             ?>
             <b>Event: </b> <?= $event ?> <br>
             <b>Date: </b> <?= $date ?> <br>
-            <b>Time: </b> <?= $time ?><br>
         </div>
     </div>
     <?= form_open('reserve/blessing') ?>
@@ -77,15 +76,14 @@
                         </div>
                         <input type="text" id="address" name="address"
                             placeholder="House No. / Street / Barangay / Municipality"
-                            class="input input-bordered w-full" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" />
+                            class="input input-bordered w-full" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="m-auto p-8">
-        <button class="btn btn-error btn-outline"> Clear</button>
-        <button class="btn btn-success text-white"> Submit</button>
+    <div class="p-8 flex justify-evenly">
+        <label for="modal_clear" class="btn btn-error btn-wide btn-outline">Clear</label>
+        <label for="modal_submit" class="btn btn-success btn-wide text-white">Submit</label>
     </div>
-    <?= form_close() ?>
 </div>

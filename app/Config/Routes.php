@@ -33,14 +33,23 @@ $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
 
-/* Form route area for calendar and reserve */
+/* Form route area for calendar */
 $routes->get('/calendar/index', [Calendar::class, 'index']);
+$routes->post('/calendar/back', [Calendar::class, 'back']);
 $routes->post('/calendar/step1', [Calendar::class, 'step1']);
 $routes->post('/calendar/step2', [Calendar::class, 'step2']);
 $routes->post('/calendar/step3', [Calendar::class, 'step3']);
+$routes->post('/calendar/step4', [Calendar::class, 'step4']);
 
+/* Form route area for reserve */
 $routes->get('/reserve/index', [Reserve::class, 'index']);
 $routes->post('/reserve/back', [Reserve::class, 'back']);
+$routes->post('/reserve/wedding', [Reserve::class, 'resWedding']);
+$routes->post('/reserve/baptism', [Reserve::class, 'resBaptism']);
+$routes->post('/reserve/funeral', [Reserve::class, 'resFuneral']);
+$routes->post('/reserve/massintention', [Reserve::class, 'resMassintention']);
+$routes->post('/reserve/blessing', [Reserve::class, 'resBlessing']);
+$routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
 
 
 /* Routes for User login */

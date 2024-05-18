@@ -33,7 +33,7 @@
     <div class="bg-zinc-300">
         <div class="p-8">
             <div class="">
-                <b>To be baptized's information</b>
+                <b>Deceased’s Information</b>
             </div>
             <div>
                 <b>Name</b>
@@ -126,11 +126,11 @@
                         <span class="label-text">Casket or Urn:</span>
                         <div class="flex px-8">
                             <label class="cursor-pointer">
-                                <input type="radio" id="casket" name="curt" value="Male" required />
+                                <input type="radio" id="casket" name="curt" value="Casket" required />
                                 <span class="label-text">Casket</span>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" id="urn" name="curt" value="Female" required />
+                                <input type="radio" id="urn" name="curt" value="Urn" required />
                                 <span class="label-text">Urn</span>
                             </label>
                         </div>
@@ -141,7 +141,7 @@
                 <div>
                     <h2>Soft Copy of Requirements</h2>
                 </div>
-                <div class="grid grid-cols-2 gap-x-8">
+                <!-- <div class="grid grid-cols-2 gap-x-8">
                     <div class="form-control">
                         <div class="label">
                             <span class="label-text">Death Certificate</span>
@@ -150,7 +150,7 @@
                             onchange="validateFileType(this.id)"
                             class="file-input file-input-bordered w-full max-w-xs bg-white" required />
                     </div>
-                </div>
+                </div> -->
             </div>
             <br>
             <br>
@@ -163,21 +163,21 @@
                     <div class="label">
                         <span class="label-text">Last name:</span>
                     </div>
-                    <input type="text" id="lastName" name="lastName" placeholder="Dela Cruz"
+                    <input type="text" id="lastName" name="infln" placeholder="Dela Cruz"
                         class="input input-bordered w-full max-w-sm" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">First name:</span>
                     </div>
-                    <input type="text" id="firstName" name="firstName" placeholder="Juan"
+                    <input type="text" id="firstName" name="inffn" placeholder="Juan"
                         class="input input-bordered w-full max-w-sm" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
                 </div>
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Middle name:</span>
                     </div>
-                    <input type="text" id="midname" name="midname" placeholder="Tomas"
+                    <input type="text" id="midname" name="infmn" placeholder="Tomas"
                         class="input input-bordered w-full max-w-sm" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" />
                 </div>
                 <div class="form-control">
@@ -199,16 +199,15 @@
                     <div class="label">
                         <span class="label-text">Present Address</span>
                     </div>
-                    <input type="text" id="groomaddress" name="groomaddress" maxlength="120"
+                    <input type="text" id="address" name="address" maxlength="120"
                         placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City"
-                        class="input input-bordered w-full w-lg" pattern="[A-Za-zÀ-ÖØ-öø-ÿ.\s\-]*" required />
+                        class="input input-bordered w-full w-lg" required />
                 </div>
             </div>
         </div>
     </div>
-    <div class="m-auto p-8">
-        <button class="btn btn-error btn-outline"> Clear</button>
-        <button class="btn btn-success text-white"> Submit</button>
+    <div class="p-8 flex justify-evenly">
+        <label for="modal_clear" class="btn btn-error btn-wide btn-outline">Clear</label>
+        <label for="modal_submit" class="btn btn-success btn-wide text-white">Submit</label>
     </div>
-    <?= form_close() ?>
 </div>
