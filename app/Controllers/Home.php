@@ -24,15 +24,6 @@ class Home extends BaseController
         $data['title'] = ucfirst($page);
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
     }
-    public function admin($page)
-    {
-        if (! is_file(APPPATH . 'Views/admin/' . $page . '.php')) {
-            // Whoops, we don't have a page for that!
-            throw new PageNotFoundException($page);
-        }
-        $data['title'] = ucfirst($page);
-        return view('templates/navadmin', $data) . view('admin/' . $page, $data);
-    }
     protected function setMessage($page) {
         
     }

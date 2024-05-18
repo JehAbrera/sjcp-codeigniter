@@ -16,7 +16,7 @@
                             <div class="stat-figure text-primary">
                                 <i data-lucide="calendar-days"></i>
                             </div>
-                            <div class="stat-title">All</div>
+                            <div class="stat-title">All Reservations</div>
                             <div class="stat-value">0</div>
                         </div>
 
@@ -38,6 +38,14 @@
 
                     </div>
                     <span class=" font-bold text-xl">Event Statistics</span>
+                    <div class=" w-full aspect-video relative bg-white rounded-lg shadow-lg p-2">
+                        <canvas class=" w-full h-full absolute inset-0 mx-auto" id="mfChart"></canvas>
+                        <select class="select select-primary absolute top-2 left-2">
+                            <option disabled selected>Event</option>
+                            <option>Baptism</option>
+                            <option>Confirmation</option>
+                        </select>
+                    </div>
                 </div>
                 <div class=" col-span-1 flex flex-col gap-16 px-2">
                     <div class=" w-full flex flex-col gap-2">
@@ -91,6 +99,31 @@
         <script src="https://unpkg.com/lucide@latest"></script>
         <script>
             lucide.createIcons();
+
+            var mfData = {
+                labels: ["Male", "Female"],
+                datasets: [{
+                    data: [100, 223],
+                }]
+            };
+
+            var mfCont = document.getElementById('mfChart').getContext('2d');
+            var mfChart = new Chart(mfCont, {
+                type: 'pie',
+                data: mfData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Gender Tally'
+                        }
+                    }
+                },
+            });
         </script>
         </body>
 

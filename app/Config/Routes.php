@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin;
 use App\Controllers\Home;
 use App\Controllers\Login;
 use App\Controllers\Signup;
@@ -17,7 +18,7 @@ use CodeIgniter\Router\RouteCollection;
 */
 $routes->get('/', [Home::class, 'index']);
 $routes->get('(:segment)', [Home::class, 'user']);
-$routes->get('/admin/(:segment)', [Home::class, 'admin']);
+$routes->get('/admin/(:segment)', [Admin::class, 'admin']);
 /*
 /*
 * Get Value routes below
