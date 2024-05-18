@@ -21,7 +21,7 @@
             <img src="../images/logo.png" alt="logo" class=" block w-24 aspect-square">
             <span class=" text-2xl text-center font-extrabold">SJCP</span>
         </div>
-        <ul class=" menu gap-2 mt-8">
+        <ul class=" menu gap-2 mt-8 label-text-alt text-zinc-50">
             <li><a href=""><i data-lucide="line-chart"></i>Dashboard</a></li>
             <li>
                 <details close>

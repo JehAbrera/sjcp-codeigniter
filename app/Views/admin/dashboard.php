@@ -1,7 +1,7 @@
         <!-- Inserted Script for Chart.js -- View details at chartjs.org -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <main class=" flex flex-[4] flex-col p-4 bg-zinc-100 max-h-screen overflow-auto text-slate-950">
+        <main class=" flex flex-[4.5] flex-col p-4 bg-zinc-100 max-h-screen overflow-auto text-slate-950">
             <div class=" flex flex-row items-center gap-2 justify-end">
                 <span class=" card shadow-lg p-2 bg-success"><i data-lucide="line-chart" class=" w-8 aspect-square"></i></span>
                 <span class=" text-lg font-semibold">Dashboard</span>
@@ -17,7 +17,7 @@
                                 <i data-lucide="calendar-days"></i>
                             </div>
                             <div class="stat-title">All Reservations</div>
-                            <div class="stat-value">0</div>
+                            <div class="stat-value"><?= $all ?></div>
                         </div>
 
                         <div class="stat">
@@ -25,7 +25,7 @@
                                 <i data-lucide="calendar-check-2"></i>
                             </div>
                             <div class="stat-title">Last 7 days</div>
-                            <div class="stat-value">0</div>
+                            <div class="stat-value"><?= $week ?></div>
                         </div>
 
                         <div class="stat">
@@ -33,7 +33,7 @@
                                 <i data-lucide="calendar-plus"></i>
                             </div>
                             <div class="stat-title">Today</div>
-                            <div class="stat-value">0</div>
+                            <div class="stat-value"><?= $today ?></div>
                         </div>
 
                     </div>

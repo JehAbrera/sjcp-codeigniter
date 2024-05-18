@@ -5,7 +5,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Home extends BaseController
 {
-    private $message = "";
+
     public function index(): string
     {
         $data['title'] = "Home"; 
