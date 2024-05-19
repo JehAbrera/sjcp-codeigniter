@@ -8,6 +8,7 @@ use App\Controllers\Calendar;
 use App\Controllers\Reserve;
 use App\Controllers\Profile;
 use CodeIgniter\Router\RouteCollection;
+use Config\App;
 
 /**
  * @var RouteCollection $routes
@@ -62,3 +63,6 @@ $routes->get('user/view', [Profile::class, 'viewProfile']);
 $routes->add('user/editProfile', [Profile::class, 'editProfile'], ['get','post']);
 $routes->add('user/editPass', [Profile::class, 'editPass'], ['get', 'post']);
 $routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
+
+/* Admin Routing */
+$routes->get('admin/records/(:segment)', [Admin::class, 'viewRecords']);

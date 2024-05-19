@@ -1123,15 +1123,6 @@ html {
   min-height: fit-content;
 }
 
-.diff {
-  position: relative;
-  display: grid;
-  width: 100%;
-  overflow: hidden;
-  container-type: inline-size;
-  grid-template-columns: auto 1fr;
-}
-
 @media (hover: hover) {
   .btm-nav > *.disabled:hover,
       .btm-nav > *[disabled]:hover {
@@ -2916,17 +2907,6 @@ details.collapse summary::-webkit-details-marker {
   outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
 }
 
-.select-primary {
-  --tw-border-opacity: 1;
-  border-color: var(--fallback-p,oklch(var(--p)/var(--tw-border-opacity)));
-}
-
-.select-primary:focus {
-  --tw-border-opacity: 1;
-  border-color: var(--fallback-p,oklch(var(--p)/var(--tw-border-opacity)));
-  outline-color: var(--fallback-p,oklch(var(--p)/1));
-}
-
 .select-disabled,
   .select:disabled,
   .select[disabled] {
@@ -3799,10 +3779,6 @@ details.collapse summary::-webkit-details-marker {
   left: 0px;
 }
 
-.left-2 {
-  left: 0.5rem;
-}
-
 .left-\[calc\(100\%-2em\)\] {
   left: calc(100% - 2em);
 }
@@ -3813,10 +3789,6 @@ details.collapse summary::-webkit-details-marker {
 
 .top-1\/2 {
   top: 50%;
-}
-
-.top-2 {
-  top: 0.5rem;
 }
 
 .z-30 {
@@ -4055,10 +4027,6 @@ details.collapse summary::-webkit-details-marker {
 
 .flex-1 {
   flex: 1 1 0%;
-}
-
-.flex-\[4\] {
-  flex: 4;
 }
 
 .flex-\[4\.5\] {

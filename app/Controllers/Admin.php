@@ -6,11 +6,12 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
 
 class Admin extends BaseController {
-    protected $count;
+    protected $count, $pager;
 
     public function __construct()
     {
         $this->count = new Count();
+        $this->pager = \Config\Services::pager();
     }
 
     public function admin($page)
@@ -42,5 +43,18 @@ class Admin extends BaseController {
         }
         $data = array_merge($data, $addInf);
         return view('templates/navadmin', $data) . view('admin/' . $page, $data);
+    }
+
+    // Functions for Records Page //
+    public function viewRecords($value, $extra = null) {
+        if (!empty($extra)) {
+            // Do something here 
+        } else {
+
+        }
+        $data = [
+            'title' => 'Records'
+        ];
+        return view('templates/navadmin', $data) . view('admin/records' , $data);
     }
 }
