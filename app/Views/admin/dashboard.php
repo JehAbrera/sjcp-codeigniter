@@ -38,57 +38,53 @@
 
                     </div>
                     <span class=" font-bold text-xl">Event Statistics</span>
-                    <div class=" w-full aspect-video relative bg-white rounded-lg shadow-lg p-2">
-                        <canvas class=" w-full h-full absolute inset-0 mx-auto" id="mfChart"></canvas>
-                        <select class="select select-primary absolute top-2 left-2">
-                            <option disabled selected>Event</option>
-                            <option>Baptism</option>
-                            <option>Confirmation</option>
-                        </select>
+                    <div class=" w-full grid grid-cols-3 gap-2">
+                        <div class=" w-full aspect-square relative bg-white rounded-lg shadow-lg p-2">
+                            <canvas class=" w-full h-full absolute inset-0 mx-auto" id="bapChart"></canvas>
+                        </div>
+                        <div class=" w-full aspect-square relative bg-white rounded-lg shadow-lg p-2">
+                            <canvas class=" w-full h-full absolute inset-0 mx-auto" id="conChart"></canvas>
+                        </div>
+                        <div class=" w-full aspect-square relative bg-white rounded-lg shadow-lg p-2">
+                            <canvas class=" w-full h-full absolute inset-0 mx-auto" id="wedChart"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class=" col-span-1 flex flex-col gap-16 px-2">
                     <div class=" w-full flex flex-col gap-2">
                         <span class=" font-bold text-xl border-b-2">Today's Events</span>
-                        <div class=" flex flex-col gap-2 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-2 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-2 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-2 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
+                        <?php
+                        if (empty($current)) { ?>
+                            <div class=" flex justify-center">
+                                <span class=" text-center">No events for today.</span>
+                            </div>
+                            <?php } else {
+                            foreach ($current as $cur) : ?>
+                                <div class=" flex flex-col gap-2 px-4 py-2 rounded-lg shadow-lg bg-white">
+                                    <span class=" text-lg"><strong><?= esc($cur['type']) ?></strong></span>
+                                    <span class=" label-text"><strong>Event Time:&nbsp;</strong><?= date('h:i a', strtotime($cur['evTSt'])) ?></span>
+                                </div>
+                        <?php endforeach;
+                        }
+                        ?>
                     </div>
                     <div class=" w-full flex flex-col gap-2">
                         <span class=" font-bold text-xl border-b-2">Upcoming Events</span>
-                        <div class=" flex flex-col gap-1 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Date:&nbsp;</strong>12/25/2025</span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-1 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Date:&nbsp;</strong>12/25/2025</span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-1 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Date:&nbsp;</strong>12/25/2025</span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
-                        <div class=" flex flex-col gap-1 px-4 py-2 rounded-lg shadow-lg bg-white">
-                            <span class=" text-lg"><strong>Event Type</strong></span>
-                            <span class=" label-text"><strong>Event Date:&nbsp;</strong>12/25/2025</span>
-                            <span class=" label-text"><strong>Event Time:&nbsp;</strong>12:00 am</span>
-                        </div>
+                        <?php
+                        if (empty($upcoming)) { ?>
+                            <div class=" flex justify-center">
+                                <span class=" text-center">No events for today.</span>
+                            </div>
+                            <?php } else {
+                            foreach ($upcoming as $up) : ?>
+                                <div class=" flex flex-col gap-1 px-4 py-2 rounded-lg shadow-lg bg-white">
+                                    <span class=" text-lg"><strong><?= esc($up['type']) ?></strong></span>
+                                    <span class=" label-text"><strong>Event Date:&nbsp;</strong><?= date('F d,Y', strtotime($up['evDate'])) ?></span>
+                                    <span class=" label-text"><strong>Event Time:&nbsp;</strong><?= date('h:i a', strtotime($up['evTSt'])) ?></span>
+                                </div>
+                        <?php endforeach;
+                        }
+                        ?>
                     </div>
                 </div>
             </section>
@@ -100,26 +96,65 @@
         <script>
             lucide.createIcons();
 
-            var mfData = {
+            var bapData = {
                 labels: ["Male", "Female"],
                 datasets: [{
-                    data: [100, 223],
+                    data: [<?= $bapM ?>, <?= $bapF ?>],
                 }]
             };
 
-            var mfCont = document.getElementById('mfChart').getContext('2d');
-            var mfChart = new Chart(mfCont, {
+            var bapCont = document.getElementById('bapChart').getContext('2d');
+            var bapChart = new Chart(bapCont, {
                 type: 'pie',
-                data: mfData,
+                data: bapData,
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: {
-                            position: 'top',
-                        },
                         title: {
                             display: true,
-                            text: 'Gender Tally'
+                            text: 'Baptism Participants'
+                        }
+                    }
+                },
+            });
+            var conData = {
+                labels: ["Male", "Female"],
+                datasets: [{
+                    data: [<?= $conM ?>, <?= $conF ?>],
+                }]
+            };
+
+            var conCont = document.getElementById('conChart').getContext('2d');
+            var conChart = new Chart(conCont, {
+                type: 'pie',
+                data: conData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Confirmation Participants'
+                        }
+                    }
+                },
+            });
+            var wedData = {
+                labels: ["Same Religion", "Different Religion"],
+                datasets: [{
+                    data: [<?= $bapM ?>, <?= $bapF ?>],
+                }]
+            };
+
+            var wedCont = document.getElementById('wedChart').getContext('2d');
+            var wedChart = new Chart(wedCont, {
+                type: 'pie',
+                data: wedData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Wedding Participants'
                         }
                     }
                 },
