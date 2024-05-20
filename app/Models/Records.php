@@ -26,10 +26,48 @@ class Records extends Model
     {
         $this->setTb($value);
 
-        $this->builder()
-            ->select('*')
-            ->orderBy('date', 'DESC')
-            ->orderBy('time', 'DESC');
+        if ($value != 'Wedding') {
+            $this->builder()
+                ->select('*');
+
+            $this->builder()
+                ->groupStart();
+
+            foreach ($name as $word) {
+                $this->builder()
+                    ->like('fn', $word, 'both')
+                    ->orLike('mn', $word, 'both')
+                    ->orLike('ln', $word, 'both');
+            }
+
+            $this->builder()
+                ->groupEnd();
+            $this->builder()
+                ->orderBy('date', 'DESC')
+                ->orderBy('time', 'DESC');
+        } else {
+            $this->builder()
+                ->select('*');
+
+            $this->builder()
+                ->groupStart();
+
+            foreach ($name as $word) {
+                $this->builder()
+                    ->like('gFn', $word, 'both')
+                    ->orLike('gMn', $word, 'both')
+                    ->orLike('gLn', $word, 'both')
+                    ->orLike('bFn', $word, 'both')
+                    ->orLike('bMn', $word, 'both')
+                    ->orLike('bLn', $word, 'both');
+            }
+
+            $this->builder()
+                ->groupEnd();
+            $this->builder()
+                ->orderBy('date', 'DESC')
+                ->orderBy('time', 'DESC');
+        }
 
         return $this;
     }
