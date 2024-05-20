@@ -6,6 +6,7 @@ use App\Controllers\Login;
 use App\Controllers\Signup;
 use App\Controllers\Calendar;
 use App\Controllers\Reserve;
+use App\Controllers\MyReservation;
 use App\Controllers\Profile;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
@@ -51,6 +52,10 @@ $routes->post('/reserve/funeral', [Reserve::class, 'resFuneral']);
 $routes->post('/reserve/massintention', [Reserve::class, 'resMassintention']);
 $routes->post('/reserve/blessing', [Reserve::class, 'resBlessing']);
 $routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
+
+//Form route are for my reservation
+$routes->get('/myreservation/index', [MyReservation::class, 'index']);
+$routes->get('/myreservation/status', [MyReservation::class, 'getres']);
 
 
 /* Routes for User login */

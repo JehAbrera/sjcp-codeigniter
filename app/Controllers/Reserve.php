@@ -53,10 +53,13 @@ class Reserve extends BaseController
 
     public function back()
     {
-        if ($this->request->getPost('submit') == "Back") {
+        $event = session()->get('event');
+        if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" || $event == "Confirmation Certificate" || $event == "Good Moral Certificate" || $event == "Banns and Permit" || $event == "Permit and No record") {
             session()->set('step', session()->get('step') - 1);
-            return redirect()->to('/calendar/index');
+        } else {
+            session()->set('step', session()->get('step') - 2);
         }
+        return redirect()->to('/calendar/index');
     }
 
     public function resWedding()
@@ -87,12 +90,18 @@ class Reserve extends BaseController
             $gfather = $this->request->getPost('groomfathern');
             $gmother = $this->request->getPost('groommothern');
             $grelig = $this->request->getPost('groomrelig');
-            $gid = $this->request->getFile('groomid')->getName();
-            $gpsa = $this->request->getFile('groompsa')->getName(); 
-            $gcen = $this->request->getFile('groomcenomar')->getName();
-            $gbapcert = $this->request->getFile('groombapcert')->getName();
-            $gconcert = $this->request->getFile('groomconcert')->getName();
-            
+            $grid = $this->request->getFile('groomid');
+            $grpsa = $this->request->getFile('groompsa');
+            $grcen = $this->request->getFile('groomcenomar');
+            $grbapcert = $this->request->getFile('groombapcert');
+            $grconcert = $this->request->getFile('groomconcert');
+            //to upload the files
+            $gid = $this->upload($name, $grid);
+            $gpsa = $this->upload($name, $grpsa);
+            $gcen = $this->upload($name, $grcen);
+            $gbapcert = $this->upload($name, $grbapcert);
+            $gconcert = $this->upload($name, $grconcert);
+
             //bride
             $bln = $this->request->getPost('brideln');
             $bfn = $this->request->getPost('bridefn');
@@ -104,11 +113,17 @@ class Reserve extends BaseController
             $bfather = $this->request->getPost('bridefathern');
             $bmother = $this->request->getPost('bridemothern');
             $brelig = $this->request->getPost('briderelig');
-            $bid = $this->request->getFile('brideid')->getName();
-            $bpsa = $this->request->getFile('bridepsa')->getName(); 
-            $bcen = $this->request->getFile('bridecenomar')->getName();
-            $bbapcert = $this->request->getFile('bridebapcert')->getName();
-            $bconcert = $this->request->getFile('brideconcert')->getName();
+            $brid = $this->request->getFile('brideid');
+            $brpsa = $this->request->getFile('bridepsa');
+            $brcen = $this->request->getFile('bridecenomar');
+            $brbapcert = $this->request->getFile('bridebapcert');
+            $brconcert = $this->request->getFile('brideconcert');
+            //to upload the files
+            $bid = $this->upload($name, $brid);
+            $bpsa = $this->upload($name, $brpsa);
+            $bcen = $this->upload($name, $brcen);
+            $bbapcert = $this->upload($name, $brbapcert);
+            $bconcert = $this->upload($name, $brconcert);
 
             //for couple
             $cml = $this->request->getFile('marriagel')->getName();
@@ -161,15 +176,17 @@ class Reserve extends BaseController
             $gfatherAdd = $this->request->getPost('godfatherAddress');
             $gmother = $this->request->getPost('godmotherName');
             $gmotherAdd = $this->request->getPost('godmotherAddress');
-            // $psa = $this->request->getPost('psa'); 
-            // $mc = $this->request->getPost('marriage_contract');
+            $psa = $this->request->getFile('psa');
+            $mc = $this->request->getFile('marriage_contract');
+            $psacert = $this->upload($name, $psa);
+            $mccert = $this->upload($name, $mc);
 
             //inserting values in allevent table
             if ($this->setres->setinAllevents($refN, $name, $email, $apDate, $apTime, $evDate, $evTSt, $evTEd, $type, $status)) {
                 //getting the id to save as foreign key in wedding details
                 $getlastId = $this->setres->getLastId();
                 $forId = $getlastId[0]['id'];
-                if ($this->setres->setinBapDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd)) {
+                if ($this->setres->setinBapDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd, $psacert, $mccert)) {
                     unset($_SESSION['step']);
                     return redirect()->to('/home');
                 }
@@ -211,14 +228,15 @@ class Reserve extends BaseController
             $add = $this->request->getPost('address');
             $sacrament = $this->request->getPost('sacrament');
             $burial = $this->request->getPost('curt');
-            // $dcert = $this->request->getPost('deathcert');
+            $dcert = $this->request->getFile('deathcert');
+            $deathcert = $this->upload($name, $dcert);
 
             //inserting values in allevent table
             if ($this->setres->setinAllevents($refN, $name, $email, $apDate, $apTime, $evDate, $evTSt, $evTEd, $type, $status)) {
                 //getting the id to save as foreign key in wedding details
                 $getlastId = $this->setres->getLastId();
                 $forId = $getlastId[0]['id'];
-                if ($this->setres->setinFunDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial)) {
+                if ($this->setres->setinFunDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial, $deathcert)) {
                     unset($_SESSION['step']);
                     return redirect()->to('/home');
                 }
@@ -255,6 +273,8 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
                 if ($this->setres->setinMassDet($forId, $num, $evDate, $evTSt, $purpose, $names)) {
                     unset($_SESSION['step']);
+                    unset($_SESSION['message']);
+                    unset($_SESSION['isClose']);
                     return redirect()->to('/home');
                 }
             }
@@ -323,16 +343,15 @@ class Reserve extends BaseController
             $num = "+63" . $this->request->getPost('contactNum');
             $purp = $this->request->getPost('purp');
             $addr = "";
-            //$birthC = $this->request->getFile('psa');
-            // $birthCert = $birthC->getRandomName();
-            // $birthC->move(WRITEPATH . 'uploads/', $birthCert);   
-            $birthCert = $this->request->getFile('psa')->getname();
-            // $birthC = "";
-            $brgyC = " ";
-            $kawanC =" ";
+            $birthC = $this->request->getFile('psa');
+            $birthCert = $this->upload($name, $birthC);
+            $brgyCert = " ";
+            $kawanCert = " ";
             if ($type == "Good Moral Certificate") {
-                $brgyC = $this->request->getFile('barangay')->getname();
-                $kawanC = $this->request->getFile('kawan')->getname();
+                $brgyC = $this->request->getFile('barangay');
+                $brgyCert = $this->upload($name, $brgyC);
+                $kawanC = $this->request->getFile('kawan');
+                $kawanCert = $this->upload($name, $kawanC);
             }
 
             //inserting values in allevent table
@@ -342,15 +361,40 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
 
                 //inserting values in allevent table
-                if ($type == "Good Moral Certificate") {
-                    $this->setres->setinDocudet($forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyC, $kawanC);
-                } else {
-                    $this->setres->setinDocudet($forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyC, $kawanC);
-                }
+                $this->setres->setinDocudet($forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
                 unset($_SESSION['step']);
                 return redirect()->to('/home');
             }
         }
+    }
+
+    //function to upload the file in local directory
+    public function upload($name, $file)
+    {
+        if ($this->validateUpload($file)) {
+            $filename = $file->getname();
+            // Define the directory to save the file
+            $uploadPath = 'images/user/' . $name . '/';
+
+            // Move the file to the upload directory
+            $file->move($uploadPath);
+
+            return $uploadPath . $filename;
+        }
+    }
+
+    //function to validate the file type
+    public function validateUpload($file)
+    {
+        $filetype = $file->getClientExtension();
+        $types = ["jpg", "jpeg", "png"];
+
+        for ($a = 0; $a < count($types); $a++) {
+            if ($filetype == $types[$a]) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -375,7 +419,6 @@ class Reserve extends BaseController
 
     public function get_random_number()
     {
-
         $rand2 = rand(10000000, 99999999);
         return $rand2;
     }

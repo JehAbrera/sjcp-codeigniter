@@ -16,6 +16,7 @@ class Calendar extends BaseController
     public function index()
     {
         $data = array();
+        // session()->set('step', '1');
         $step = session()->get('step');
         if (!isset($step) || $step == "" || $step == 1) {
             $data = [
@@ -45,25 +46,25 @@ class Calendar extends BaseController
     public function step1()
     {
         if ($this->request->getPost('selectEvent') == "Document Request") {
-            session()->set('step', 2);
-            session()->set('event', $this->request->getPost('selectEvent'));
+            session()->set('event', $this->request->getPost('selectDocument'));
         } else {
-            session()->set('step', 3);
+            session()->set('event', $this->request->getPost('selectEvent'));
         }
+        session()->set('step', 2);
+        $this->step2();
         return redirect()->to('/calendar/index');
     }
 
     public function step2()
     {
+        $event = session()->get('event');
         date_default_timezone_set('Asia/Manila');
         //setting the current date as chosen date to check available times
         session()->set('month', date('n') - 1);
         session()->set('year', date('Y'));
         session()->set('day', date('d'));
-        session()->set('event', $this->request->getPost('selectEvent'));
         $formated_date = date('Y-m-d');
         session()->set('date', $formated_date);
-        session()->set('step', 3);
         //to check if the selected date is sunday or monday
         $dayofWeek = date_format(date_create($formated_date), 'l');
         $isClose = "false";
@@ -88,11 +89,13 @@ class Calendar extends BaseController
                 session()->set('count', count($data));
 
                 session()->set('try', $this->printTime($data));
+                $message = "sa calendar yung problema";
             } else {
                 $message = "8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
             }
 
         }
+        //session()->set('message', $message);
         session()->set('isClose', $isClose);
         return redirect()->to('/calendar/index');
     }
@@ -104,40 +107,41 @@ class Calendar extends BaseController
         session()->set('month', $this->request->getPost('month'));
         session()->set('year', $this->request->getPost('year'));
         session()->set('day', $this->request->getPost('day'));
-        session()->set('step', 3);
         $date = $this->request->getPost('year') . "-" . ($this->request->getPost('month') + 1) . "-" . $this->request->getPost('day');
         $formated_date = date('Y-m-d', strtotime($date));
         session()->set('date', $formated_date);
         //to check if the selected date is sunday or monday
         $dayofWeek = date_format(date_create($formated_date), 'l');
         $isClose = "false";
+        $event = session()->get('event');
         if ($dayofWeek == "Monday") {
-            if (session()->get('event') == "Mass Intention") {
+            if ($event == "Mass Intention") {
                 $isClose = "false";
             } else {
                 $isClose = "true";
                 $message = "Cannot reserve for this day";
+                session()->set('message', $message);
             }
         } else if ($dayofWeek == "Sunday") {
-            if (session()->get('event') != "Wedding" || session()->get('event') != "Baptism" || session()->get('event') != "Funeral") {
+            if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" ||$event == "Confirmation Certificate" ||$event == "Good Moral Certificate" ||$event == "Banns and Permit" ||$event == "Permit and No record" ) {
                 $isClose = "false";
-                $message = "1:30 PM - 5:00 PM";
+                $message = "8:00 AM - 12:00 NN";
+                session()->set('message', $message);
             } else {
                 $isClose = "true";
             }
         } else {
-            if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
+            if ($event == "Wedding" || $event == "Baptism" || $event == "Funeral" || $event == "Mass Intention") {
                 //calling the funtion tocheck
                 $data = $this->toCheck($formated_date);
                 session()->set('count', count($data));
-
                 session()->set('try', $this->printTime($data));
             } else {
                 $message = "8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
+                session()->set('message', $message);
             }
 
         }
-        session()->set('message', $message);
         session()->set('isClose', $isClose);
 
         return redirect()->to('/calendar/index');
@@ -181,7 +185,7 @@ class Calendar extends BaseController
         $avtime = $ST;
         $break = false;
         //para alisin yung time taken or naapektuhan ng event ng iba
-        if (session()->get('event') != 'Mass Intention') {
+        if (session()->get('event') != 'Mass Intention' && session()->get('event') != 'Funeral') {
             for ($x = 0; $x < count($ST); $x++) {
                 for ($y = 0; $y < $count; $y++) {
                     if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time
@@ -207,9 +211,15 @@ class Calendar extends BaseController
 
     public function back()
     {
+        $event = session()->get('event');
         if ($this->request->getPost('submit') == "Back") {
-            session()->set('step', session()->get('step') - 1);
-            return redirect()->to('/calendar/index');
+            if ($event == "Wedding" || $event == "Baptism" || $event == "Funeral" || $event == "Mass Intention") {
+                session()->set('step', session()->get('step') - 2);
+                return redirect()->to('/calendar/index');
+            } else {
+                session()->set('step', session()->get('step') - 1);
+                return redirect()->to('/calendar/index');
+            }
         }
     }
 

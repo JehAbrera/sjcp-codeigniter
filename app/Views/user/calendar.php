@@ -9,7 +9,8 @@
                     <p class="mb-4">Step 1 of 2:</p>
                     <b class="card-title">Select an Event to Reserve</b>
                 </div>
-                <select class="select select-bordered join-item w-full mb-8" name="selectEvent" required>
+                <select class="select select-bordered join-item w-full mb-8" name="selectEvent" id="selectEvent"
+                    onchange="showdocument()" required>
                     <option disabled selected value="">Select Event</option>
                     <option value="Wedding">Wedding</option>
                     <option value="Baptism">Baptism</option>
@@ -17,6 +18,15 @@
                     <option value="Mass Intention">Mass Intention</option>
                     <option value="Blessing">Blessing</option>
                     <option value="Document Request">Document Request</option>
+                </select>
+                <select class="select select-bordered join-item w-full mb-8 hidden" name="selectDocument"
+                    id="selectDocument">
+                    <option disabled selected value="">Select Document</option>
+                    <option value="Baptismal Certificate">Baptismal Certificate</option>
+                    <option value="Wedding Certificate">Wedding Certificate</option>
+                    <option value="Confirmation Certificate">Confirmation Certificate</option>
+                    <option value="Good Moral Certificate">Good Moral Certificate</option>
+                    <option value="Permit and No Record">Permit and No Record</option>
                 </select>
 
                 <div class="card-actions flex justify-center items-center">
@@ -27,44 +37,6 @@
             </div>
         </div>
     <?php } else if ($step == 2) { ?>
-            <div class="w-full h-full flex flex-col justify-center items-center">
-                <!-- <div class="p-8 border border-black">
-                    <?= form_open('calendar/back') ?>
-                        <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i data-lucide="chevron-left"></i> Back</button>
-                    <?= form_close() ?>
-                </div> -->
-                <div class="card w-2/5 text-center bg-zinc-100 p-9">
-                <?= form_open('calendar/step2') ?>
-                    <div>
-                        <p class="mb-4">Step 1 of 2:</p>
-                        <b class="card-title">Select an Event to Reserve</b>
-                    </div>
-                    <select class="select select-bordered join-item w-full mb-8" name="selectEvent" disabled>
-                        <option disabled value="">Select Event</option>
-                        <option value="Wedding">Wedding</option>
-                        <option value="Baptism">Baptism</option>
-                        <option value="Funeral">Funeral</option>
-                        <option value="Mass Intention">Mass Intention</option>
-                        <option value="Blessing">Blessing</option>
-                        <option selected value="Document Request">Document Request</option>
-                    </select>
-                    <select class="select select-bordered join-item w-full mb-8" name="selectEvent" required>
-                        <option disabled selected value="">Select Document</option>
-                        <option value="Baptismal Certificate">Baptismal Certificate</option>
-                        <option value="Wedding Certificate">Wedding Certificate</option>
-                        <option value="Confirmation Certificate">Confirmation Certificate</option>
-                        <option value="Good Moral Certificate">Good Moral Certificate</option>
-                        <option value="Permit and No Record">Permit and No Record</option>
-                    </select>
-
-                    <div class="card-actions flex justify-center items-center">
-                        <button type="submit" name="next" class="btn btn-success text-zinc-100">Next <i
-                                data-lucide="chevron-right"></i></button>
-                    </div>
-                <?= form_close() ?>
-                </div>
-            </div>
-    <?php } else if ($step == 3) { ?>
                 <!-- for calendar-->
                 <div class="lg:w-full md:w-9/12 sm:w-10/12 mx-auto h-screen flex flex-col gap-8 p-10">
                     <div class="w-full">
@@ -73,7 +45,6 @@
                                 data-lucide="chevron-left"></i> Back</button>
                 <?= form_close() ?>
                     </div>
-            <?= session()->get('event') ?>
                     <div class="w-full">
                         <p>Step 2 of 2:</p>
                         <b class="card-title">Select Date to Reserve</b>
@@ -108,26 +79,27 @@
                                 if (session()->get('isClose') == "true") {
                                     echo "Cannot Schedule Event for this day of the week";
                                 } else {
-                                    if (session()->get('event') != "Wedding" || session()->get('event') != "Baptism" || session()->get('event') != "Funeral" || session()->get('event') != "Mass Intention") { ?>
+                                    $event = session()->get('event');
+                                    if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" || $event == "Confirmation Certificate" || $event == "Good Moral Certificate" || $event == "Banns and Permit" || $event == "Permit and No record" || $event == "Blessing") { ?>
                                             <input type="radio" id="rdbless" name="avTime" value="" class="hidden peer"
                                                 onclick="btnEnable()" required />
                                             <label for="rdbless"
                                                 class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
                                                 <p><?= session()->get('message') ?></p>
                                             </label>
-                                <?php } else {
+                                <?php } else if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
                                         $time = session()->get('try');
                                         $timeArray = explode(',', $time, -1);
                                         if (count($timeArray) != 0) {
                                             foreach ($timeArray as $row) { ?>
-                                                    <li>
-                                                        <input type="radio" id="<?= $row ?>" name="avTime" value="<?= $row ?>" class="hidden peer"
-                                                            onclick="btnEnable()" required />
-                                                        <label for="<?= $row ?>"
-                                                            class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
-                                                            <p><?= date('g:i A', strtotime($row)) ?></p>
-                                                        </label>
-                                                    </li>
+                                                        <li>
+                                                            <input type="radio" id="<?= $row ?>" name="avTime" value="<?= $row ?>" class="hidden peer"
+                                                                onclick="btnEnable()" required />
+                                                            <label for="<?= $row ?>"
+                                                                class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
+                                                                <p><?= date('g:i A', strtotime($row)) ?></p>
+                                                            </label>
+                                                        </li>
                                         <?php }
                                         } else {
                                             echo "No Available Time Slots";
@@ -150,6 +122,17 @@
 
 </main>
 <script>
+
+    function showdocument() {
+        var x = document.getElementById("selectEvent").value;
+
+        if (x == "Document Request") {
+            document.getElementById("selectDocument").className = "select select-bordered join-item w-full mb-8 block";
+            document.getElementById("selectDocument").required  = true ;
+        } else {
+            document.getElementById("selectDocument").className = "select select-bordered join-item w-full mb-8 hidden";
+        }
+    }
 
     const selectedday = document.getElementById('daySelected');
     const selectedmonth = document.getElementById('month');
@@ -228,6 +211,12 @@
             } else {
                 dayElement.value = day;
             }
+
+            //to disable the past date
+            // if (day < selectedday.value) {
+            //     dayElement.className = 'text-center py-2 border text-zinc-100 rounded-lg bg-gray-100'; // Add classes for the indicator
+            //     dayElement.disabled = true;
+            // }
 
             //to highlight the selected date
             if (year === selectedyear.value && month === selectedmonth.value && day == selectedday.value) {
