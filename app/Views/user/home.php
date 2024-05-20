@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class=" flex justify-center">
-            <button type="button" class=" btn bg-slate-950 text-zinc-100">View Live</button>
+            <button type="button" onclick="openInNewTab('https://www.facebook.com/SJCPOfficial')" class=" btn bg-slate-950 text-zinc-100">View Live</button>
         </div>
     </section>
     <section role="faq" class=" grid grid-cols-1 md:grid-cols-2 gap-2 bg-slate-950 text-zinc-100 py-2">
@@ -27,7 +27,7 @@
                 </p>
             </div>
             <div>
-                <button type="button" class=" btn bg-zinc-100 text-slate-950">FAQs</button>
+                <button type="button" onclick="location.href = '/faqs'" class=" btn bg-zinc-100 text-slate-950">FAQs</button>
             </div>
         </div>
         <div class=" flex justify-center items-center">
@@ -47,7 +47,7 @@
                 </p>
             </div>
             <div>
-                <button type="button" class=" btn text-zinc-100 bg-slate-950">Services</button>
+                <button type="button" onclick="location.href = '/services'" class=" btn text-zinc-100 bg-slate-950">Services</button>
             </div>
         </div>
     </section>
@@ -61,7 +61,7 @@
                 </p>
             </div>
             <div>
-                <button type="button" class=" btn bg-zinc-100 text-slate-950">Announcements</button>
+                <button type="button" onclick="location.href = '/announcements'" class=" btn bg-zinc-100 text-slate-950">Announcements</button>
             </div>
         </div>
         <div class=" flex justify-center items-center">
@@ -81,7 +81,7 @@
                 </p>
             </div>
             <div>
-                <button type="button" class=" btn text-zinc-100 bg-slate-950">About Us</button>
+                <button type="button" onclick="location.href = '/about'" class=" btn text-zinc-100 bg-slate-950">About Us</button>
             </div>
         </div>
     </section>
@@ -146,4 +146,9 @@
             </div>
         </div>
     </section>
+    <script>
+        function openInNewTab(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 </main>

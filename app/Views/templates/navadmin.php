@@ -18,11 +18,11 @@
 <body class=" flex flex-row relative items-stretch h-screen max-h-screen">
     <nav class=" flex flex-1 flex-col items-center p-2 bg-slate-950 text-zinc-100">
         <div class=" flex flex-row items-center justify-center border-b-zinc-100 border-b-2 w-full">
-            <img src="../images/logo.png" alt="logo" class=" block w-24 aspect-square">
+            <img src="<?= base_url('images/logo.png') ?>" alt="logo" class=" block w-24 aspect-square">
             <span class=" text-2xl text-center font-extrabold">SJCP</span>
         </div>
-        <ul class=" menu gap-2 mt-8">
-            <li><a href=""><i data-lucide="line-chart"></i>Dashboard</a></li>
+        <ul class=" menu gap-2 mt-8 label-text-alt text-zinc-50">
+            <li><a href="/admin/dashboard"><i data-lucide="line-chart"></i>Dashboard</a></li>
             <li>
                 <details close>
                     <summary><i data-lucide="blocks"></i>Content Management</summary>
@@ -36,10 +36,10 @@
                 <details close>
                     <summary><i data-lucide="archive"></i>Records</summary>
                     <ul>
-                        <li><a href="">Baptism</a></li>
-                        <li><a href="">Confirmation</a></li>
-                        <li><a href="">Wedding</a></li>
-                        <li><a href="">Funeral</a></li>
+                        <li><a href="/admin/records/Baptism">Baptism</a></li>
+                        <li><a href="/admin/records/Confirmation">Confirmation</a></li>
+                        <li><a href="/admin/records/Wedding">Wedding</a></li>
+                        <li><a href="/admin/records/Funeral%20Mass">Funeral</a></li>
                     </ul>
                 </details>
             </li>
