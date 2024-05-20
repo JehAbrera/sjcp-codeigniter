@@ -40,6 +40,7 @@
             </thead>
             <tbody>
                 <?php
+                    print_r($records);
                     if (empty($records)) { ?>
                         <tr>
                             <td colspan="4" class=" text-center">No Records Found!</td>
