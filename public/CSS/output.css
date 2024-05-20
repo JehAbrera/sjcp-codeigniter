@@ -4126,6 +4126,10 @@ details.collapse summary::-webkit-details-marker {
   flex: 1 1 0%;
 }
 
+.flex-\[4\] {
+  flex: 4;
+}
+
 .flex-\[4\.5\] {
   flex: 4.5;
 }
@@ -4305,10 +4309,6 @@ details.collapse summary::-webkit-details-marker {
   text-wrap: balance;
 }
 
-.rounded {
-  border-radius: 0.25rem;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -4350,11 +4350,6 @@ details.collapse summary::-webkit-details-marker {
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}
-
-.border-slate-950 {
-  --tw-border-opacity: 1;
-  border-color: rgb(2 6 23 / var(--tw-border-opacity));
 }
 
 .border-b-slate-950 {
