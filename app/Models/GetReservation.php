@@ -6,23 +6,22 @@ use CodeIgniter\Model;
 
 class GetReservation extends Model
 {
-    public function __construct()
-    {
-        $this->db = db_connect();
-    }
+    protected $table = '';
 
     public function queryAll($status, $email)
     {
-         // Build the SELECT query using CodeIgniter's Query Builder
-         $query = $this->db->table('allevents')
+        $this->setTb();
+        
+        $this->builder()
          ->select('*')
          ->where('email', $email)
-         ->where('status', $status)
-         ->get();
+         ->where('status', $status);
 
+        return $this;
+    }   
 
-     // Retrieve the result
-     $result = $query->getResultArray();
-     return $result;
+    protected function setTb()
+    {
+       $this->table = 'allevents';
     }
 }

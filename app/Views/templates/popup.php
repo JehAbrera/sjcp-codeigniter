@@ -24,17 +24,4 @@
     </div>
   </div>
 </div>
-
-<input type="checkbox" id="modal_cancelres" class="modal-toggle" />
-<div class="modal" role="dialog">
-  <div class="modal-box">
-    <div><i data-lucide="circle-x" class="text-center text-xl"></i></div>
-    <h3 class="font-bold text-lg text-center">Are you sure you want to cancel this reservation?</h3>
-    <p class="py-1 text-center text-sm">This reservation will be removed and will appear as cancelled in your appointment history.</p>
-    <div class="modal-action justify-center m-1">  
-      <label for="modal_cancelres" class="btn btn-error btn-outline">No</label>
-      <button type="submit" name="submit" value="submitform" class="btn btn-success text-white">Yes</button>
-    </div>
-  </div>
-</div>
 <?= form_close() ?>
