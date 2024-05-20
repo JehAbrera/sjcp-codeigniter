@@ -6,7 +6,140 @@
     <div class=" flex justify-between items-center">
         <span class=" badge badge-success badge-outline p-4 font-bold text-2xl"><?= $type ?></span>
         <div class=" flex items-center gap-2">
-            <button class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Record</button>
+            <label for="addRec" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Record</label>
+            <input type="checkbox" id="addRec" class="modal-toggle" />
+            <div class="modal" role="dialog">
+                <div class="modal-box relative">
+                    <h3 class="font-bold text-lg text-center mb-4"><?= $type ?> Form</h3>
+                    <!-- Add forms here -->
+                    <form action="" method="post" class=" w-full flex flex-col gap-2">
+                        <input type="hidden" name="type" value="<?= $type ?>">
+                        <?php
+                        if ($type == 'Baptism') { ?>
+                            <label for="">Participant's Name</label>
+                            <div class=" w-full grid grid-cols-3 gap-1">
+                                <div class=" form-control">
+                                    <label class=" label-text-alt" for="">First Name</label>
+                                    <input type="text" name="fn" id="" class=" input input-bordered" />
+                                </div>
+                                <div class=" form-control">
+                                    <label class=" label-text-alt" for="">Middle Name</label>
+                                    <input type="text" name="mn" id="" class=" input input-bordered" />
+                                </div>
+                                <div class=" form-control">
+                                    <label class=" label-text-alt" for="">Last Name</label>
+                                    <input type="text" name="ln" id="" class=" input input-bordered" />
+                                </div>
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" form-control">
+                                    <label class=" label-text-alt" for="">Gender</label>
+                                    <div class="flex justify-between items-center h-full px-8">
+                                        <label class="cursor-pointer">
+                                            <input type="radio" id="genderMale" name="gender" value="Male" required />
+                                            <span class="label-text">Male</span>
+                                        </label>
+                                        <label class="cursor-pointer">
+                                            <input type="radio" id="genderFemale" name="gender" value="Female" required />
+                                            <span class="label-text">Female</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class=" form-control">
+                                    <label class=" label-text-alt" for="">Birthdate</label>
+                                    <input type="date" name="bday" id="" class=" input input-bordered">
+                                </div>
+                            </div>
+                            <div class=" w-full form-control">
+                                <label class=" label-text-alt" for="">Place of Birth</label>
+                                <input type="text" name="pob" id="" class=" input input-bordered">
+                            </div>
+                            <div class=" w-full form-control">
+                                <label class=" label-text-alt" for="">Present Address</label>
+                                <input type="text" name="addr" id="" class=" input input-bordered">
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Father's Name</label>
+                                    <input type="text" name="fatN" id="" class=" input input-bordered">
+                                </div>
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Father's Birthplace</label>
+                                    <input type="text" name="fatPob" id="" class=" input input-bordered">
+                                </div>
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Mother's Name</label>
+                                    <input type="text" name="motN" id="" class=" input input-bordered">
+                                </div>
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Mother's Birthplace</label>
+                                    <input type="text" name="motPob" id="" class=" input input-bordered">
+                                </div>
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Parent/Guardian's Contact Number</label>
+                                    <input type="text" name="num" id="" class=" input input-bordered">
+                                </div>
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Parent's Type of Marriage</label>
+                                    <select id="marriage_type" name="marriage_type" class="select select-bordered">
+                                        <option value="default" disabled selected hidden></option>
+                                        <option value="Catholic Marriage" title="Catholic Marriage = married in church and officiated by a priest">Catholic
+                                            Marriage</option>
+                                        <option value="Civil Marriage" title="Civil Marriage = married in court and officiated by a lawyer">Civil Marriage
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Godfather's Name</label>
+                                    <input type="text" name="gfN" id="" class=" input input-bordered">
+                                </div>
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Godfather's Address</label>
+                                    <input type="text" name="gfAdd" id="" class=" input input-bordered">
+                                </div>
+                            </div>
+                            <div class=" w-full grid grid-cols-2 gap-1">
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Godmother's Name</label>
+                                    <input type="text" name="gmN" id="" class=" input input-bordered">
+                                </div>
+                                <div class=" w-full form-control">
+                                    <label class=" label-text-alt" for="">Godmother's Address</label>
+                                    <input type="text" name="gmAdd" id="" class=" input input-bordered">
+                                </div>
+                            </div>
+                        <?php } elseif ($type == 'Confirmation') {
+                        } elseif ($type == 'Wedding') {
+                        } elseif ($type == 'Funeral Mass') {
+                        }
+                        ?>
+                        <div class=" modal-action justify-center mt-0">
+                            <button type="reset" class=" btn btn-error btn-outline">Clear</button>
+                        </div>
+                    </form>
+                    <label for="cancelAdd" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
+                </div>
+                <input type="checkbox" id="cancelAdd" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box">
+                        <div class=" flex justify-center">
+                            <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                        <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                        <div class="modal-action justify-center mt-0">
+                            <label for="cancelAdd" class="btn btn-error btn-outline">No</label>
+                            <button class=" btn btn-success" onclick="location.href = '/admin/records/<?= $type ?>'">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form action="/admin/records/<?= $type ?>" method="post" class="join">
                 <div>
                     <div>
@@ -163,7 +296,7 @@
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="modal-action justify-center fixed top-4 right-10 z-[99]">
+                                        <div class="modal-action fixed top-4 right-10 z-[99]">
                                             <label for="view<?= $rec['id'] ?>" class="btn btn-error btn-circle"><i data-lucide="X"></i></label>
                                         </div>
                                     </div>

@@ -27,7 +27,7 @@
                 <details close>
                     <summary><i data-lucide="blocks"></i>Content Management</summary>
                     <ul>
-                        <li><a href="">Announcements</a></li>
+                        <li><a href="/admin/announcements">Announcements</a></li>
                         <li><a href="">General Content</a></li>
                     </ul>
                 </details>

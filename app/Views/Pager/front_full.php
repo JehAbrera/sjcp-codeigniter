@@ -1,14 +1,14 @@
 <?php $pager->setSurroundCount(2) ?>
 
 <nav aria-label="Page navigation">
-    <ul class="join gap-2 bg-zinc-300 p-2">
+    <ul class="join gap-2 bg-zinc-300">
     <?php if ($pager->hasPrevious()) : ?>
-        <li>
+        <li class=" join-item hover p-2">
             <a href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
                 <span aria-hidden="true"><?= lang('Pager.first') ?></span>
             </a>
         </li>
-        <li>
+        <li class=" join-item hover p-2">
             <a href="<?= $pager->getPrevious() ?>" aria-label="<?= lang('Pager.previous') ?>">
                 <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
             </a>
@@ -16,7 +16,7 @@
     <?php endif ?>
 
     <?php foreach ($pager->links() as $link): ?>
-        <li <?= $link['active'] ? 'class=" text-primary"' : '' ?>>
+        <li <?= $link['active'] ? 'class=" text-primary join-item hover p-2"' : ' join-item hover p-2' ?>>
             <a href="<?= $link['uri'] ?>">
                 <?= $link['title'] ?>
             </a>
@@ -24,12 +24,12 @@
     <?php endforeach ?>
 
     <?php if ($pager->hasNext()) : ?>
-        <li>
+        <li class=" join-item hover p-2">
             <a href="<?= $pager->getNext() ?>" aria-label="<?= lang('Pager.next') ?>">
                 <span aria-hidden="true"><?= lang('Pager.next') ?></span>
             </a>
         </li>
-        <li>
+        <li class=" join-item hover p-2">
             <a href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
                 <span aria-hidden="true"><?= lang('Pager.last') ?></span>
             </a>
