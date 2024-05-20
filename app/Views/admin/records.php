@@ -5,29 +5,32 @@
     </div>
     <div class=" flex justify-between items-center">
         <span class=" badge badge-success badge-outline p-4 font-bold text-2xl"><?= $type ?></span>
-        <form action="" method="post" class="join">
-            <div>
+        <div class=" flex items-center gap-2">
+            <button class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Record</button>
+            <form action="" method="post" class="join">
                 <div>
-                    <input class="input input-bordered join-item" name="name" placeholder="Search Name" />
+                    <div>
+                        <input class="input input-bordered join-item" name="name" placeholder="Search Name" />
+                    </div>
                 </div>
-            </div>
-            <div class="indicator">
-                <button class="btn btn-success join-item" type="submit">Search</button>
-            </div>
-        </form>
+                <div class="indicator">
+                    <button class="btn btn-success join-item" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <section role="table-area">
+    <section role="table-area" class=" flex flex-col">
         <?php
-            $th = [];
-            if ($type == 'Baptism') {
-                $th = ['Date of Baptism', 'Date of Birth', 'Name'];
-            } elseif ($type == 'Confirmation') {
-                $th = ['Date of Confirmation', 'Date of Birth', 'Name'];
-            } elseif ($type == 'Wedding') {
-                $th = ['Date of Wedding', "Groom's Name", "Bride's Name"];
-            } elseif ($type == 'Funeral Mass') {
-                $th = ['Date of Funeral', 'Date of Death', 'Name'];
-            }
+        $th = [];
+        if ($type == 'Baptism') {
+            $th = ['Date of Baptism', 'Name', 'Date of Birth'];
+        } elseif ($type == 'Confirmation') {
+            $th = ['Date of Confirmation', 'Name', 'Date of Birth'];
+        } elseif ($type == 'Wedding') {
+            $th = ['Date of Wedding', "Groom's Name", "Bride's Name"];
+        } elseif ($type == 'Funeral Mass') {
+            $th = ['Date of Funeral', 'Name', 'Date of Death'];
+        }
         ?>
         <table class=" table table-zebra bg-white table-fixed w-full text-center border shadow-lg">
             <thead>
@@ -40,35 +43,43 @@
             </thead>
             <tbody>
                 <?php
-                    if (empty($records)) { ?>
-                        <tr>
-                            <td colspan="4" class=" text-center">No Records Found!</td>
-                        </tr>
+                if (empty($records)) { ?>
+                    <tr>
+                        <td colspan="4" class=" text-center">No Records Found!</td>
+                    </tr>
                     <?php } else {
-                        foreach ($records as $rec) { ?>
-                            <tr>
-                                <td><?= date('F d, Y', strtotime($rec['date'])) ?></td>
-                                <?php
-                                    if ($type == 'Baptism') {
-                                        
-                                    } elseif ($type == 'Confirmation') {
-                                        
-                                    } elseif ($type == 'Wedding') {
-                                        
-                                    } elseif ($type == 'Funeral Mass') {
-                                        
-                                    }
-                                ?> 
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        <?php }
-                    }
+                    foreach ($records as $rec) { ?>
+                        <tr>
+                            <td class=" py-1"><?= date('F d, Y', strtotime($rec['date'])) ?></td>
+                            <?php
+                            if ($type == 'Baptism') { ?>
+                                <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
+                                <td class=" py-1"><?= date('F d, Y', strtotime($rec['dob'])) ?></td>
+                            <?php } elseif ($type == 'Confirmation') { ?>
+
+                            <?php } elseif ($type == 'Wedding') { ?>
+
+                            <?php } elseif ($type == 'Funeral Mass') { ?>
+
+                            <?php }
+                            ?>
+                            <td class=" py-1">
+                                <div class="tooltip" data-tip="View">
+                                    <label class="btn bg-zinc-300"><i data-lucide="eye"></i></label>
+                                </div>
+                                <div class="tooltip" data-tip="Edit">
+                                    <button class="btn bg-zinc-300"><i data-lucide="pen-line"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                <?php }
+                }
                 ?>
             </tbody>
         </table>
-        <?= $pager->links() ?>
+        <ul class=" join self-center mt-4">
+            <?= $pager->links() ?>
+        </ul>
     </section>
 </main>
 <!-- Development version -->
