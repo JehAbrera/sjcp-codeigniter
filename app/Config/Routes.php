@@ -55,7 +55,7 @@ $routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
 
 //Form route are for my reservation
 $routes->get('/myreservation/index', [MyReservation::class, 'index']);
-$routes->post('/myreservation/status', [MyReservation::class, 'getStatus']);
+$routes->get('/myreservation/status/(:segment)', [MyReservation::class, 'getStatus']);
 $routes->post('/myreservation/cancel', [MyReservation::class, 'cancelReserve']);
 
 

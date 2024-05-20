@@ -41,11 +41,18 @@ class MyReservation extends BaseController
 
     }
 
-    public function getStatus()
+    public function getStatus($status)
     {
-        $status = $this->request->getPost('status');
         $email = "jelikapalad@gmail.com";
         $reserv = $this->getres->queryAll($status, $email)->paginate(10);
+        foreach($reserv as &$res){
+            $add = [];
+            $tbl = $this->table($res['type']);
+            $add = [
+                'det' => $this->viewDetails($tbl, $res['id'])
+            ];
+            $res = array_merge($res, $add);
+        }
         $data = [
             'title' => 'My Reservation',
             'type' => $status,

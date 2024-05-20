@@ -4036,6 +4036,10 @@ details.collapse summary::-webkit-details-marker {
   top: 1rem;
 }
 
+.right-4 {
+  right: 1rem;
+}
+
 .z-30 {
   z-index: 30;
 }

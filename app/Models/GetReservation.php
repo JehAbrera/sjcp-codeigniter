@@ -14,7 +14,7 @@ class GetReservation extends Model
 
         $this->builder()
          ->select('*')
-        //  ->where('email', $email)
+         ->where('email', $email)
          ->where('status', $status);
 
         return $this;
