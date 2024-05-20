@@ -33,7 +33,7 @@
             $th = ['Date of Funeral', 'Name', 'Date of Death'];
         }
         ?>
-        <table class=" table table-zebra bg-white table-fixed w-full text-center border shadow-lg">
+        <table class=" table table-zebra bg-white table-fixed w-full text-center shadow-lg">
             <thead>
                 <tr class=" border-b-slate-900">
                     <th><?= $th[0] ?></th>
@@ -76,15 +76,73 @@
                             ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
                                 <td class=" py-1"><?= date('F d, Y', strtotime($rec['dob'])) ?></td>
-                            <?php } elseif ($type == 'Confirmation') { ?>
+                            <?php } elseif ($type == 'Confirmation') {
+                                $viewArray = [
+                                    "$type Date" => date('F d, Y', strtotime($rec['date'])),
+                                    "$type Time" => date('h:i a', strtotime($rec['time'])),
+                                    'Name' => $rec['fn'] . " " . $rec['mn'] . " " . $rec['ln'],
+                                    'Gender' => $rec['gender'],
+                                    'Date of Birth' => $rec['dob'],
+                                    'Age' => $rec['age'],
+                                    'Place of Birth' => $rec['pob'],
+                                    'Place of Baptism' => $rec['plcBap'],
+                                    'Date of Baptism' => $rec['datBap'],
+                                    "Father's Name" => $rec['fatN'],
+                                    "Mother's Name" => $rec['motN'],
+                                    'Contact' => $rec['num'],
+                                    "Address" => $rec['addr'],
+                                    "Godfather's Name" => $rec['gFatN'],
+                                    "Godmother's Name" => $rec['gMotN'],
+                                ]
+                            ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
                                 <td class=" py-1"><?= date('F d, Y', strtotime($rec['dob'])) ?></td>
-                            <?php } elseif ($type == 'Wedding') { ?>
+                            <?php } elseif ($type == 'Wedding') {
+                                $viewArray = [
+                                    "$type Date" => date('F d, Y', strtotime($rec['date'])),
+                                    "$type Time" => date('h:i a', strtotime($rec['time'])),
+                                    "<h3 class='font-bold text-lg'>Groom's Information</h3>" => '',
+                                    "Groom's Name" => $rec['gFn'] . " " . $rec['gMn'] . " " . $rec['gLn'],
+                                    "Groom's Contact" => $rec['gNum'],
+                                    "Groom's Date of Birth" => $rec['gDob'],
+                                    "Groom's Place of Birth" => $rec['gPob'],
+                                    "Groom's Address" => $rec['gAddr'],
+                                    "Groom's Father's Name" => $rec['gFat'],
+                                    "Groom's Mother's Name" => $rec['gMot'],
+                                    "Groom's Religion" => $rec['gRel'],
+                                    "<h3 class='font-bold text-lg'>Bride's Information</h3>" => '',
+                                    "Bride's Name" => $rec['bFn'] . " " . $rec['bMn'] . " " . $rec['bLn'],
+                                    "Bride's Contact" => $rec['bNum'],
+                                    "Bride's Date of Birth" => $rec['bDob'],
+                                    "Bride's Place of Birth" => $rec['bPob'],
+                                    "Bride's Address" => $rec['bAddr'],
+                                    "Bride's Father's Name" => $rec['bFat'],
+                                    "Bride's Mother's Name" => $rec['bMot'],
+                                    "Bride's Religion" => $rec['bRel'],
+                                ]
+                            ?>
                                 <td class=" py-1"><?= $rec['gFn'] . ' ' . $rec['gLn'] ?></td>
                                 <td class=" py-1"><?= $rec['bFn'] . ' ' . $rec['bLn'] ?></td>
-                            <?php } elseif ($type == 'Funeral Mass') { ?>
+                            <?php } elseif ($type == 'Funeral Mass') {
+                                $viewArray = [
+                                    "$type Date" => date('F d, Y', strtotime($rec['date'])),
+                                    "$type Time" => date('h:i a', strtotime($rec['time'])),
+                                    'Name' => $rec['fn'] . " " . $rec['mn'] . " " . $rec['ln'],
+                                    'Gender' => $rec['gender'],
+                                    'Date of Death' => $rec['dDate'],
+                                    'Age' => $rec['age'],
+                                    'Cause of Death' => $rec['dCause'],
+                                    'Interment Date' => $rec['intDate'],
+                                    'Cemetery' => $rec['cem'],
+                                    "Informant's Name" => $rec['infFn'] . " " . $rec['infMn'] . " " . $rec['infLn'],
+                                    'Contact' => $rec['num'],
+                                    "Address" => $rec['addr'],
+                                    "Sacrament Received" => $rec['sacr'],
+                                    "Burial Type" => $rec['burial'],
+                                ]
+                            ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
-                                <td class=" py-1"><?= date('F d, Y', strtotime($rec['dod'])) ?></td>
+                                <td class=" py-1"><?= date('F d, Y', strtotime($rec['dDate'])) ?></td>
                             <?php }
                             ?>
                             <td class=" py-1">
@@ -131,7 +189,7 @@
             </tbody>
         </table>
         <ul class=" join self-center mt-4">
-            <?= $pager->links() ?>
+            <?= $pager->links('default', 'front_full') ?>
         </ul>
     </section>
 </main>
