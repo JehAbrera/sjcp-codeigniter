@@ -31,22 +31,25 @@ class Reserve extends BaseController
             $view = "wedding";
         } else if ($event == "Baptism") {
             $view = "baptism";
-        } else if ($event == "Funeral") {
+        } else if ($event == "Funeral Mass/Blessing") {
             $view = "funeral";
         } else if ($event == "Mass Intention") {
             $view = "massintention";
         } else if ($event == "Blessing") {
             $view = "blessing";
-        } else if ($event == "Baptismal Certificate") {
-            $view = "baptismalCert";
-        } else if ($event == "Wedding Certificate") {
-            $view = "weddingCert";
-        } else if ($event == "Confirmation Certificate") {
-            $view = "confirmationCert";
-        } else if ($event == "Good Moral Certificate") {
-            $view = "goodmoralCert";
-        } else if ($event == "Permit and No Record") {
-            $view = "permit";
+        } else if ($event == "Document Request"){
+            $document = session()->get('document');
+            if ($document == "Baptismal Certificate") {
+                $view = "baptismalCert";
+            } else if ($event == "Wedding Certificate") {
+                $view = "weddingCert";
+            } else if ($event == "Confirmation Certificate") {
+                $view = "confirmationCert";
+            } else if ($event == "Good Moral Certificate") {
+                $view = "goodmoralCert";
+            } else if ($event == "Permit and No Record") {
+                $view = "permit";
+            }
         }
         return $view;
     }
@@ -54,11 +57,7 @@ class Reserve extends BaseController
     public function back()
     {
         $event = session()->get('event');
-        if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" || $event == "Confirmation Certificate" || $event == "Good Moral Certificate" || $event == "Banns and Permit" || $event == "Permit and No record") {
-            session()->set('step', session()->get('step') - 1);
-        } else {
-            session()->set('step', session()->get('step') - 2);
-        }
+        session()->set('step', session()->get('step') - 1);
         return redirect()->to('/calendar/index');
     }
 
@@ -334,6 +333,7 @@ class Reserve extends BaseController
             $status = "Pending";
 
             //form details
+            $docu = session()->get('document');
             $fn = $this->request->getPost('firstName');
             $mn = $this->request->getPost('midname');
             $ln = $this->request->getPost('lastName');
@@ -361,7 +361,7 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
 
                 //inserting values in allevent table
-                $this->setres->setinDocudet($forId, $evDate, $type, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
+                $this->setres->setinDocudet($forId, $evDate, $docu, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
                 unset($_SESSION['step']);
                 return redirect()->to('/home');
             }

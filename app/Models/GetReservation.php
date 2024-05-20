@@ -10,17 +10,28 @@ class GetReservation extends Model
 
     public function queryAll($status, $email)
     {
-        $this->setTb();
-        
+        $this->setAlleventsTbl();
+
         $this->builder()
          ->select('*')
-         ->where('email', $email)
+        //  ->where('email', $email)
          ->where('status', $status);
 
         return $this;
-    }   
+    }
+    
+    public function getDetails($tbl, $id)
+    {
+        $query = $this->db->table($tbl)
+         ->select('*')
+         ->where('forID', $id)
+         ->get();
 
-    protected function setTb()
+        $result = $query->getResultArray();
+        return $result;
+    }
+
+    protected function setAlleventsTbl()
     {
        $this->table = 'allevents';
     }

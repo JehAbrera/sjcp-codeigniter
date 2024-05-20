@@ -4,25 +4,36 @@ namespace App\Controllers;
 
 use App\Models\GetReservation;
 
-class MyReservation extends BaseController{
+class MyReservation extends BaseController
+{
 
     protected $helpers = ['form'];
-    protected $getres, $pager;
+    protected $getres, $pager, $updateres;
     public function __construct()
     {
         // Add objects at constructor //
         $this->getres = new \App\Models\GetReservation();
+        $this->updateres = new \App\Models\UpdateReservation();
         $this->pager = \Config\Services::pager();
     }
 
     public function index()
     {
         $data = array();
-        $reserv = $this->getres->queryAll("Pending", "sampleDOCUMENT@gmail.com")->paginate(10);
+        $email = "jelikapalad@gmail.com";
+        $reserv = $this->getres->queryAll("Pending", $email)->paginate(10);
+        foreach($reserv as &$res){
+            $add = [];
+            $tbl = $this->table($res['type']);
+            $add = [
+                'det' => $this->viewDetails($tbl, $res['id'])
+            ];
+            $res = array_merge($res, $add);
+        }
         $data = [
             'title' => 'My Reservation',
             'type' => 'Pending',
-            'class' =>$this->forClass("Pending"),
+            'class' => $this->forClass("Pending"),
             'reservations' => $reserv,
             'pager' => $this->getres->pager,
         ];
@@ -33,7 +44,7 @@ class MyReservation extends BaseController{
     public function getStatus()
     {
         $status = $this->request->getPost('status');
-        $email = "sampleDOCUMENT@gmail.com";
+        $email = "jelikapalad@gmail.com";
         $reserv = $this->getres->queryAll($status, $email)->paginate(10);
         $data = [
             'title' => 'My Reservation',
@@ -46,19 +57,50 @@ class MyReservation extends BaseController{
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/myreservation', $data) . view('templates/footer');
     }
 
-    public function forClass($status){
-        if($status == "Pending"){
+    public function cancelReserve()
+    {
+        $id = $this->request->getPost('id');
+        $this->updateres->cancelReserv($id);
+        return redirect()->to('/myreservation/index');
+
+    }
+
+    public function viewDetails($tbl, $id){
+        $reserv = $this->getres->getDetails($tbl, $id);
+        return $reserv;
+    }
+
+    public function forClass($status)
+    {
+        if ($status == "Pending") {
             $class = "text-yellow-400 ";
-        } else if($status == "Accepted"){
+        } else if ($status == "Accepted") {
             $class = "text-blue-600";
-        } else if($status == "Completed"){
+        } else if ($status == "Completed") {
             $class = "text-green-400";
-        } else if($status == "Declined"){
+        } else if ($status == "Declined") {
             $class = "text-red-800";
-        } else if($status == "Canceled"){
+        } else if ($status == "Canceled") {
             $class = "text-red-800";
         }
         return $class;
+    }
+
+    public function table($type)
+    {
+        if($type == "Wedding"){
+            return $this->table = 'detwed';
+        } else if($type == "Baptism"){
+            return $this->table = 'detbap';
+        }else if($type == "Funeral"){
+            return$this->table = 'detfun';
+        }else if($type == "Mass Intention"){
+            return $this->table = 'detmass';
+        }else if($type == "Blessing"){
+            return$this->table = 'detbls';
+        }else{
+            return $this->table = 'detdocu';
+        }
     }
 
 }

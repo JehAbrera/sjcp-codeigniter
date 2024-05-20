@@ -41,7 +41,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('weddet')->insert([
+            return $db->table('detwed')->insert([
                 'wedID' => '1',
                 'forID' => 'b',
                 'date' => 'c',
@@ -89,7 +89,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('bapdet')->insert([
+            return $db->table('detbap')->insert([
                 'bapID' => '1',
                 'forID' => 'b',
                 'date' => 'c',
@@ -125,7 +125,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('fundet')->insert([
+            return $db->table('detfun')->insert([
                 'funID' => '1',
                 'forID' => 'b',
                 'date' => 'c',
@@ -159,7 +159,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('mintdet')->insert([
+            return $db->table('detmass')->insert([
                 'mIntID' => '1',
                 'forID' => 'b',
                 'num' => 'c',
@@ -178,7 +178,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('blsdet')->insert([
+            return $db->table('detbls')->insert([
                 'blsID' => '1',
                 'forID' => 'b',
                 'num' => 'c',
@@ -197,7 +197,7 @@ class SetReservation extends Model
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
-            return $db->table('docreqdet')->insert([
+            return $db->table('detdocu')->insert([
                 'drID' => '1',
                 'forID' => 'b',
                 'date' => 'd',
