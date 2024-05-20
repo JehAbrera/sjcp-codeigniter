@@ -29,7 +29,7 @@
             <b>Time: </b> <?= $time ?><br>
         </div>
     </div>
-    <?= form_open('reserve/funeral') ?>
+    <?= form_open_multipart('reserve/funeral') ?>
     <div class="bg-zinc-300">
         <div class="p-8">
             <div class="">
@@ -141,16 +141,14 @@
                 <div>
                     <h2>Soft Copy of Requirements</h2>
                 </div>
-                <!-- <div class="grid grid-cols-2 gap-x-8">
+                <div class="gap-x-8">
                     <div class="form-control">
                         <div class="label">
                             <span class="label-text">Death Certificate</span>
                         </div>
-                        <input type="file" id="deathcert" name="deathcert" accept="image/*"
-                            onchange="validateFileType(this.id)"
-                            class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        <input type="file" id="deathcert" name="deathcert" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" required />
                     </div>
-                </div> -->
+                </div>
             </div>
             <br>
             <br>
@@ -199,9 +197,7 @@
                     <div class="label">
                         <span class="label-text">Present Address</span>
                     </div>
-                    <input type="text" id="address" name="address" maxlength="120"
-                        placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City"
-                        class="input input-bordered w-full w-lg" required />
+                    <input type="text" id="address" name="address" maxlength="120" placeholder="9 Sampaguita St., Brgy. Pembo, Taguig City" class="input input-bordered w-full w-lg" required />
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@
             <b>Time: </b> <?= $time ?><br>
         </div>
     </div>
-    <?= form_open('reserve/baptism') ?>
+    <?= form_open_multipart('reserve/baptism') ?>
     <div class="bg-zinc-300">
         <div class="p-8">
             <div class="">
@@ -203,7 +203,7 @@
             <div>
                 <h2>Soft Copy of Requirements</h2>
             </div>
-            <!-- <div class="grid grid-cols-2 gap-x-8">
+            <div class="grid grid-cols-2 gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Child's PSA Birth Certificate</span>
@@ -219,7 +219,7 @@
                         onchange="validateFileType(this.id)"
                         class="file-input file-input-bordered w-full max-w-xs bg-white" required />
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <div class="p-8 flex justify-evenly">

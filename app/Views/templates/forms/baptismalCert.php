@@ -114,13 +114,12 @@
                 <div>
                     <h2>Soft Copy of Requirements</h2>
                 </div>
-                <div class="grid grid-cols-2 gap-x-8">
+                <div class="gap-x-8">
                     <div class="form-control">
                         <div class="label">
                             <span class="label-text">Child's PSA Birth Certificate</span>
                         </div>
-                        <input type="file" id="psa" name="psa" accept="image/*"
-                            class="file-input file-input-bordered w-full max-w-xs bg-white" required />
+                        <input type="file" id="psa" name="psa" accept="image/*" class="file-input file-input-bordered w-full max-w-xs bg-white" required />
                     </div>
                 </div>
             </div>

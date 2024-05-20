@@ -85,7 +85,7 @@ class SetReservation extends Model
         return true;
     }
 
-    public function setinBapDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd)
+    public function setinBapDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd, $psacert, $mccert)
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
@@ -117,11 +117,11 @@ class SetReservation extends Model
             ]);
         });
         // Run the Query
-        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd, '', '');
+        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd, $psacert, $mccert);
         return true;
     }
 
-    public function setinFunDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial)
+    public function setinFunDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial, $deathcert)
     {
         // Prepare the Query
         $pQuery = $this->db->prepare(static function ($db) {
@@ -151,7 +151,7 @@ class SetReservation extends Model
             ]);
         });
         // Run the Query
-        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial, '');
+        $results = $pQuery->execute('', $forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial, $deathcert);
         return true;
     }
 

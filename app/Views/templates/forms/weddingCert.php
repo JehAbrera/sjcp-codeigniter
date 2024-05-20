@@ -110,11 +110,11 @@
             </div>
             <br>
             <br>
-            <div class="grid grid-cols-2 gap-x-8">
+            <div class="gap-x-8">
                 <div>
                     <h2>Soft Copy of Requirements</h2>
                 </div>
-                <div class="grid grid-cols-2 gap-x-8">
+                <div class="gap-x-8">
                 <div class="form-control">
                     <div class="label">
                         <span class="label-text">Child's PSA Birth Certificate</span>
