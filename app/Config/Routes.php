@@ -55,7 +55,7 @@ $routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
 
 //Form route are for my reservation
 $routes->get('/myreservation/index', [MyReservation::class, 'index']);
-$routes->get('/myreservation/status', [MyReservation::class, 'getres']);
+$routes->post('/myreservation/status', [MyReservation::class, 'getStatus']);
 
 
 /* Routes for User login */
