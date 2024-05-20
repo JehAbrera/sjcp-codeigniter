@@ -5,18 +5,20 @@ namespace App\Controllers;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
 
-class Admin extends BaseController {
-    protected $count, $pager;
+class Admin extends BaseController
+{
+    protected $count, $pager, $records;
 
     public function __construct()
     {
+        $this->records = new \App\Models\Records();
         $this->count = new Count();
         $this->pager = \Config\Services::pager();
     }
 
     public function admin($page)
     {
-        if (! is_file(APPPATH . 'Views/admin/' . $page . '.php')) {
+        if (!is_file(APPPATH . 'Views/admin/' . $page . '.php')) {
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
         }
@@ -46,15 +48,29 @@ class Admin extends BaseController {
     }
 
     // Functions for Records Page //
-    public function viewRecords($value, $extra = null) {
+    public function viewRecords($value, $extra = null)
+    {
         if (!empty($extra)) {
-            // Do something here 
+            // Fetch Name value
+            $recs = $this->records->queryName($value, $extra)->paginate(25);
         } else {
-
+            // Fetch all data
+            $recs = $this->records->queryAll($value)->paginate(25);
         }
+        //$paginated = $recs->paginate(25, 'default');
         $data = [
-            'title' => 'Records'
+            'title' => 'Records',
+            'type' => $value,
+            'records' => $recs,
+            'pager' => $this->records->pager,
         ];
-        return view('templates/navadmin', $data) . view('admin/records' , $data);
+        return view('templates/navadmin', $data) . view('admin/records', $data);
+    }
+
+    public function getName($value)
+    {
+        $name = $this->request->getPost('name');
+
+        return redirect()->to('/admin/dashboard/' . $value .  '/' . $name);
     }
 }
