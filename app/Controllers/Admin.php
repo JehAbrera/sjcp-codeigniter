@@ -60,7 +60,7 @@ class Admin extends BaseController
             $recs = $this->records->queryName($value, $keywords)->paginate(20);
         } else {
             // Fetch all data
-            $recs = $this->records->queryAll($value)->paginate(20);
+            $recs = $this->records->queryAll($value)->paginate(1);
         }
         //$paginated = $recs->paginate(25, 'default');
         $data = [

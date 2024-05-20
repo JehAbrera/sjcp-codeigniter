@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url('./CSS/output.css') ?>">
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         * {
             font-family: "Poppins", sans-serif;
@@ -33,7 +33,7 @@
                 </details>
             </li>
             <li>
-                <details close>
+                <details open>
                     <summary><i data-lucide="archive"></i>Records</summary>
                     <ul>
                         <li><a href="/admin/records/Baptism">Baptism</a></li>
@@ -48,9 +48,12 @@
         </ul>
         <dialog id="logout" class="modal text-slate-950">
             <div class="modal-box">
-                <h3 class="font-bold text-lg">Logout</h3>
-                <p class="py-4">Press ESC key or click the button below to close</p>
-                <div class="modal-action">
+                <div class=" flex justify-center">
+                    <i data-lucide="log-out" class=" w-16 h-16"></i>
+                </div>
+                <h3 class="font-bold text-lg text-center">Confirm Logout?</h3>
+                <p class="py-4 text-center text-balance">Logging out will require you to sign in again to access your account.</p>
+                <div class="modal-action mt-0 justify-center">
                     <form method="dialog">
                         <button class="btn focus:outline-none btn-error btn-outline">No</button>
                     </form>

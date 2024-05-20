@@ -42,6 +42,7 @@ class Records extends Model
 
             $this->builder()
                 ->groupEnd();
+                
             $this->builder()
                 ->orderBy('date', 'DESC')
                 ->orderBy('time', 'DESC');

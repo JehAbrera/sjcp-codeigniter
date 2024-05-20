@@ -4898,6 +4898,7 @@ details.collapse summary::-webkit-details-marker {
   color: rgb(250 250 250 / var(--tw-text-opacity));
 }
 
+<<<<<<< HEAD
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
@@ -4916,6 +4917,10 @@ details.collapse summary::-webkit-details-marker {
 .text-red-700 {
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity));
+=======
+.underline {
+  text-decoration-line: underline;
+>>>>>>> 45d6d7b2c8671c4e89b0c411504289d3815e5ebb
 }
 
 .shadow {
@@ -4988,6 +4993,10 @@ details.collapse summary::-webkit-details-marker {
 .hover\:text-zinc-100:hover {
   --tw-text-opacity: 1;
   color: rgb(244 244 245 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
 }
 
 .focus\:outline-none:focus {
