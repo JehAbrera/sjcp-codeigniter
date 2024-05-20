@@ -51,11 +51,16 @@ class Admin extends BaseController
     public function viewRecords($value, $extra = null)
     {
         if (!empty($extra)) {
+            $keyword = trim($extra);
+
+            // Split the keyword into individual components (by spaces)
+            $keywords = explode(' ', $keyword);
+
             // Fetch Name value
-            $recs = $this->records->queryName($value, $extra)->paginate(25);
+            $recs = $this->records->queryName($value, $keywords)->paginate(20);
         } else {
             // Fetch all data
-            $recs = $this->records->queryAll($value)->paginate(25);
+            $recs = $this->records->queryAll($value)->paginate(20);
         }
         //$paginated = $recs->paginate(25, 'default');
         $data = [
@@ -71,6 +76,6 @@ class Admin extends BaseController
     {
         $name = $this->request->getPost('name');
 
-        return redirect()->to('/admin/dashboard/' . $value .  '/' . $name);
+        return redirect()->to('/admin/records/' . $value .  '/' . $name);
     }
 }

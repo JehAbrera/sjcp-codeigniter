@@ -71,5 +71,5 @@ $routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
 
 /* Admin Routing */
 $routes->get('admin/records/(:segment)', [Admin::class, 'viewRecords']);
-$routes->get('admin/records/(:segment)/(:any)', [Admin::class, 'viewRecords']);
+$routes->get('admin/records/(:segment)/(:segment)', [Admin::class, 'viewRecords']);
 $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
