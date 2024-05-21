@@ -67,7 +67,7 @@
                                 <label class="label">
                                     <span class="label-text">Middle Name</span>
                                 </label>
-                                <input type="text" placeholder="Mutas" name="mn" value="<?= set_value('mn', $mn) ?>" class="input input-bordered" required />
+                                <input type="text" placeholder="Mutas" name="mn" value="<?= set_value('mn', $mn) ?>" class="input input-bordered" />
                             </div>
                             <div class="form-control">
                                 <label class="label">
@@ -97,7 +97,7 @@
                                 <label class="label">
                                     <span class="label-text">Email</span>
                                 </label>
-                                <input type="text" placeholder="samplemail@gmail.com" name="email" class="input input-bordered" />
+                                <input type="text" placeholder="samplemail@gmail.com" name="email" class="input input-bordered" required />
                                 <?php
                                 if (session()->has('emailErr')) { ?>
                                     <span class=" label-text-alt text-error"><?= session()->emailErr ?></span>
@@ -109,7 +109,7 @@
                                     <span class="label-text">Password</span>
                                 </label>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="password" name="pass" class="input input-bordered w-full" />
+                                    <input type="password" placeholder="password" name="pass" class="input input-bordered w-full" required />
                                     <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                     <span class="label-text">Confirm Password</span>
                                 </label>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="confirm password" name="conpass" class="input input-bordered w-full" />
+                                    <input type="password" placeholder="confirm password" name="conpass" class="input input-bordered w-full" required />
                                     <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
                                 </div>
                             </div>
