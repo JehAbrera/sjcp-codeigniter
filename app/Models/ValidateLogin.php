@@ -16,10 +16,14 @@ class ValidateLogin extends Model
         $this->db = db_connect();
         $this->hash = new Hash();
     }
-    public function index($user, $pass) 
+    public function index($user, $pass, ?string $table = null) 
     {   
         // Build the SELECT query using CodeIgniter's Query Builder
-        $query = $this->db->table('liuser')->select('*')->where('email', $user)->where('pass', $this->hash->hash($pass))->get();
+        if (!empty($table)) {
+            $query = $this->db->table($table)->select('*')->where('usern', $user)->where('pass', $this->hash->hash($pass))->get();
+        } else {
+            $query = $this->db->table('liuser')->select('*')->where('email', $user)->where('pass', $this->hash->hash($pass))->get();
+        }
 
         // Retrieve the result
         $result = $query->getResult();

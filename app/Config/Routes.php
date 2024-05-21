@@ -61,6 +61,8 @@ $routes->get('/myreservation/status', [MyReservation::class, 'getres']);
 /* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
 $routes->post('login/user', [Login::class, 'login']);
+/* For admin login */
+$routes->post('login/admin', [Login::class, 'admin']);
 
 /* Routes for the user profile */
 $routes->get('user/profile', [Profile::class, 'index']);

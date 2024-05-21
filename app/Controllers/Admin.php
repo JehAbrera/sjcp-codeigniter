@@ -26,6 +26,9 @@ class Admin extends BaseController
             'title' => ucfirst($page),
         ];
         $addInf = [];
+        if ($page == 'login') {
+            return view('admin/' . $page, $data);
+        }
         // Set data values for dashboard //
         if ($page == 'dashboard') {
             // Call queries to retrieve data for display //
@@ -41,6 +44,11 @@ class Admin extends BaseController
                 'wedD' => $this->count->getCount('recwed', [false]),
                 'current' => $this->count->getCurrent(),
                 'upcoming' => $this->count->getUpcoming(),
+            ];
+        }
+        if ($page == 'announcements') {
+            $addInf = [
+                'announcements' => $this->records->getAnnouncements($page)->paginate(10),
             ];
         }
         $data = array_merge($data, $addInf);

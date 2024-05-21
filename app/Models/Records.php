@@ -42,7 +42,7 @@ class Records extends Model
 
             $this->builder()
                 ->groupEnd();
-                
+
             $this->builder()
                 ->orderBy('date', 'DESC')
                 ->orderBy('time', 'DESC');
@@ -73,6 +73,15 @@ class Records extends Model
         return $this;
     }
 
+    public function getAnnouncements($value) {
+        $this->setTb($value);
+
+        $this->builder()
+                ->select('*');
+
+        return $this;
+    }
+
     protected function setTb($value)
     {
         if ($value == 'Baptism') {
@@ -83,6 +92,8 @@ class Records extends Model
             $this->table = 'recwed';
         } elseif ($value == 'Funeral Mass') {
             $this->table = 'recfun';
+        } elseif ($value == 'announcements') {
+            $this->table = 'detannou';
         }
     }
 }
