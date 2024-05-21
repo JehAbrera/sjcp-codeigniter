@@ -2038,6 +2038,14 @@ input.tab:checked + .tab-content,
     var(--togglehandleborder);
 }
 
+.alert-success {
+  border-color: var(--fallback-su,oklch(var(--su)/0.2));
+  --tw-text-opacity: 1;
+  color: var(--fallback-suc,oklch(var(--suc)/var(--tw-text-opacity)));
+  --alert-bg: var(--fallback-su,oklch(var(--su)/1));
+  --alert-bg-mix: var(--fallback-b1,oklch(var(--b1)/1));
+}
+
 .alert-error {
   border-color: var(--fallback-er,oklch(var(--er)/0.2));
   --tw-text-opacity: 1;
@@ -4024,6 +4032,10 @@ details.collapse summary::-webkit-details-marker {
   right: 2.5rem;
 }
 
+.right-4 {
+  right: 1rem;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -4034,10 +4046,6 @@ details.collapse summary::-webkit-details-marker {
 
 .top-4 {
   top: 1rem;
-}
-
-.right-4 {
-  right: 1rem;
 }
 
 .z-30 {
@@ -4820,11 +4828,6 @@ details.collapse summary::-webkit-details-marker {
 .text-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity));
-}
-
-.text-blue-800 {
-  --tw-text-opacity: 1;
-  color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
 .text-error {
