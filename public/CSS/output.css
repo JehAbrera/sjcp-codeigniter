@@ -4683,6 +4683,16 @@ details.collapse summary::-webkit-details-marker {
   background-color: rgb(212 212 216 / var(--tw-bg-opacity));
 }
 
+.bg-blue-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.bg-red-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
 .bg-\[url\(\'\.\.\/images\/bgheader\.jpg\'\)\] {
   background-image: url('../images/bgheader.jpg');
 }
@@ -4822,6 +4832,10 @@ details.collapse summary::-webkit-details-marker {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-center {

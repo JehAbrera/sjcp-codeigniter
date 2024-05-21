@@ -43,7 +43,7 @@
                     </ul>
                 </details>
             </li>
-            <li><a href=""><i data-lucide="list-todo"></i>Reservations</a></li>
+            <li><a href="/admin/reservations/status/Pending"><i data-lucide="list-todo"></i>Reservations</a></li>
             <li><a onclick="logout.showModal()"><i data-lucide="log-out"></i>Logout</a></li>
         </ul>
         <dialog id="logout" class="modal text-slate-950">

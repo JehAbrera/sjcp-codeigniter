@@ -8,11 +8,12 @@ use App\Models\Announcement;
 
 class Admin extends BaseController
 {
-    protected $count, $pager, $records, $announce;
+    protected $count, $pager, $records, $getres, $announce;
 
     public function __construct()
     {
         $this->records = new \App\Models\Records();
+        $this->getres = new \App\Models\GetReservation();
         $this->count = new Count();
         $this->pager = \Config\Services::pager();
         $this->announce = new Announcement();
@@ -87,6 +88,51 @@ class Admin extends BaseController
         $name = $this->request->getPost('name');
 
         return redirect()->to('/admin/records/' . $value .  '/' . $name);
+    }
+
+    //functions for admin reservation page
+    public function getStatus($status)
+    {
+        $reserv = $this->getres->adminQueryAll($status)->paginate(50);
+        foreach ($reserv as &$res) {
+            $add = [];
+            $tbl = $this->table($res['type']);
+            $add = [
+                'det' => $this->viewDetails($tbl, $res['id'])
+            ];
+            $res = array_merge($res, $add);
+        }
+        $data = [
+            'title' => 'Reservation',
+            'type' => $status,
+            'reservations' => $reserv,
+            'pager' => $this->getres->pager,
+        ];
+
+        return view('templates/navadmin', $data) . view('admin/reservation', $data);
+    }
+
+    public function viewDetails($tbl, $id)
+    {
+        $reserv = $this->getres->getDetails($tbl, $id);
+        return $reserv;
+    }
+
+    public function table($type)
+    {
+        if ($type == "Wedding") {
+            return $this->table = 'detwed';
+        } else if ($type == "Baptism") {
+            return $this->table = 'detbap';
+        } else if ($type == "Funeral") {
+            return $this->table = 'detfun';
+        } else if ($type == "Mass Intention") {
+            return $this->table = 'detmass';
+        } else if ($type == "Funeral Mass/Blessing") {
+            return $this->table = 'detbls';
+        } else {
+            return $this->table = 'detdocu';
+        }
     }
 
     // Functions for announcements 
