@@ -76,3 +76,8 @@ $routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
 $routes->get('admin/records/(:segment)', [Admin::class, 'viewRecords']);
 $routes->get('admin/records/(:segment)/(:segment)', [Admin::class, 'viewRecords']);
 $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
+
+/* Post request for adding announcement and editing existing */
+$routes->post('/admin/announcements/add', [Admin::class, 'addItem']);
+$routes->post('/admin/announcements/delete', [Admin::class, 'delItem']);
+$routes->post('/admin/announcements/edit', [Admin::class, 'editItem']);

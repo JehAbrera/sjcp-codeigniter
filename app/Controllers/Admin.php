@@ -4,16 +4,18 @@ namespace App\Controllers;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
+use App\Models\Announcement;
 
 class Admin extends BaseController
 {
-    protected $count, $pager, $records;
+    protected $count, $pager, $records, $announce;
 
     public function __construct()
     {
         $this->records = new \App\Models\Records();
         $this->count = new Count();
         $this->pager = \Config\Services::pager();
+        $this->announce = new Announcement();
     }
 
     public function admin($page)
@@ -48,7 +50,7 @@ class Admin extends BaseController
         }
         if ($page == 'announcements') {
             $addInf = [
-                'announcements' => $this->records->getAnnouncements($page)->paginate(10),
+                'announcements' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
         $data = array_merge($data, $addInf);
@@ -85,5 +87,106 @@ class Admin extends BaseController
         $name = $this->request->getPost('name');
 
         return redirect()->to('/admin/records/' . $value .  '/' . $name);
+    }
+
+    // Functions for announcements 
+    public function addItem()
+    {
+        $title = $this->request->getPost('title');
+        $img = $this->request->getFile('upload');
+        $date = $this->request->getPost('date');
+        $time = $this->request->getPost('time');
+        $desc = $this->request->getPost('desc');
+        if ($this->validateUpload($img)) {
+            $image = $this->upload($img);
+            $data = [
+                'img' => $image,
+                'title' => $title,
+                'date' => $date,
+                'time' => $time,
+                'descr' => $desc
+            ];
+            if ($this->announce->save($data)) {
+                return redirect()->to('/admin/announcements')->with('announceSuc', "Announcement successfully created!");
+            } else {
+                return redirect()->to('/admin/announcements')->with('announceErr', "Failed to create announcement, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/announcements')->with('announceErr', "Invalid format, please try again");
+        }
+    }
+
+    // Validate for announcements 
+    //function to validate the file type
+    public function validateUpload($img)
+    {
+        if ($img->isValid() && !$img->hasMoved()) {
+            $filetype = $img->getClientExtension();
+            $types = ["jpg", "jpeg", "png"];
+
+            return in_array($filetype, $types);
+        }
+        return false;
+    }
+
+    // Set upload path
+    public function upload($file)
+    {
+        $filename = $file->getname();
+        // Define the directory to save the file
+        $uploadPath = 'images/announcements/';
+
+        // Move the file to the upload directory
+        $file->move($uploadPath);
+
+        return $uploadPath . $filename;
+    }
+
+    // Delete an announcement
+    public function delItem() {
+        $id = $this->request->getPost('id');
+
+        $row = $this->announce->find($id);
+
+        if ($row) {
+            $file = $row['id'];
+
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
+            $this->announce->delete($id);
+
+            return redirect()->to('/admin/announcements')->with('announceSuc', "Announcement deleted successfully!");
+        } else {
+            return redirect()->to('/admin/announcements')->with('announceErr', "Failed to delete announcement, please try again.");
+        }
+    }
+
+    // Edit announcement
+    public function editItem() {
+        $id = $this->request->getPost('id');
+        $title = $this->request->getPost('title');
+        $img = $this->request->getFile('upload');
+        $date = $this->request->getPost('date');
+        $time = $this->request->getPost('time');
+        $desc = $this->request->getPost('desc');
+        if ($this->validateUpload($img)) {
+            $image = $this->upload($img);
+            $data = [
+                'img' => $image,
+                'title' => $title,
+                'date' => $date,
+                'time' => $time,
+                'descr' => $desc
+            ];
+            if ($this->announce->update($id, $data)) {
+                return redirect()->to('/admin/announcements')->with('announceSuc', "Announcement successfully updated!");
+            } else {
+                return redirect()->to('/admin/announcements')->with('announceErr', "Failed to update announcement, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/announcements')->with('announceErr', "Invalid format, please try again");
+        }
     }
 }

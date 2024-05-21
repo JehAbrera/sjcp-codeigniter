@@ -77,7 +77,7 @@ class EmailSender {
         return $msg;
     }
 
-    public function send($purpose, $reason, $to) {
+    public function send($purpose, $value, $to, $reference = null, $status = null, $reason = null) {
         $this->email->setFrom('stjohn.automatedmail@gmail,com', 'Saint John of the Cross Parish');
         $this->email->setTo($to);
         $this->email->setMailType('html');
@@ -86,7 +86,7 @@ class EmailSender {
             session()->set('otp', $otp);
             $subject = $otp . " is your OTP";
             $this->email->setSubject($subject);
-            $message = $this->generateMessage($reason, $otp);
+            $message = $this->generateMessage($value, $otp);
             $this->email->setMessage($message);
             $this->email->send();
         } // add else statement if purpose is status changed
