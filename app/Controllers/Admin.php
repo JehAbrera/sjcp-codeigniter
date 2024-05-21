@@ -4,19 +4,14 @@ namespace App\Controllers;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
-<<<<<<< HEAD
-use App\Libraries\EmailSender;
 
-class Admin extends BaseController
-{
-    protected $count, $pager, $records, $getres, $updateres, $email;
-=======
+use App\Libraries\EmailSender;
 use App\Models\Announcement;
 
 class Admin extends BaseController
 {
     protected $count, $pager, $records, $getres, $announce;
->>>>>>> 9e24acbdd60c842ecf7110d535fdd10c14886b04
+    protected $updateres, $email;
 
     public function __construct()
     {
