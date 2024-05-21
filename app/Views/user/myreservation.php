@@ -14,6 +14,14 @@
         </div>
         <div>
             <?php
+            if (session()->has('SucMess')) { ?>
+                <div class="alert alert-success">
+                    <?= session()->SucMess ?>
+                </div>
+            <?php }
+            ?>
+            <br>
+            <?php
             if (empty($reservations)) { ?>
                 <div class="bg-zinc-100 w-full p-6 grid grid-cols-2">
                     <p>No Reservations Found</p>
@@ -35,7 +43,7 @@
                             if ($type == "Declined" || $type == "Canceled") { ?>
                                 <label for="modal_resched<?= $res['id'] ?>" class="text-blue-700">Reschedule</label>
                             <?php } else if ($type == "Pending") { ?>
-                                    <label for="modal_cancel<?= $res['id'] ?>" class="text-red-700">Cancel</label>
+                                    <label for="modal_reason<?= $res['id'] ?>" class="text-red-700">Cancel</label>
                             <?php } else {
 
                             }
@@ -162,13 +170,49 @@
                         </div>
                     </div>
 
-                    <!-- modal for canceling -->
+
+                    <!-- modal for reason -->
                     <?= form_open('myreservation/cancel') ?>
+                    <div>
+                        <input type="checkbox" id="modal_reason<?= $res['id'] ?>" class="modal-toggle" />
+                        <div class="modal" role="dialog">
+                            <div class="modal-box">
+                                <h3 class="font-bold text-lg text-center">Reason</h3>
+                                <p class="py-1 text-center text-sm">Please provide a reason for the cancellation of your
+                                    appointment.</p>
+                                <div>
+                                    <input type="radio" id="1" name="reason" value="Change of plans" onclick="hideinput()">
+                                    <label for="1">Change of plans</label><br>
+                                    <input type="radio" id="2" name="reason" value="Lack of preparation" onclick="hideinput()">
+                                    <label for="2">Lack of preparation</label><br>
+                                    <input type="radio" id="3" name="reason" value="Others" onclick="showinput()">
+                                    <label for="3">Others:</label>
+                                    <input type="radio" id="4" name="reason" value="Incorrect information submitted" onclick="hideinput()">
+                                    <label for="4">Incorrect information submitted</label><br>
+                                    <input type="radio" id="5" name="reason" value="Emergency" onclick="hideinput()">
+                                    <label for="5">Emergency</label><br>
+                                    <input type="radio" id="6" name="reason" value="Conflicting schedules" onclick="hideinput()">
+                                    <label for="6">Conflicting schedules</label>
+                                    <input type="radio" id="7" name="reason" value="Personal matters" onclick="hideinput()">
+                                    <label for="7">Personal matters</label>
+                                    <input type="text" id="otherinput" name="otherinput" class="">
+                                </div>
+                                <div class="modal-action justify-center m-1">
+                                    <label for="modal_reason<?= $res['id'] ?>" class="btn btn-error btn-outline">Cancel</label>
+                                    <label for="modal_cancel<?= $res['id'] ?>" for
+                                        class="btn btn-succes btn-outline">Send</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- modal for canceling -->
                     <div>
                         <input type="checkbox" id="modal_cancel<?= $res['id'] ?>" class="modal-toggle" />
                         <div class="modal" role="dialog">
                             <div class="modal-box">
-                                <div><i data-lucide="circle-x" class="text-center text-xl"></i></div>
+                                <div class="flex justify-center"><i data-lucide="circle-x" class="text-center w-16 h-16"></i>
+                                </div>
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to cancel this reservation?
                                     <?= $res['refN'] ?>
                                 </h3>
@@ -191,7 +235,8 @@
                         <input type="checkbox" id="modal_resched<?= $res['id'] ?>" class="modal-toggle" />
                         <div class="modal" role="dialog">
                             <div class="modal-box">
-                                <div><i data-lucide="circle-x" class="text-center text-xl"></i></div>
+                                <div class="flex justify-center"><i data-lucide="circle-x" class="text-center w-16 h-16"></i>
+                                </div>
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to reschedule this reservation?
                                 </h3>
                                 <p class="py-1 text-center text-sm">This reservation will be removed and will appear as
@@ -216,3 +261,17 @@
         </ul>
     </section>
 </main>
+
+<script>
+    function showinput(id) {
+        var text = document.getElementById('otherinput');
+        text.className = "block input input-bordered";
+        text.placeholder = "Enter other reason here";
+        text.disabled = false;
+    }
+    function hideinput(id) {
+        var text = document.getElementById('otherinput');
+        text.className = "hidden";
+        text.disabled = true;
+    }
+</script>

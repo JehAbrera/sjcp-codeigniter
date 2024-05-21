@@ -67,8 +67,12 @@ class MyReservation extends BaseController
     public function cancelReserve()
     {
         $id = $this->request->getPost('id');
-        $this->updateres->cancelReserv($id);
-        return redirect()->to('/myreservation/index');
+        $reason = $this->request->getPost('reason');
+        if($reason == "Others"){
+            $reason = $this->request->getPost('otherinput');
+        }
+        $this->updateres->cancelReserv($id, $reason);
+        return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled your reservation');
 
     }
 
