@@ -14,7 +14,7 @@
                     <option disabled selected value="">Select Event</option>
                     <option value="Wedding">Wedding</option>
                     <option value="Baptism">Baptism</option>
-                    <option value="Funeral">Funeral</option>
+                    <option value="Funeral Mass/Blessing">Funeral</option>
                     <option value="Mass Intention">Mass Intention</option>
                     <option value="Blessing">Blessing</option>
                     <option value="Document Request">Document Request</option>
@@ -80,7 +80,7 @@
                                     echo "Cannot Schedule Event for this day of the week";
                                 } else {
                                     $event = session()->get('event');
-                                    if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" || $event == "Confirmation Certificate" || $event == "Good Moral Certificate" || $event == "Banns and Permit" || $event == "Permit and No record" || $event == "Blessing") { ?>
+                                    if ($event == "Document Request" || $event == "Blessing") { ?>
                                             <input type="radio" id="rdbless" name="avTime" value="" class="hidden peer"
                                                 onclick="btnEnable()" required />
                                             <label for="rdbless"

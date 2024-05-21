@@ -16,26 +16,21 @@ class Calendar extends BaseController
     public function index()
     {
         $data = array();
-        // session()->set('step', '1');
+        //session()->set('step', '1');
         $step = session()->get('step');
         if (!isset($step) || $step == "" || $step == 1) {
             $data = [
-                'title' => "calendar",
+                'title' => "Calendar",
                 'step' => 1
             ];
         } elseif ($step == 2) {
             $data = [
-                'title' => "calendar",
+                'title' => "Calendar",
                 'step' => session()->get('step')
             ];
         } elseif ($step == 3) {
             $data = [
-                'title' => "calendar",
-                'step' => session()->get('step')
-            ];
-        } elseif ($step == 4) {
-            $data = [
-                'title' => "calendar",
+                'title' => "Calendar",
                 'step' => session()->get('step')
             ];
             return redirect()->to('/reserve/index');
@@ -46,10 +41,9 @@ class Calendar extends BaseController
     public function step1()
     {
         if ($this->request->getPost('selectEvent') == "Document Request") {
-            session()->set('event', $this->request->getPost('selectDocument'));
-        } else {
-            session()->set('event', $this->request->getPost('selectEvent'));
+            session()->set('document', $this->request->getPost('selectDocument'));
         }
+        session()->set('event', $this->request->getPost('selectEvent'));
         session()->set('step', 2);
         $this->step2();
         return redirect()->to('/calendar/index');
@@ -123,7 +117,7 @@ class Calendar extends BaseController
                 session()->set('message', $message);
             }
         } else if ($dayofWeek == "Sunday") {
-            if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" ||$event == "Confirmation Certificate" ||$event == "Good Moral Certificate" ||$event == "Banns and Permit" ||$event == "Permit and No record" ) {
+            if ($event == "Wedding Certificate" || $event == "Baptismal Certificate" || $event == "Confirmation Certificate" || $event == "Good Moral Certificate" || $event == "Banns and Permit" || $event == "Permit and No record") {
                 $isClose = "false";
                 $message = "8:00 AM - 12:00 NN";
                 session()->set('message', $message);
@@ -151,7 +145,7 @@ class Calendar extends BaseController
     {
         $time = $this->request->getPost('avTime');
         session()->set('time', $time);
-        session()->set('step', 4);
+        session()->set('step', 3);
         return redirect()->to('/calendar/index');
     }
 
@@ -213,13 +207,8 @@ class Calendar extends BaseController
     {
         $event = session()->get('event');
         if ($this->request->getPost('submit') == "Back") {
-            if ($event == "Wedding" || $event == "Baptism" || $event == "Funeral" || $event == "Mass Intention") {
-                session()->set('step', session()->get('step') - 2);
-                return redirect()->to('/calendar/index');
-            } else {
-                session()->set('step', session()->get('step') - 1);
-                return redirect()->to('/calendar/index');
-            }
+            session()->set('step', session()->get('step') - 1);
+            return redirect()->to('/calendar/index');
         }
     }
 
