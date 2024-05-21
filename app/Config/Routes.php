@@ -61,6 +61,8 @@ $routes->post('/myreservation/cancel', [MyReservation::class, 'cancelReserve']);
 /* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
 $routes->post('login/user', [Login::class, 'login']);
+/* For admin login */
+$routes->post('login/admin', [Login::class, 'admin']);
 
 /* Routes for the user profile */
 $routes->get('user/profile', [Profile::class, 'index']);
@@ -76,4 +78,12 @@ $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
 
 
 $routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
+<<<<<<< HEAD
 $routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
+=======
+
+/* Post request for adding announcement and editing existing */
+$routes->post('/admin/announcements/add', [Admin::class, 'addItem']);
+$routes->post('/admin/announcements/delete', [Admin::class, 'delItem']);
+$routes->post('/admin/announcements/edit', [Admin::class, 'editItem']);
+>>>>>>> 9e24acbdd60c842ecf7110d535fdd10c14886b04

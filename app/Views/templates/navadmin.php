@@ -57,7 +57,7 @@
                     <form method="dialog">
                         <button class="btn focus:outline-none btn-error btn-outline">No</button>
                     </form>
-                    <form action="" method="post" class=" btn btn-success">Yes</form>
+                    <button class=" btn btn-success" onclick="location.href = '/logout'">Yes</button>
                 </div>
             </div>
         </dialog>

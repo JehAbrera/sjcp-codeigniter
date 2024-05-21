@@ -86,7 +86,7 @@ class EmailSender {
             session()->set('otp', $otp);
             $subject = $otp . " is your OTP";
             $this->email->setSubject($subject);
-            $message = $this->generateMessage($reason, $otp);
+            $message = $this->generateMessage($value, $otp);
             $this->email->setMessage($message);
             $this->email->send();
         } else if($purpose == 'updateStat'){

@@ -39,7 +39,16 @@ class Login extends BaseController
             session()->set('isLogged', true);
             return redirect()->to('/home');
         }
-        session()->setFlashdata('loginErr', "Invalid login details, make sure your details are correct!");
-        return redirect()->to('/account/login');
+        return redirect()->to('/account/login')->with('loginErr', "Invalid login details, make sure your details are correct!");
+    }
+
+    public function admin() {
+        $user = $this->request->getPost('username');
+        $pass = $this->request->getPost('password');
+        if ($this->valid->index($user,$pass, 'liadmin')) {
+            session()->set('adminLog', true);
+            return redirect()->to('/admin/dashboard');
+        }
+        return redirect()->to('/admin/login')->with('loginErr', "Invalid login details, make sure your details are correct!");
     }
 }
