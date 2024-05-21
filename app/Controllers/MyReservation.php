@@ -72,10 +72,11 @@ class MyReservation extends BaseController
     {
         $id = $this->request->getPost('id');
         $reason = $this->request->getPost('reason');
+        $status = "Canceled";
         if ($reason == "Others") {
             $reason = $this->request->getPost('otherinput');
         }
-        $this->updateres->cancelReserv($id, $reason);
+        $this->updateres->updateReserv($id, $reason, $status);
         return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled your reservation');
 
     }

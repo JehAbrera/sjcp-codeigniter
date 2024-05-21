@@ -76,3 +76,4 @@ $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
 
 
 $routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
+$routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);

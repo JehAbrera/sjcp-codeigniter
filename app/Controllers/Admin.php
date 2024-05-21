@@ -4,15 +4,18 @@ namespace App\Controllers;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
+use App\Libraries\EmailSender;
 
 class Admin extends BaseController
 {
-    protected $count, $pager, $records, $getres;
+    protected $count, $pager, $records, $getres, $updateres, $email;
 
     public function __construct()
     {
         $this->records = new \App\Models\Records();
         $this->getres = new \App\Models\GetReservation();
+        $this->updateres = new \App\Models\UpdateReservation();
+        $this->email = new EmailSender();
         $this->count = new Count();
         $this->pager = \Config\Services::pager();
     }
@@ -77,8 +80,9 @@ class Admin extends BaseController
     {
         $name = $this->request->getPost('name');
 
-        return redirect()->to('/admin/records/' . $value .  '/' . $name);
+        return redirect()->to('/admin/records/' . $value . '/' . $name);
     }
+
 
     //functions for admin reservation page
     public function getStatus($status)
@@ -102,6 +106,50 @@ class Admin extends BaseController
         return view('templates/navadmin', $data) . view('admin/reservation', $data);
     }
 
+    public function updateReserve()
+    {
+        $id = $this->request->getPost('id');
+        $email = $this->request->getPost('email');
+        $refn = $this->request->getPost('refn');
+        if ($this->request->getPost('submit') == 'Approve') {
+            $status = "Accepted";
+            if ($this->updateres->acceptReserv($id, $status)) {
+                //if the query is successfull
+
+                // Call email sender library - declare purpose and target as parameters //
+                // purpose values can only be --otp-- or --status-- //
+                $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
+                return redirect()->to('/admin/reservations/status/Accepted')->with('SucMess', 'Reservation successfully accepted!');
+            }
+
+        } else if ($this->request->getPost('submit') == 'Decline') {
+            $reason = $this->request->getPost('reason');
+            $status = "Declined";
+            if ($reason == "Others") {
+                $reason = $this->request->getPost('otherinput');
+            }
+            if($this->updateres->updateReserv($id, $reason, $status)){
+                //if the query is successfull
+
+                // Call email sender library - declare purpose and target as parameters //
+                // purpose values can only be --otp-- or --status-- //
+                $this->email->send('updateStat', 'Status', $email, $refn, 'Declined', $reason);
+                return redirect()->to('/admin/reservations/status/Declined')->with('SucMess', 'Reservation successfully declined!');
+            }
+        } else if ($this->request->getPost('submit') == 'Complete') {
+            $status = "Completed";
+            if ($this->updateres->acceptReserv($id, $status)) {
+                //if the query is successfull
+
+                // Call email sender library - declare purpose and target as parameters //
+                // purpose values can only be --otp-- or --status-- //
+                $this->email->send('updateStat', 'Status', $email, $refn, 'Completed');
+                return redirect()->to('/admin/reservations/status/Completed')->with('SucMess', 'Reservation successfully completed!');
+            }
+        }
+
+    }
+
     public function viewDetails($tbl, $id)
     {
         $reserv = $this->getres->getDetails($tbl, $id);
@@ -114,11 +162,11 @@ class Admin extends BaseController
             return $this->table = 'detwed';
         } else if ($type == "Baptism") {
             return $this->table = 'detbap';
-        } else if ($type == "Funeral") {
+        } else if ($type == "Funeral Mass/Blessing") {
             return $this->table = 'detfun';
         } else if ($type == "Mass Intention") {
             return $this->table = 'detmass';
-        } else if ($type == "Funeral Mass/Blessing") {
+        } else if ($type == "Blessing") {
             return $this->table = 'detbls';
         } else {
             return $this->table = 'detdocu';
