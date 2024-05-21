@@ -19,6 +19,17 @@ class GetReservation extends Model
 
         return $this;
     }
+
+    public function adminQueryAll($status)
+    {
+        $this->setAlleventsTbl();
+
+        $this->builder()
+         ->select('*')
+         ->where('status', $status);
+
+        return $this;
+    }
     
     public function getDetails($tbl, $id)
     {
