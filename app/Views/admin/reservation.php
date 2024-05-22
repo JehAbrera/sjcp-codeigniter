@@ -20,7 +20,9 @@
         </div>
     </div>
     <section role="table-area" class=" flex flex-col">
+        <p class=" text-xl font-semibold p-4"><?= $type ?> </p>
         <?php $viewArray = []; ?>
+        
         <?php
         if (session()->has('SucMess')) { ?>
             <div class="alert alert-success">
@@ -38,7 +40,6 @@
                     <th class="text-left">Date</th>
                     <th class="text-left">Time of Reservation</th>
                     <th class="text-left">Reservation</th>
-                    <th class="text-left">Status</th>
                     <th class="text-left">Actions</th>
                 </tr>
             </thead>
@@ -57,7 +58,6 @@
                             <td class=" py-1 text-left"><?= date('F d, Y', strtotime($res['apDate'])) ?></td>
                             <td class=" py-1 text-left"><?= date('h:i a', strtotime($res['apTime'])) ?></td>
                             <td class=" py-1 text-left"><?= $res['type'] ?></td>
-                            <td class=" py-1 text-left"><?= $res['status'] ?></td>
 
                             <?php
                             foreach ($res['det'] as $det) {
@@ -188,7 +188,6 @@
                                     </div>
                                 </div>
                                 <!-- modal for approving the reservation -->
-                                <?= form_open('/admin/reservations/update') ?>
 
                                 <?php
                                 if ($res['status'] == "Pending") { ?>
@@ -210,8 +209,10 @@
                                                 <div class="modal-action justify-center m-1">
                                                     <label for="modal_approve<?= $res['id'] ?>"
                                                         class="btn btn-error btn-outline">No</label>
+                                                    <?= form_open('/admin/reservations/update') ?>
                                                     <button type="submit" name="submit" value="Approve"
                                                         class="btn btn-success text-white">Yes</button>
+                                                    <? form_close() ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,8 +221,9 @@
                                 ?>
 
                                 <!-- modal for reason -->
+                            <?= form_open('/admin/reservations/update') ?>
                                 <?php
-                                if ($res['status'] == "Pending") { ?>
+                                if ($res['status'] == "Pending" || $res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Decline">
                                         <label for="modal_reason<?= $res['id'] ?>"><i data-lucide="square-x"
                                                 class="bg-red-700"></i></label>
@@ -294,8 +296,14 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="id" value="<?= $res['id'] ?>">
+                                <input type="hidden" name="email" value="<?= $res['email'] ?>">
+                                <input type="hidden" name="refn" value="<?= $res['refN'] ?>">
+                            <?= form_close() ?>
+
 
                                 <!-- modal for complete -->
+                            <?= form_open('/admin/reservations/update') ?>
                                 <?php
                                 if ($res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Complete">

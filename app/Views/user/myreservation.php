@@ -45,7 +45,7 @@
                             <?php
                             if ($type == "Declined" || $type == "Canceled") { ?>
                                 <label for="modal_resched<?= $res['id'] ?>" class="text-blue-700">Reschedule</label>
-                            <?php } else if ($type == "Pending") { ?>
+                            <?php } else if ($type == "Pending" || $type == "Accepted") { ?>
                                     <label for="modal_reason<?= $res['id'] ?>" class="text-red-700">Cancel</label>
                             <?php } else {
 

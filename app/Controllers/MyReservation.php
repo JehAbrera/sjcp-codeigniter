@@ -90,11 +90,11 @@ class MyReservation extends BaseController
             return $this->table = 'detwed';
         } else if ($type == "Baptism") {
             return $this->table = 'detbap';
-        } else if ($type == "Funeral") {
+        } else if ($type == "Funeral Mass/Blessing") {
             return $this->table = 'detfun';
         } else if ($type == "Mass Intention") {
             return $this->table = 'detmass';
-        } else if ($type == "Funeral Mass/Blessing") {
+        } else if ($type == "Blessing") {
             return $this->table = 'detbls';
         } else {
             return $this->table = 'detdocu';
