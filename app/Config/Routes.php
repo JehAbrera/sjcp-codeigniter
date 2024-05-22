@@ -54,7 +54,6 @@ $routes->post('/reserve/blessing', [Reserve::class, 'resBlessing']);
 $routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
 
 //Form route are for my reservation
-$routes->get('/myreservation/index', [MyReservation::class, 'index']);
 $routes->get('/myreservation/status/(:segment)', [MyReservation::class, 'getStatus']);
 $routes->post('/myreservation/cancel', [MyReservation::class, 'cancelReserve']);
 
@@ -62,6 +61,8 @@ $routes->post('/myreservation/cancel', [MyReservation::class, 'cancelReserve']);
 /* Routes for User login */
 $routes->get('account/login', [Login::class, 'index']);
 $routes->post('login/user', [Login::class, 'login']);
+/* For admin login */
+$routes->post('login/admin', [Login::class, 'admin']);
 
 /* Routes for the user profile */
 $routes->get('user/profile', [Profile::class, 'index']);
@@ -74,3 +75,12 @@ $routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
 $routes->get('admin/records/(:segment)', [Admin::class, 'viewRecords']);
 $routes->get('admin/records/(:segment)/(:segment)', [Admin::class, 'viewRecords']);
 $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
+
+
+$routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
+$routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
+
+/* Post request for adding announcement and editing existing */
+$routes->post('/admin/announcements/add', [Admin::class, 'addItem']);
+$routes->post('/admin/announcements/delete', [Admin::class, 'delItem']);
+$routes->post('/admin/announcements/edit', [Admin::class, 'editItem']);

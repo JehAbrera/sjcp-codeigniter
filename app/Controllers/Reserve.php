@@ -41,13 +41,13 @@ class Reserve extends BaseController
             $document = session()->get('document');
             if ($document == "Baptismal Certificate") {
                 $view = "baptismalCert";
-            } else if ($event == "Wedding Certificate") {
+            } else if ($document == "Wedding Certificate") {
                 $view = "weddingCert";
-            } else if ($event == "Confirmation Certificate") {
+            } else if ($document == "Confirmation Certificate") {
                 $view = "confirmationCert";
-            } else if ($event == "Good Moral Certificate") {
+            } else if ($document == "Good Moral Certificate") {
                 $view = "goodmoralCert";
-            } else if ($event == "Permit and No Record") {
+            } else if ($document == "Permit and No Record") {
                 $view = "permit";
             }
         }

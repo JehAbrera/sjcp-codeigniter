@@ -43,7 +43,7 @@
                     </ul>
                 </details>
             </li>
-            <li><a href=""><i data-lucide="list-todo"></i>Reservations</a></li>
+            <li><a href="/admin/reservations/status/Pending"><i data-lucide="list-todo"></i>Reservations</a></li>
             <li><a onclick="logout.showModal()"><i data-lucide="log-out"></i>Logout</a></li>
         </ul>
         <dialog id="logout" class="modal text-slate-950">
@@ -57,7 +57,7 @@
                     <form method="dialog">
                         <button class="btn focus:outline-none btn-error btn-outline">No</button>
                     </form>
-                    <form action="" method="post" class=" btn btn-success">Yes</form>
+                    <button class=" btn btn-success" onclick="location.href = '/logout'">Yes</button>
                 </div>
             </div>
         </dialog>

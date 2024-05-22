@@ -18,9 +18,9 @@
                 <div class="alert alert-success">
                     <?= session()->SucMess ?>
                 </div>
+                <br>
             <?php }
             ?>
-            <br>
             <?php
             if (empty($reservations)) { ?>
                 <div class="bg-zinc-100 w-full p-6 grid grid-cols-2">
@@ -187,11 +187,13 @@
                                     <label for="2">Lack of preparation</label><br>
                                     <input type="radio" id="3" name="reason" value="Others" onclick="showinput()">
                                     <label for="3">Others:</label>
-                                    <input type="radio" id="4" name="reason" value="Incorrect information submitted" onclick="hideinput()">
+                                    <input type="radio" id="4" name="reason" value="Incorrect information submitted"
+                                        onclick="hideinput()">
                                     <label for="4">Incorrect information submitted</label><br>
                                     <input type="radio" id="5" name="reason" value="Emergency" onclick="hideinput()">
                                     <label for="5">Emergency</label><br>
-                                    <input type="radio" id="6" name="reason" value="Conflicting schedules" onclick="hideinput()">
+                                    <input type="radio" id="6" name="reason" value="Conflicting schedules"
+                                        onclick="hideinput()">
                                     <label for="6">Conflicting schedules</label>
                                     <input type="radio" id="7" name="reason" value="Personal matters" onclick="hideinput()">
                                     <label for="7">Personal matters</label>
