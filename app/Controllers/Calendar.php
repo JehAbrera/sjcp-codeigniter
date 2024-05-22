@@ -146,7 +146,12 @@ class Calendar extends BaseController
         $time = $this->request->getPost('avTime');
         session()->set('time', $time);
         session()->set('step', 3);
-        return redirect()->to('/calendar/index');
+        
+        if(!session()->get('isLogged') || !session()->has('isLogged')){
+            return redirect()->to('/account/login')->with('SucMess', 'Please Login before accessing the page');
+        } else {
+            return redirect()->to('/calendar/index');
+        }
     }
 
     //to check the avaibale time for specific date
