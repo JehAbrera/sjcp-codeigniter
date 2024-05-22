@@ -40,7 +40,7 @@
                     <th class="text-left">Date</th>
                     <th class="text-left">Time of Reservation</th>
                     <th class="text-left">Reservation</th>
-                    <th class="text-left">Actions</th>
+                    <th colspan="2" class="text-left">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -162,9 +162,9 @@
                             }
                             ?>
 
-                            <td class=" py-1 flex">
+                            <td colspan="2" class=" py-1 flex">
                                 <div class="tooltip" data-tip="View">
-                                    <label for="view<?= $res['id'] ?>"><i data-lucide="eye" class="bg-zinc-200"></i></label>
+                                    <label for="view<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="eye" class=""></i></label>
                                     <input type="checkbox" id="view<?= $res['id'] ?>" class="modal-toggle" />
                                     <div class="modal" role="dialog">
                                         <div class="modal-box">
@@ -187,46 +187,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- modal for approving the reservation -->
-
-                                <?php
-                                if ($res['status'] == "Pending") { ?>
-                                    <div class="tooltip" data-tip="Approve">
-                                        <label for="modal_approve<?= $res['id'] ?>"><i data-lucide="calendar-check"
-                                                class="bg-blue-800"></i></label>
-                                        <input type="checkbox" id="modal_approve<?= $res['id'] ?>" class="modal-toggle" />
-                                        <div class="modal" role="dialog">
-                                            <div class="modal-box">
-                                                <div class="flex justify-center"><i data-lucide="circle-check"
-                                                        class="text-center w-16 h-16"></i>
-                                                </div>
-                                                <h3 class="font-bold text-lg text-center">Are you sure you want to Approve this
-                                                    reservation?
-                                                </h3>
-                                                <p class="py-1 text-center text-sm">Accepting the reservation will inform the
-                                                    requester
-                                                    and the reservation status will be updated accordingly.</p>
-                                                <div class="modal-action justify-center m-1">
-                                                    <label for="modal_approve<?= $res['id'] ?>"
-                                                        class="btn btn-error btn-outline">No</label>
-                                                    <?= form_open('/admin/reservations/update') ?>
-                                                    <button type="submit" name="submit" value="Approve"
-                                                        class="btn btn-success text-white">Yes</button>
-                                                    <? form_close() ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
-                                ?>
 
                                 <!-- modal for reason -->
                             <?= form_open('/admin/reservations/update') ?>
                                 <?php
                                 if ($res['status'] == "Pending" || $res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Decline">
-                                        <label for="modal_reason<?= $res['id'] ?>"><i data-lucide="square-x"
-                                                class="bg-red-700"></i></label>
+                                        <label for="modal_reason<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-x"
+                                                class="text-red-500"></i></label>
                                         <input type="checkbox" id="modal_reason<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
@@ -235,7 +203,7 @@
                                                     your
                                                     appointment.</p>
                                                 <div class="flex flex-col">
-                                                    <h3 class="font-bold text-lg text-center">Reason for declining:</h3>
+                                                    <br>
                                                     <div class="flex">
                                                         <div class="text-left">
                                                             <input type="radio" id="1" name="reason"
@@ -302,13 +270,46 @@
                             <?= form_close() ?>
 
 
+                            <!-- modal for approving the reservation -->
+                            <?php
+                                if ($res['status'] == "Pending") { ?>
+                                    <div class="tooltip" data-tip="Approve">
+                                        <label for="modal_approve<?= $res['id'] ?>" class="btn bg-blue-500"><i data-lucide="calendar-check"
+                                                class=""></i></label>
+                                        <input type="checkbox" id="modal_approve<?= $res['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box">
+                                                <div class="flex justify-center"><i data-lucide="circle-check"
+                                                        class="text-center w-16 h-16"></i>
+                                                </div>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to Approve this
+                                                    reservation?
+                                                </h3>
+                                                <p class="py-1 text-center text-sm">Accepting the reservation will inform the
+                                                    requester
+                                                    and the reservation status will be updated accordingly.</p>
+                                                <div class="modal-action justify-center m-1">
+                                                    <label for="modal_approve<?= $res['id'] ?>"
+                                                        class="btn btn-error btn-outline">No</label>
+                                                    <?= form_open('/admin/reservations/update') ?>
+                                                    <button type="submit" name="submit" value="Approve"
+                                                        class="btn btn-success text-white">Yes</button>
+                                                    <? form_close() ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                                ?>
+
+
                                 <!-- modal for complete -->
                             <?= form_open('/admin/reservations/update') ?>
                                 <?php
                                 if ($res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Complete">
-                                        <label for="modal_comp<?= $res['id'] ?>"><i data-lucide="square-check"
-                                                class="bg-blue-800"></i></label>
+                                        <label for="modal_comp<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-check"
+                                                class="bg-green-500 text-white"></i></label>
                                         <input type="checkbox" id="modal_comp<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
