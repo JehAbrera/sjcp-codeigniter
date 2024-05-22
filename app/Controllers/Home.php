@@ -32,6 +32,11 @@ class Home extends BaseController
         $data['title'] = ucfirst($page);
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
     }
+
+    public function terms(){
+        $data['title'] = "TermsandServices";
+        return view('/user/termsandservices', $data);
+    }
     protected function setMessage($page)
     {
     }
