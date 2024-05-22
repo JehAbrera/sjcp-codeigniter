@@ -20,6 +20,7 @@ use Config\App;
 */
 $routes->get('/', [Home::class, 'index']);
 $routes->get('(:segment)', [Home::class, 'user']);
+$routes->get('/termsandservices/view', [Home::class, 'terms']);
 $routes->get('/admin/(:segment)', [Admin::class, 'admin']);
 /*
 /*

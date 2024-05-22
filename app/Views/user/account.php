@@ -9,12 +9,10 @@
                     <span class=" cursor-pointer text-xl block py-4 font-semibold <?php
                     if ($mode == 'signup') {
                         echo 'bg-slate-950 text-zinc-100';
-                    } ?>"
-                        onclick=" location.href = '/account/login'">Login</span>
+                    } ?>" onclick=" location.href = '/account/login'">Login</span>
                     <span class=" cursor-pointer text-xl block py-4 font-semibold <?php if ($mode == 'login') {
                         echo 'bg-slate-950 text-zinc-100';
-                    } ?>"
-                        onclick=" location.href = '/account/signup'">Register</span>
+                    } ?>" onclick=" location.href = '/account/signup'">Register</span>
                 </div>
                 <div class=" form-control px-4 py-4">
                     <?php if ($mode == "login") { ?>
@@ -146,6 +144,12 @@
                                         class="input input-bordered w-full" />
                                     <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
                                 </div>
+                            </div>
+                            <div class="form-control">
+                                <label class="cursor-pointer label">
+                                    <input type="checkbox" id="terms" class="checkbox" required />
+                                    <p class="px-4 label-text">Check here to indicate that you have read and agree to the <a href="/termsandservices/view" target="_blank" class="text-blue-600 underline"> Terms and Services </a> of Saint John of the Cross Parish </p>
+                                </label>
                             </div>
                             <div class=" flex gap-2 justify-center mt-6">
                                 <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i
