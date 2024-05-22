@@ -49,7 +49,6 @@
                         <p>Step 2 of 2:</p>
                         <b class="card-title">Select Date to Reserve</b>
                     </div>
-                    <?php print_r(session()->get('array'))?>
                     <div class="w-full flex gap-8">
                         <div class="w-2/3">
                             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
