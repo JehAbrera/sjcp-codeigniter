@@ -3,15 +3,26 @@
 namespace App\Controllers;
 
 use App\Models\SetReservation;
+use App\Models\GetuserName;
 
 class Reserve extends BaseController
 {
     protected $helpers = ['form'];
-    protected $setres;
+    protected $setres, $getusername;
     public function __construct()
     {
         // Add objects at constructor //
         $this->setres = new SetReservation();
+        $this->getusername = new GetuserName();
+    }
+
+    //to check if the user is logedin
+    public function checkLogin(){
+        if(!session()->get('isLogged') || !session()->has('isLogged')){
+            return redirect()->to('/account/login')->with('SucMess', 'Please Login before accessing the page');
+        } else {
+            return redirect()->to('/calendar/index');
+        }
     }
 
     public function index()
@@ -24,6 +35,14 @@ class Reserve extends BaseController
 
     }
 
+    //gets the name in database using email
+    public function setName($email){
+        $result = $this->getusername->getName($email);
+        $uname = $result[0]['ln'] . "," . $result[0]['fn'] . $result[0]['mn'];
+        return $uname;
+    }
+
+    //to know what form file to open
     public function checkEvent()
     {
         $event = session()->get('event');
@@ -54,6 +73,7 @@ class Reserve extends BaseController
         return $view;
     }
 
+    //function when the back button is clicked
     public function back()
     {
         $event = session()->get('event');
@@ -61,14 +81,16 @@ class Reserve extends BaseController
         return redirect()->to('/calendar/index');
     }
 
+
+    //funtion to save details per event starts here
     public function resWedding()
     {
         if ($this->request->getPost('submit') == "submitform") {
 
             //event details
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleWEDDING";
-            $email = "sampleWEDDING@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -146,8 +168,8 @@ class Reserve extends BaseController
 
             //event details fo allevents table
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleBAPTISM";
-            $email = "sampleBSPTISM@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -199,8 +221,8 @@ class Reserve extends BaseController
 
             //event details fo allevents table
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleFUNERAL";
-            $email = "sampleFUNERAL@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -249,8 +271,8 @@ class Reserve extends BaseController
 
             //event details fo allevents table
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleMASSINT";
-            $email = "sampleMASSINT@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -286,8 +308,8 @@ class Reserve extends BaseController
 
             //event details fo allevents table
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleBLESSING";
-            $email = "sampleBLESSING@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -321,8 +343,8 @@ class Reserve extends BaseController
 
             //event details fo allevents table
             $refN = "SJCP" . $this->get_random_number();
-            $name = "sampleDOCUMENT";
-            $email = "sampleDOCUMENT@gmail.com";
+            $email = session()->get('user');
+            $name = $this->setName($email);
             date_default_timezone_set('Asia/Manila');
             $apDate = date("Y-m-d");
             $apTime = date("H:i:s");
@@ -363,7 +385,7 @@ class Reserve extends BaseController
                 //inserting values in allevent table
                 $this->setres->setinDocudet($forId, $evDate, $docu, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
                 unset($_SESSION['step']);
-                return redirect()->to('/home');
+                return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your request has been submitted.');
             }
         }
     }

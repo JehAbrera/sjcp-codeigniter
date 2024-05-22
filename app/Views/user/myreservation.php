@@ -15,13 +15,16 @@
         <div>
             <?php
             if (session()->has('SucMess')) { ?>
-                <div class="alert alert-success">
-                    <?= session()->SucMess ?>
+                <div role="alert" class="alert alert-success label-text-alt p-2 text-center mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span><?= session()->SucMess ?></span>
                 </div>
-                <br>
             <?php }
-            ?>
-            <?php
+            $viewArray = [];
             if (empty($reservations)) { ?>
                 <div class="bg-zinc-100 w-full p-6 grid grid-cols-2">
                     <p>No Reservations Found</p>
@@ -53,7 +56,6 @@
                     <br>
 
                     <?php
-                    $viewArray = [];
                     foreach ($res['det'] as $det) {
                         if ($res['type'] == 'Baptism') {
                             $viewArray = [
@@ -76,26 +78,7 @@
                                 "Godmother's Address" => $det['gMotAd'],
                             ]
                                 ?>
-                        <?php } elseif ($res['type'] == 'Confirmation') {
-                            $viewArray = [
-                                "$type Date" => date('F d, Y', strtotime($det['date'])),
-                                "$type Time" => date('h:i a', strtotime($det['tSt'])),
-                                'Name' => $det['fn'] . " " . $det['mn'] . " " . $det['ln'],
-                                'Gender' => $det['gender'],
-                                'Date of Birth' => $det['dob'],
-                                'Age' => $det['age'],
-                                'Place of Birth' => $det['pob'],
-                                'Place of Baptism' => $det['plcBap'],
-                                'Date of Baptism' => $det['datBap'],
-                                "Father's Name" => $det['fatN'],
-                                "Mother's Name" => $det['motN'],
-                                'Contact' => $det['num'],
-                                "Address" => $det['addr'],
-                                "Godfather's Name" => $det['gFatN'],
-                                "Godmother's Name" => $det['gMotN'],
-                            ]
-                                ?>
-                        <?php } elseif ($res['type'] == 'Wedding') {
+                        <?php } else if ($res['type'] == 'Wedding') {
                             $viewArray = [
                                 "$type Date" => date('F d, Y', strtotime($det['date'])),
                                 "$type Time" => date('h:i a', strtotime($det['tSt'])),
@@ -119,7 +102,7 @@
                                 "Bride's Religion" => $det['bRel'],
                             ]
                                 ?>
-                        <?php } elseif ($res['type'] == 'Funeral Mass') {
+                        <?php } else if ($res['type'] == 'Funeral Mass/Blessing') {
                             $viewArray = [
                                 "$type Date" => date('F d, Y', strtotime($det['date'])),
                                 "$type Time" => date('h:i a', strtotime($det['tSt'])),
@@ -135,6 +118,39 @@
                                 "Address" => $det['addr'],
                                 "Sacrament Received" => $det['sacr'],
                                 "Burial Type" => $det['burial'],
+                            ]
+                                ?>
+
+                        <?php } else if ($res['type'] == 'Mass Intention') {
+                            $viewArray = [
+                                "$type Date" => date('F d, Y', strtotime($det['date'])),
+                                "$type Time" => date('h:i a', strtotime($det['time'])),
+                                'Contact Number' => $det['num'],
+                                'Purpose' => $det['purpose'],
+                                'Name/s' => $det['name'],
+                            ]
+                                ?>
+
+                        <?php } else if ($res['type'] == 'Blessing') {
+                            $viewArray = [
+                                "$type Date" => date('F d, Y', strtotime($det['date'])),
+                                'Contact Number' => $det['num'],
+                                'Type' => $det['type'],
+                                'Address' => $det['addr'],
+                            ]
+                                ?>
+
+                        <?php } else if ($res['type'] == 'Document Request') {
+                            $viewArray = [
+                                "$type Date" => date('F d, Y', strtotime($det['date'])),
+                                'Type' => $det['type'],
+                                'Name' => $det['fn'] . " " . $det['mn'] . " " . $det['ln'],
+                                'Date of Birth' => $det['dob'],
+                                "Father's Name" => $det['fatN'],
+                                "Mother's Name" => $det['motN'],
+                                'Contact Number' => $det['num'],
+                                'Purpose' => $det['purp'],
+                                'Address' => $det['addr'],
                             ]
                                 ?>
 
