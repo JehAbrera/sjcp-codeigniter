@@ -78,7 +78,8 @@ $routes->add('user/delAcc', [Profile::class, 'deleteAcc'], ['get', 'post']);
 $routes->get('admin/records/(:segment)', [Admin::class, 'viewRecords']);
 $routes->get('admin/records/(:segment)/(:segment)', [Admin::class, 'viewRecords']);
 $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
-
+$routes->post('admin/records/(:segment)/add', [Admin::class, 'addRec']);
+$routes->post('admin/records/(:segment)/edit', [Admin::class, 'editRec']);
 
 $routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
 $routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);

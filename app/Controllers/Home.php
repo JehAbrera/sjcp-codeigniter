@@ -33,11 +33,16 @@ class Home extends BaseController
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
         }
+<<<<<<< HEAD
 
         if ($page == 'faqs') {
             $addInf = [
                 'faqs' => $this->records->getAnnouncements($page)->paginate(10)
             ];
+=======
+        if ($page == 'success') {
+            return view('user/' . $page);
+>>>>>>> 8bcc341068ff870b09d6c64cddf8da86611c4b4c
         }
         $data['title'] = ucfirst($page);
 

@@ -42,7 +42,10 @@
                     <label class="label">
                         <span class="label-text">Password</span>
                     </label>
-                    <input type="password" placeholder="password" name="password" class="input input-bordered" required />
+                    <div class=" w-full relative flex">
+                        <input type="password" placeholder="password" name="password" id="pass" class="input input-bordered w-full" required />
+                        <i data-lucide="eye" id="icon" onclick="toggle(pass, icon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
+                    </div>
                 </div>
                 <div class="form-control mt-6">
                     <button class="btn btn-primary" type="submit" name="login">Login</button>
@@ -50,6 +53,7 @@
             </form>
         </div>
     </main>
+    <script src="<?= base_url('./scripts/Registration.js') ?>"></script>
     <!-- Development version -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <!-- Production version -->

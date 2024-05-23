@@ -8,6 +8,7 @@ use App\Models\Count;
 
 use App\Libraries\EmailSender;
 use App\Models\Announcement;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Admin extends BaseController
 {
@@ -103,6 +104,106 @@ class Admin extends BaseController
         return redirect()->to('/admin/records/' . $value . '/' . $name);
     }
 
+    // Fetch add or edit record request 
+    // Format strings before saving
+    public function addRec($type)
+    {
+        switch ($type) {
+            case 'Baptism':
+                $record = new \App\Models\Records\Baptism();
+
+                $values = [
+                    'date' => $this->request->getPost('bapD'),
+                    'time' => $this->request->getPost('bapT'),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'num' => "+63" . $this->request->getPost('num'),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'fatPob' => ucfirst(strval($this->request->getPost('fatPob'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'motPob' => ucfirst(strval($this->request->getPost('motPob'))),
+                    'mrgTp' => $this->request->getPost('mtype'),
+                    'gFatN' => ucwords(strval($this->request->getPost('gfN'))),
+                    'gFatAd' => ucfirst(strval($this->request->getPost('gfAdd'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
+                    'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
+                ];
+
+                if ($record->save($values)) {
+                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully added!');
+                } else {
+                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to add record!');
+                }
+                break;
+
+            case 'Confirmation':
+                # code...
+                break;
+
+            case 'Wedding':
+                # code...
+                break;
+
+            case 'Funeral Mass':
+                # code...
+                break;
+        }
+    }
+    public function editRec($type)
+    {
+        switch ($type) {
+            case 'Baptism':
+                $record = new \App\Models\Records\Baptism();
+
+                $id = (int) $this->request->getPost('id');
+                $date = strval($this->request->getPost('bapD'));
+                $values = [
+                    'date' => strval($this->request->getPost('bapD')),
+                    'time' => $this->request->getPost('bapT'),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'num' => "+63" . strval($this->request->getPost('num')),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'fatPob' => ucfirst(strval($this->request->getPost('fatPob'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'motPob' => ucfirst(strval($this->request->getPost('motPob'))),
+                    'mrgTp' => strval($this->request->getPost('mtype')),
+                    'gFatN' => ucwords(strval($this->request->getPost('gfN'))),
+                    'gFatAd' => ucfirst(strval($this->request->getPost('gfAdd'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
+                    'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
+                ];
+                if ($record->update($id, $values)) {
+                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully updated!');
+                } else {
+                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to update record!');
+                }
+                break;
+
+            case 'Confirmation':
+                # code...
+                break;
+
+            case 'Wedding':
+                # code...
+                break;
+
+            case 'Funeral Mass':
+                # code...
+                break;
+        }
+    }
+
 
     //functions for admin reservation page
     public function getStatus($status)
@@ -140,14 +241,13 @@ class Admin extends BaseController
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
                 return redirect()->to('/admin/reservations/status/Accepted')->with('SucMess', 'Reservation successfully accepted!');
             }
-
         } else if ($this->request->getPost('submit') == 'Decline') {
             $reason = $this->request->getPost('reason');
             $status = "Declined";
             if ($reason == "Others") {
                 $reason = $this->request->getPost('otherinput');
             }
-            if($this->updateres->updateReserv($id, $reason, $status)){
+            if ($this->updateres->updateReserv($id, $reason, $status)) {
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
@@ -164,7 +264,6 @@ class Admin extends BaseController
                 return redirect()->to('/admin/reservations/status/Completed')->with('SucMess', 'Reservation successfully completed!');
             }
         }
-
     }
 
     //get details from database
@@ -297,13 +396,14 @@ class Admin extends BaseController
     }
 
     // Delete an announcement
-    public function delItem() {
+    public function delItem()
+    {
         $id = $this->request->getPost('id');
 
         $row = $this->announce->find($id);
 
         if ($row) {
-            $file = $row['id'];
+            $file = $row['img'];
 
             if (file_exists($file)) {
                 unlink($file);
@@ -318,7 +418,8 @@ class Admin extends BaseController
     }
 
     // Edit announcement
-    public function editItem() {
+    public function editItem()
+    {
         $id = $this->request->getPost('id');
         $title = $this->request->getPost('title');
         $img = $this->request->getFile('upload');

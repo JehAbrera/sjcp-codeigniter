@@ -221,7 +221,7 @@
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
                                 <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
                                 <div class="modal-action justify-center">
-                                    <label for="discard-<?= $item['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                    <label for="disc-<?= $item['id'] ?>" class="btn btn-error btn-outline">No</label>
                                     <button type="button" class="btn btn-success toggleCloseButton" data-id="<?= $item['id'] ?>">Yes</button>
                                 </div>
                             </div>

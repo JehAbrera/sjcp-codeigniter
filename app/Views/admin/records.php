@@ -1,4 +1,105 @@
 <main class=" flex flex-[4.5] flex-col p-4 bg-zinc-100 max-h-screen overflow-auto text-slate-950 gap-4">
+    <?php
+    switch ($type) {
+            // Change values array depending on event type
+        case 'Baptism':
+            $view = 'templates/recordforms/baptism';
+            $values = [
+                'date' => '',
+                'time' => '',
+                'fn' => '',
+                'mn' => '',
+                'ln' => '',
+                'gender' => '',
+                'dob' => '',
+                'pob' => '',
+                'addr' => '',
+                'num' => '',
+                'fatN' => '',
+                'fatPob' => '',
+                'motN' => '',
+                'motPob' => '',
+                'mrgTp' => '',
+                'gFatN' => '',
+                'gFatAd' => '',
+                'gMotN' => '',
+                'gMotAd' => '',
+            ];
+            break;
+        case 'Confirmation':
+            $view = 'templates/recordforms/confirmation';
+            $values = [
+                'date' => '',
+                'time' => '',
+                'fn' => '',
+                'mn' => '',
+                'ln' => '',
+                'gender' => '',
+                'dob' => '',
+                'pob' => '',
+                'addr' => '',
+                'num' => '',
+                'fatN' => '',
+                'fatPob' => '',
+                'motN' => '',
+                'motPob' => '',
+                'mrgTp' => '',
+                'gFatN' => '',
+                'gFatAd' => '',
+                'gMotN' => '',
+                'gMotAd' => '',
+            ];
+            break;
+        case 'Wedding':
+            $view = 'templates/recordforms/confirmation';
+            $values = [
+                'date' => '',
+                'time' => '',
+                'fn' => '',
+                'mn' => '',
+                'ln' => '',
+                'gender' => '',
+                'dob' => '',
+                'pob' => '',
+                'addr' => '',
+                'num' => '',
+                'fatN' => '',
+                'fatPob' => '',
+                'motN' => '',
+                'motPob' => '',
+                'mrgTp' => '',
+                'gFatN' => '',
+                'gFatAd' => '',
+                'gMotN' => '',
+                'gMotAd' => '',
+            ];
+            break;
+        case 'Funeral Mass':
+            $view = 'templates/recordforms/confirmation';
+            $values = [
+                'date' => '',
+                'time' => '',
+                'fn' => '',
+                'mn' => '',
+                'ln' => '',
+                'gender' => '',
+                'dob' => '',
+                'pob' => '',
+                'addr' => '',
+                'num' => '',
+                'fatN' => '',
+                'fatPob' => '',
+                'motN' => '',
+                'motPob' => '',
+                'mrgTp' => '',
+                'gFatN' => '',
+                'gFatAd' => '',
+                'gMotN' => '',
+                'gMotAd' => '',
+            ];
+            break;
+    }
+    ?>
     <div class=" flex flex-row items-center gap-2 justify-end">
         <span class=" card shadow-lg p-2 bg-success"><i data-lucide="archive" class=" w-8 aspect-square"></i></span>
         <span class=" text-lg font-semibold">Records</span>
@@ -6,140 +107,65 @@
     <div class=" flex justify-between items-center">
         <span class=" badge badge-success badge-outline p-4 font-bold text-2xl"><?= $type ?></span>
         <div class=" flex items-center gap-2">
-            <label for="addRec" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Record</label>
-            <input type="checkbox" id="addRec" class="modal-toggle" />
-            <div class="modal" role="dialog">
-                <div class="modal-box relative">
-                    <h3 class="font-bold text-lg text-center mb-4"><?= $type ?> Form</h3>
-                    <!-- Add forms here -->
-                    <form action="" method="post" class=" w-full flex flex-col gap-2">
-                        <input type="hidden" name="type" value="<?= $type ?>">
-                        <?php
-                        if ($type == 'Baptism') { ?>
-                            <label for="">Participant's Name</label>
-                            <div class=" w-full grid grid-cols-3 gap-1">
-                                <div class=" form-control">
-                                    <label class=" label-text-alt" for="">First Name</label>
-                                    <input type="text" name="fn" id="" class=" input input-bordered" />
-                                </div>
-                                <div class=" form-control">
-                                    <label class=" label-text-alt" for="">Middle Name</label>
-                                    <input type="text" name="mn" id="" class=" input input-bordered" />
-                                </div>
-                                <div class=" form-control">
-                                    <label class=" label-text-alt" for="">Last Name</label>
-                                    <input type="text" name="ln" id="" class=" input input-bordered" />
-                                </div>
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" form-control">
-                                    <label class=" label-text-alt" for="">Gender</label>
-                                    <div class="flex justify-between items-center h-full px-8">
-                                        <label class="cursor-pointer">
-                                            <input type="radio" id="genderMale" name="gender" value="Male" required />
-                                            <span class="label-text">Male</span>
-                                        </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" id="genderFemale" name="gender" value="Female" required />
-                                            <span class="label-text">Female</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class=" form-control">
-                                    <label class=" label-text-alt" for="">Birthdate</label>
-                                    <input type="date" name="bday" id="" class=" input input-bordered">
-                                </div>
-                            </div>
-                            <div class=" w-full form-control">
-                                <label class=" label-text-alt" for="">Place of Birth</label>
-                                <input type="text" name="pob" id="" class=" input input-bordered">
-                            </div>
-                            <div class=" w-full form-control">
-                                <label class=" label-text-alt" for="">Present Address</label>
-                                <input type="text" name="addr" id="" class=" input input-bordered">
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Father's Name</label>
-                                    <input type="text" name="fatN" id="" class=" input input-bordered">
-                                </div>
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Father's Birthplace</label>
-                                    <input type="text" name="fatPob" id="" class=" input input-bordered">
-                                </div>
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Mother's Name</label>
-                                    <input type="text" name="motN" id="" class=" input input-bordered">
-                                </div>
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Mother's Birthplace</label>
-                                    <input type="text" name="motPob" id="" class=" input input-bordered">
-                                </div>
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Parent/Guardian's Contact Number</label>
-                                    <input type="text" name="num" id="" class=" input input-bordered">
-                                </div>
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Parent's Type of Marriage</label>
-                                    <select id="marriage_type" name="marriage_type" class="select select-bordered">
-                                        <option value="default" disabled selected hidden></option>
-                                        <option value="Catholic Marriage" title="Catholic Marriage = married in church and officiated by a priest">Catholic
-                                            Marriage</option>
-                                        <option value="Civil Marriage" title="Civil Marriage = married in court and officiated by a lawyer">Civil Marriage
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Godfather's Name</label>
-                                    <input type="text" name="gfN" id="" class=" input input-bordered">
-                                </div>
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Godfather's Address</label>
-                                    <input type="text" name="gfAdd" id="" class=" input input-bordered">
-                                </div>
-                            </div>
-                            <div class=" w-full grid grid-cols-2 gap-1">
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Godmother's Name</label>
-                                    <input type="text" name="gmN" id="" class=" input input-bordered">
-                                </div>
-                                <div class=" w-full form-control">
-                                    <label class=" label-text-alt" for="">Godmother's Address</label>
-                                    <input type="text" name="gmAdd" id="" class=" input input-bordered">
-                                </div>
-                            </div>
-                        <?php } elseif ($type == 'Confirmation') {
-                        } elseif ($type == 'Wedding') {
-                        } elseif ($type == 'Funeral Mass') {
-                        }
-                        ?>
-                        <div class=" modal-action justify-center mt-0">
-                            <button type="reset" class=" btn btn-error btn-outline">Clear</button>
+            <form action="/admin/records/<?= $type ?>/add" method="post" id="form-0">
+                <label for="open-0" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Record</label>
+                <input type="checkbox" id="open-0" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box relative">
+                        <h3 class="font-bold text-lg text-center mb-4"><?= $type ?> Form</h3>
+                        <!-- Add forms here -->
+                        <input type="hidden" name="id" value="0">
+                        <?= view($view, $values) ?>
+                        <div class=" modal-action justify-center mt-4">
+                            <label for="clear-0" class=" btn btn-error btn-outline">Clear</label>
+                            <label for="save-0" class=" btn btn-success">Save</label>
                         </div>
-                    </form>
-                    <label for="cancelAdd" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
+                        <label for="disc-0" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
+                    </div>
                 </div>
-                <input type="checkbox" id="cancelAdd" class="modal-toggle" />
+                <input type="checkbox" id="disc-0" class="modal-toggle" />
                 <div class="modal" role="dialog">
                     <div class="modal-box">
-                        <div class=" flex justify-center">
-                            <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                        <div class="flex justify-center">
+                            <i data-lucide="circle-x" class="w-16 h-16"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
-                        <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
-                        <div class="modal-action justify-center mt-0">
-                            <label for="cancelAdd" class="btn btn-error btn-outline">No</label>
-                            <button class=" btn btn-success" onclick="location.href = '/admin/records/<?= $type ?>'">Yes</button>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to cancel adding this record?</h3>
+                        <p class="py-4 text-center text-balance">Canceling will discard any information entered for this record.</p>
+                        <div class="modal-action justify-center">
+                            <label for="disc-0" class="btn btn-error btn-outline">No</label>
+                            <button type="button" class="btn btn-success toggleCloseButton" data-id="0">Yes</button>
                         </div>
                     </div>
                 </div>
-            </div>
+                <input type="checkbox" id="clear-0" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box">
+                        <div class="flex justify-center">
+                            <i data-lucide="circle-x" class="w-16 h-16"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                        <p class="py-4 text-center text-balance">Your changes will not be saved. Do you want to discard anyway?</p>
+                        <div class="modal-action justify-center">
+                            <label for="clear-0" class="btn btn-error btn-outline">No</label>
+                            <button type="button" class="btn btn-success toggleAndResetButton" data-id="0">Yes</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="checkbox" id="save-0" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box">
+                        <div class=" flex justify-center">
+                            <i data-lucide="search-check" class=" w-16 h-16"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to add this record?</h3>
+                        <p class="py-4 text-center text-balance">Adding this record will store the provided information in the system.</p>
+                        <div class="modal-action justify-center">
+                            <label for="save-0" class="btn btn-error btn-outline">No</label>
+                            <button type="submit" class=" btn btn-success">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <form action="/admin/records/<?= $type ?>" method="post" class="join">
                 <div>
                     <div>
@@ -152,6 +178,24 @@
             </form>
         </div>
     </div>
+    <?php
+    if (session()->has('recSuc')) { ?>
+        <div role="alert" class="alert alert-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span><?= session()->recSuc ?></span>
+        </div>
+    <?php }
+    if (session()->has('recErr')) { ?>
+        <div role="alert" class="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span><?= session()->recErr ?></span>
+        </div>
+    <?php }
+    ?>
     <section role="table-area" class=" flex flex-col">
         <?php
         $th = [];
@@ -205,7 +249,28 @@
                                     "Godfather's Address" => $rec['gFatAd'],
                                     "Godmother's Name" => $rec['gMotN'],
                                     "Godmother's Address" => $rec['gMotAd'],
-                                ]
+                                ];
+                                $values = [
+                                    'date' => date('Y-m-d', strtotime($rec['date'])),
+                                    'time' => date('H:i', strtotime($rec['time'])),
+                                    'fn' => $rec['fn'],
+                                    'mn' => $rec['mn'],
+                                    'ln' => $rec['ln'],
+                                    'gender' => $rec['gender'],
+                                    'dob' => $rec['dob'],
+                                    'pob' => $rec['pob'],
+                                    'addr' => $rec['addr'],
+                                    'num' => $rec['num'],
+                                    'fatN' => $rec['fatN'],
+                                    'fatPob' => $rec['fatPob'],
+                                    'motN' => $rec['motN'],
+                                    'motPob' => $rec['motPob'],
+                                    'mrgTp' => $rec['mrgTp'],
+                                    'gFatN' => $rec['gFatN'],
+                                    'gFatAd' => $rec['gFatAd'],
+                                    'gMotN' => $rec['gMotN'],
+                                    'gMotAd' => $rec['gMotAd'],
+                                ];
                             ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
                                 <td class=" py-1"><?= date('F d, Y', strtotime($rec['dob'])) ?></td>
@@ -226,7 +291,28 @@
                                     "Address" => $rec['addr'],
                                     "Godfather's Name" => $rec['gFatN'],
                                     "Godmother's Name" => $rec['gMotN'],
-                                ]
+                                ];
+                                $values = [
+                                    'date' => '',
+                                    'time' => '',
+                                    'fn' => '',
+                                    'mn' => '',
+                                    'ln' => '',
+                                    'gender' => '',
+                                    'dob' => '',
+                                    'pob' => '',
+                                    'addr' => '',
+                                    'num' => '',
+                                    'fatN' => '',
+                                    'fatPob' => '',
+                                    'motN' => '',
+                                    'motPob' => '',
+                                    'mrgTp' => '',
+                                    'gFatN' => '',
+                                    'gFatAd' => '',
+                                    'gMotN' => '',
+                                    'gMotAd' => '',
+                                ];
                             ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
                                 <td class=" py-1"><?= date('F d, Y', strtotime($rec['dob'])) ?></td>
@@ -252,7 +338,28 @@
                                     "Bride's Father's Name" => $rec['bFat'],
                                     "Bride's Mother's Name" => $rec['bMot'],
                                     "Bride's Religion" => $rec['bRel'],
-                                ]
+                                ];
+                                $values = [
+                                    'date' => '',
+                                    'time' => '',
+                                    'fn' => '',
+                                    'mn' => '',
+                                    'ln' => '',
+                                    'gender' => '',
+                                    'dob' => '',
+                                    'pob' => '',
+                                    'addr' => '',
+                                    'num' => '',
+                                    'fatN' => '',
+                                    'fatPob' => '',
+                                    'motN' => '',
+                                    'motPob' => '',
+                                    'mrgTp' => '',
+                                    'gFatN' => '',
+                                    'gFatAd' => '',
+                                    'gMotN' => '',
+                                    'gMotAd' => '',
+                                ];
                             ?>
                                 <td class=" py-1"><?= $rec['gFn'] . ' ' . $rec['gLn'] ?></td>
                                 <td class=" py-1"><?= $rec['bFn'] . ' ' . $rec['bLn'] ?></td>
@@ -272,7 +379,28 @@
                                     "Address" => $rec['addr'],
                                     "Sacrament Received" => $rec['sacr'],
                                     "Burial Type" => $rec['burial'],
-                                ]
+                                ];
+                                $values = [
+                                    'date' => '',
+                                    'time' => '',
+                                    'fn' => '',
+                                    'mn' => '',
+                                    'ln' => '',
+                                    'gender' => '',
+                                    'dob' => '',
+                                    'pob' => '',
+                                    'addr' => '',
+                                    'num' => '',
+                                    'fatN' => '',
+                                    'fatPob' => '',
+                                    'motN' => '',
+                                    'motPob' => '',
+                                    'mrgTp' => '',
+                                    'gFatN' => '',
+                                    'gFatAd' => '',
+                                    'gMotN' => '',
+                                    'gMotAd' => '',
+                                ];
                             ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>
                                 <td class=" py-1"><?= date('F d, Y', strtotime($rec['dDate'])) ?></td>
@@ -302,17 +430,65 @@
                                     </div>
                                 </div>
                                 <div class="tooltip" data-tip="Edit">
-                                    <label for="edit<?= $rec['id'] ?>" class="btn bg-zinc-300"><i data-lucide="pen-line"></i></label>
-                                    <input type="checkbox" id="edit<?= $rec['id'] ?>" class="modal-toggle" />
-                                    <div class="modal" role="dialog">
-                                        <div class="modal-box">
-                                            <h3 class="font-bold text-lg">Hello!</h3>
-                                            <p class="py-4">This modal works with a hidden checkbox!</p>
-                                            <div class="modal-action justify-center">
-                                                <label for="edit<?= $rec['id'] ?>" class="btn btn-error btn-outline">Close!</label>
+                                    <form action="/admin/records/<?= $type ?>/edit" method="post" id="form-<?= $rec['id'] ?>">
+                                        <label for="open-<?= $rec['id'] ?>" class="btn bg-zinc-300"><i data-lucide="pen-line"></i></label>
+                                        <input type="checkbox" id="open-<?= $rec['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box relative text-left">
+                                                <h3 class="font-bold text-lg text-center mb-4"><?= $type ?> Form</h3>
+                                                <!-- Add forms here -->
+                                                <input type="hidden" name="id" value="<?= $rec['id'] ?>">
+                                                <?= view($view, $values) ?>
+                                                <div class=" modal-action justify-center mt-4">
+                                                    <label for="clear-<?= $rec['id'] ?>" class=" btn btn-error btn-outline">Reset</label>
+                                                    <label for="save-<?= $rec['id'] ?>" class=" btn btn-success">Save</label>
+                                                </div>
+                                                <label for="disc-<?= $rec['id'] ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
                                             </div>
                                         </div>
-                                    </div>
+                                        <input type="checkbox" id="disc-<?= $rec['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box">
+                                                <div class="flex justify-center">
+                                                    <i data-lucide="circle-x" class="w-16 h-16"></i>
+                                                </div>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to cancel editing this record?</h3>
+                                                <p class="py-4 text-center text-balance">Canceling will discard any updated information entered for this record.</p>
+                                                <div class="modal-action justify-center">
+                                                    <label for="disc-<?= $rec['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                    <button type="button" class="btn btn-success toggleCloseButton" data-id="<?= $rec['id'] ?>">Yes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="checkbox" id="clear-<?= $rec['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box">
+                                                <div class="flex justify-center">
+                                                    <i data-lucide="circle-x" class="w-16 h-16"></i>
+                                                </div>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
+                                                <p class="py-4 text-center text-balance">Your changes will not be saved. Do you want to discard anyway?</p>
+                                                <div class="modal-action justify-center">
+                                                    <label for="clear-<?= $rec['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                    <button type="button" class="btn btn-success toggleAndResetButton" data-id="<?= $rec['id'] ?>">Yes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="checkbox" id="save-<?= $rec['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box">
+                                                <div class=" flex justify-center">
+                                                    <i data-lucide="search-check" class=" w-16 h-16"></i>
+                                                </div>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to save changes?</h3>
+                                                <p class="py-4 text-center text-balance">Saving your changes will update the current data and cannot be undone.</p>
+                                                <div class="modal-action justify-center">
+                                                    <label for="save-<?= $rec['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                    <button type="submit" class=" btn btn-success">Yes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -332,6 +508,38 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
     lucide.createIcons();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.toggleAndResetButton').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.dataset.id;
+                const checkbox = document.getElementById('clear-' + itemId);
+                const open = document.getElementById('open-' + itemId);
+                const form = document.getElementById('form-' + itemId);
+
+                if (checkbox && open && form) {
+                    checkbox.checked = !checkbox.checked;
+                    form.reset();
+                    open.checked = !open.checked;
+                } else {
+                    console.error('One or more elements not found for item ID:', itemId);
+                }
+            });
+        });
+
+        document.querySelectorAll('.toggleCloseButton').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.dataset.id;
+                const form = document.getElementById('form-' + itemId);
+
+                if (form) {
+                    form.reset();
+                } else {
+                    console.error('Form element not found for item ID:', itemId);
+                }
+            });
+        });
+    });
 </script>
 </body>
 
