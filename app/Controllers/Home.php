@@ -29,6 +29,9 @@ class Home extends BaseController
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
         }
+        if ($page == 'success') {
+            return view('user/' . $page);
+        }
         $data['title'] = ucfirst($page);
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
     }
