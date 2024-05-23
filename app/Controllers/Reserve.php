@@ -369,7 +369,7 @@ class Reserve extends BaseController
             $birthCert = $this->upload($name, $birthC);
             $brgyCert = " ";
             $kawanCert = " ";
-            if ($type == "Good Moral Certificate") {
+            if ($docu == "Good Moral Certificate") {
                 $brgyC = $this->request->getFile('barangay');
                 $brgyCert = $this->upload($name, $brgyC);
                 $kawanC = $this->request->getFile('kawan');
@@ -378,11 +378,11 @@ class Reserve extends BaseController
 
             //inserting values in allevent table
             if ($this->setres->setinAllevents($refN, $name, $email, $apDate, $apTime, $evDate, $evTSt, $evTEd, $type, $status)) {
-                //getting the id to save as foreign key in wedding details
+                //getting the id to save as foreign key in document details
                 $getlastId = $this->setres->getLastId();
                 $forId = $getlastId[0]['id'];
 
-                //inserting values in allevent table
+                //inserting values in detdocu table
                 $this->setres->setinDocudet($forId, $evDate, $docu, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
                 unset($_SESSION['step']);
                 return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your request has been submitted.');

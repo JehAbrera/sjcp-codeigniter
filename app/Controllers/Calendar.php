@@ -77,19 +77,17 @@ class Calendar extends BaseController
                 $isClose = "true";
             }
         } else {
-            if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
+            if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral Mass/Blessing" || session()->get('event') == "Mass Intention") {
                 //calling the funtion tocheck
                 $data = $this->toCheck($formated_date);
                 session()->set('count', count($data));
-
                 session()->set('try', $this->printTime($data));
-                $message = "sa calendar yung problema";
             } else {
                 $message = "8:00 AM - 11:30 AM and 1:30 PM - 5:00 PM";
+                session()->set('message', $message);
             }
 
         }
-        //session()->set('message', $message);
         session()->set('isClose', $isClose);
         return redirect()->to('/calendar/index');
     }
@@ -125,7 +123,7 @@ class Calendar extends BaseController
                 $isClose = "true";
             }
         } else {
-            if ($event == "Wedding" || $event == "Baptism" || $event == "Funeral" || $event == "Mass Intention") {
+            if ($event == "Wedding" || $event == "Baptism" || $event == "Funeral Mass/Blessing" || $event == "Mass Intention") {
                 //calling the funtion tocheck
                 $data = $this->toCheck($formated_date);
                 session()->set('count', count($data));
@@ -168,7 +166,7 @@ class Calendar extends BaseController
         } else if (session()->get('event') == 'Baptism') {
             $ST = ['09:00:00', '10:00:00', '11:00:00', '14:00:00', '15:00:00'];
             $ET = ['09:45:00', '10:45:00', '11:45:00', '14:45:00', '15:45:00'];
-        } else if (session()->get('event') == 'Funeral') {
+        } else if (session()->get('event') == 'Funeral Mass/Blessing') {
             $ST = ['08:00:00', '13:00:00'];
         } else if (session()->get('event') == 'Mass Intention') {
             if ($day == "Sunday") {
@@ -184,7 +182,7 @@ class Calendar extends BaseController
         $avtime = $ST;
         $break = false;
         //para alisin yung time taken or naapektuhan ng event ng iba
-        if (session()->get('event') != 'Mass Intention' && session()->get('event') != 'Funeral') {
+        if (session()->get('event') != 'Mass Intention' && session()->get('event') != 'Funeral Mass/Blessing') {
             for ($x = 0; $x < count($ST); $x++) {
                 for ($y = 0; $y < $count; $y++) {
                     if (strtotime($ST[$x]) == strtotime($data[$y]['evTSt'])) { //kapag magkaparehas yung start time

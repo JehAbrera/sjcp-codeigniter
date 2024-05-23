@@ -87,3 +87,9 @@ $routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
 $routes->post('/admin/announcements/add', [Admin::class, 'addItem']);
 $routes->post('/admin/announcements/delete', [Admin::class, 'delItem']);
 $routes->post('/admin/announcements/edit', [Admin::class, 'editItem']);
+
+/* Post request for adding faqs and editing existing */
+$routes->post('/admin/faqs/add', [Admin::class, 'addfaqItem']);
+$routes->post('/admin/faqs/delete', [Admin::class, 'delfaqItem']);
+$routes->post('/admin/faqs/edit', [Admin::class, 'editfaqItem']);
+

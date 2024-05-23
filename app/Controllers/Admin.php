@@ -2,6 +2,7 @@
 // Redirect admin controller request in this page
 namespace App\Controllers;
 
+use App\Models\FaqsCont;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
 
@@ -11,7 +12,7 @@ use App\Models\Announcement;
 class Admin extends BaseController
 {
     protected $count, $pager, $records, $getres, $announce;
-    protected $updateres, $email;
+    protected $updateres, $email, $faqs;
 
     public function __construct()
     {
@@ -22,6 +23,7 @@ class Admin extends BaseController
         $this->count = new Count();
         $this->pager = \Config\Services::pager();
         $this->announce = new Announcement();
+        $this->faqs = new FaqsCont();
     }
 
     public function admin($page)
@@ -57,6 +59,12 @@ class Admin extends BaseController
         if ($page == 'announcements') {
             $addInf = [
                 'announcements' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+        }
+
+        if ($page == 'faqs') {
+            $addInf = [
+                'faqs' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
         $data = array_merge($data, $addInf);
@@ -129,7 +137,6 @@ class Admin extends BaseController
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
-                // purpose values can only be --otp-- or --status-- //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
                 return redirect()->to('/admin/reservations/status/Accepted')->with('SucMess', 'Reservation successfully accepted!');
             }
@@ -144,7 +151,6 @@ class Admin extends BaseController
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
-                // purpose values can only be --otp-- or --status-- //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Declined', $reason);
                 return redirect()->to('/admin/reservations/status/Declined')->with('SucMess', 'Reservation successfully declined!');
             }
@@ -154,7 +160,6 @@ class Admin extends BaseController
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
-                // purpose values can only be --otp-- or --status-- //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Completed');
                 return redirect()->to('/admin/reservations/status/Completed')->with('SucMess', 'Reservation successfully completed!');
             }
@@ -162,6 +167,7 @@ class Admin extends BaseController
 
     }
 
+    //get details from database
     public function viewDetails($tbl, $id)
     {
         $reserv = $this->getres->getDetails($tbl, $id);
@@ -182,6 +188,58 @@ class Admin extends BaseController
             return $this->table = 'detbls';
         } else {
             return $this->table = 'detdocu';
+        }
+    }
+
+    // Functions for faqs 
+    public function addfaqItem()
+    {
+        $ques = ucfirst($this->request->getPost('question'));
+        $ans = ucfirst($this->request->getPost('answer'));
+        $data = [
+            'question' => $ques,
+            'answer' => $ans,
+        ];
+        if ($this->faqs->save($data)) {
+            return redirect()->to('/admin/faqs')->with('faqsSuc', "Frequently Asked Question successfully created!");
+        } else {
+            return redirect()->to('/admin/faqs')->with('faqsErr', "Frequently Asked Question, please try again");
+        }
+    }
+    // Delete an faqs
+    public function delfaqItem() {
+        $id = $this->request->getPost('id');
+
+        $row = $this->faqs->find($id);
+
+        if ($row) {
+            $file = $row['id'];
+
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
+            $this->faqs->delete($id);
+
+            return redirect()->to('/admin/faqs')->with('faqsSuc', "Frequently Asked Question deleted successfully!");
+        } else {
+            return redirect()->to('/admin/faqs')->with('faqsErr', "Failed to delete Frequently Asked Question Item, please try again.");
+        }
+    }
+
+    // Edit faqs
+    public function editfaqItem() {
+        $id = $this->request->getPost('id');
+        $ques = ucfirst($this->request->getPost('question'));
+        $ans = ucfirst($this->request->getPost('answer'));
+        $data = [
+            'question' => $ques,
+            'answer' => $ans,
+        ];
+        if ($this->faqs->save($data)) {
+            return redirect()->to('/admin/faqs')->with('faqsSuc', "Frequently Asked Question successfully updated!");
+        } else {
+            return redirect()->to('/admin/faqs')->with('faqsErr', "Failed to update Frequently Asked Question Item, please try again");
         }
     }
 

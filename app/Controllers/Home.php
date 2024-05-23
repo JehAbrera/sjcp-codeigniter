@@ -6,6 +6,10 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Home extends BaseController
 {
+    protected $records;
+    public function __construct(){
+        $this->records = new \App\Models\Records();
+    }
 
     public function index(): string
     {
@@ -29,7 +33,15 @@ class Home extends BaseController
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
         }
+
+        if ($page == 'faqs') {
+            $addInf = [
+                'faqs' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+        }
         $data['title'] = ucfirst($page);
+
+        $data = array_merge($data, $addInf);
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
     }
 
