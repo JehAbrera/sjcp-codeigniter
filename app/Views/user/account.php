@@ -53,9 +53,9 @@
                                 <span class="label-text">Password</span>
                             </label>
                             <div class=" w-full relative flex">
-                                <input type="password" placeholder="password" name="password"
+                                <input type="password" placeholder="password" id="loginpass" name="password"
                                     class="input input-bordered w-full" required />
-                                <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
+                                <i data-lucide="eye" id="loginicon" onclick="toggle(loginpass, loginicon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
                             </div>
                         </div>
                         <div class="form-control items-center mt-10 gap-2">
@@ -129,9 +129,9 @@
                                     <span class="label-text">Password</span>
                                 </label>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="password" name="pass"
+                                    <input type="password" placeholder="password" name="pass" id="pass"
                                         class="input input-bordered w-full" />
-                                    <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
+                                    <i data-lucide="eye" id="passicon" onclick="toggle(pass, passicon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
                                 </div>
                             </div>
                             <div class="form-control">
@@ -139,9 +139,9 @@
                                     <span class="label-text">Confirm Password</span>
                                 </label>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="confirm password" name="conpass"
+                                    <input type="password" placeholder="confirm password" name="conpass" id="conpass"
                                         class="input input-bordered w-full" />
-                                    <i data-lucide="eye" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2"></i>
+                                    <i data-lucide="eye" id="conpassicon" onclick="toggle(conpass, conpassicon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
                                 </div>
                             </div>
                             <div class="form-control">
@@ -199,6 +199,7 @@
         </div>
     </section>
 </main>
+<script src="<?= base_url('./scripts/Registration.js') ?>"></script>
 <!-- Development version -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <!-- Production version -->
