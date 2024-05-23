@@ -20,6 +20,7 @@ use Config\App;
 */
 $routes->get('/', [Home::class, 'index']);
 $routes->get('(:segment)', [Home::class, 'user']);
+$routes->get('/termsandservices/view', [Home::class, 'terms']);
 $routes->get('/admin/(:segment)', [Admin::class, 'admin']);
 /*
 /*
@@ -44,6 +45,7 @@ $routes->post('/calendar/step3', [Calendar::class, 'step3']);
 $routes->post('/calendar/step4', [Calendar::class, 'step4']);
 
 /* Form route area for reserve */
+$routes->get('/reserve/check', [Reserve::class, 'checkLogin']);
 $routes->get('/reserve/index', [Reserve::class, 'index']);
 $routes->post('/reserve/back', [Reserve::class, 'back']);
 $routes->post('/reserve/wedding', [Reserve::class, 'resWedding']);
@@ -54,6 +56,7 @@ $routes->post('/reserve/blessing', [Reserve::class, 'resBlessing']);
 $routes->post('/reserve/docureq', [Reserve::class, 'resDocument']);
 
 //Form route are for my reservation
+$routes->get('/myreservation/index', [MyReservation::class, 'checkLogin']);
 $routes->get('/myreservation/status/(:segment)', [MyReservation::class, 'getStatus']);
 $routes->post('/myreservation/cancel', [MyReservation::class, 'cancelReserve']);
 
@@ -78,6 +81,7 @@ $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
 
 
 $routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
+$routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
 
 /* Post request for adding announcement and editing existing */
 $routes->post('/admin/announcements/add', [Admin::class, 'addItem']);

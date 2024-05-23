@@ -13,15 +13,30 @@ class UpdateReservation extends Model
         $this->db = db_connect();
     }
 
-    public function cancelReserv($id, $reason)
+    public function updateReserv($id, $reason, $status)
     {
         $builder = $this->db->table('allevents');
         $update = [
-            'status' => 'Canceled',
+            'status' => $status,
             'reason' => $reason,
         ];
         
         $builder->where('id', $id);
-        $builder->update($update);
-    }   
+        $check = $builder->update($update);
+
+        return $check;
+    } 
+    
+    public function acceptReserv($id, $status)
+    {
+        $builder = $this->db->table('allevents');
+        $update = [
+            'status' => $status,
+        ];
+        
+        $builder->where('id', $id);
+        $check = $builder->update($update);
+
+        return $check;
+    }
 }

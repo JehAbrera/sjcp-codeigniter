@@ -31,8 +31,11 @@
                             <summary>Services</summary>
                             <ul class=" bg-slate-950">
                                 <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/services">Services</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Reserve Event</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/myreservation/status/Pending">My Reservations</a></li>
+                                <?php
+                                if (session()->has('isLogged') || session()->has('isLogged') && session()->isLogged) { ?>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/reserve/check">Reserve Event</a></li>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/myreservation/index">My Reservations</a></li>
+                                <?php } ?>
                             </ul>
                         </details>
                     </li>
@@ -40,8 +43,10 @@
                         <details close>
                             <summary>Events</summary>
                             <ul class=" bg-slate-950">
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/announcement">Announcements</a></li>
-                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Available Time Slots</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a
+                                        href="/announcement">Announcements</a></li>
+                                <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/calendar/index">Available
+                                        Time Slots</a></li>
                             </ul>
                         </details>
                     </li>
@@ -54,8 +59,10 @@
                             <details close>
                                 <summary><i data-lucide="circle-user"></i>Profile</summary>
                                 <ul class=" bg-slate-950">
-                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/user/view">My Profile</a></li>
-                                    <li class=" hover:bg-slate-700 hover:rounded-md"><label for="logoutModal">Logout</label></li>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><a href="/user/view">My Profile</a>
+                                    </li>
+                                    <li class=" hover:bg-slate-700 hover:rounded-md"><label for="logoutModal">Logout</label>
+                                    </li>
                                 </ul>
                             </details>
                         </li>
@@ -64,7 +71,8 @@
                 </ul>
             </div>
         </div>
-        <div id="sidenav" role="side-nav" class=" hidden flex-col z-40 bg-slate-950 text-zinc-100 py-4 fixed top-0 left-0 w-full h-screen">
+        <div id="sidenav" role="side-nav"
+            class=" hidden flex-col z-40 bg-slate-950 text-zinc-100 py-4 fixed top-0 left-0 w-full h-screen">
             <span class=" self-end pe-4 hover:cursor-pointer" onclick="toggleSide()"><i data-lucide="x"></i></span>
             <ul class=" menu">
                 <li><a href="">Home</a></li>
@@ -99,7 +107,8 @@
                     <i data-lucide="log-out" class=" w-16 h-16"></i>
                 </div>
                 <h3 class="font-bold text-lg text-center">Confirm Logout?</h3>
-                <p class="py-4 text-center text-balance">Logging out will require you to sign in again to access your account.</p>
+                <p class="py-4 text-center text-balance">Logging out will require you to sign in again to access your
+                    account.</p>
                 <div class="modal-action mt-0 justify-center">
                     <label for="logoutModal" class="btn btn-error btn-outline">No</label>
                     <button class=" btn btn-success" onclick="location.href = '/logout'">Yes</button>
