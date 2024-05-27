@@ -96,6 +96,12 @@ class Records extends Model
             $this->table = 'detannou';
         } elseif ($value == 'faqs') {
             $this->table = 'faqscont';
+        } elseif ($value == 'services') {
+            $this->table = 'servecont';
+        } elseif ($value == 'about') {
+            $this->table = 'aboutuscont';
+        } elseif ($value == 'emp') {
+            $this->table = 'employee';
         }
     }
 }

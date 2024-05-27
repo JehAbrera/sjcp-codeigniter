@@ -94,3 +94,15 @@ $routes->post('/admin/faqs/add', [Admin::class, 'addfaqItem']);
 $routes->post('/admin/faqs/delete', [Admin::class, 'delfaqItem']);
 $routes->post('/admin/faqs/edit', [Admin::class, 'editfaqItem']);
 
+/* Post request for adding services and editing existing */
+$routes->post('/admin/services/add', [Admin::class, 'addserveItem']);
+$routes->post('/admin/services/delete', [Admin::class, 'delserveItem']);
+$routes->post('/admin/services/edit', [Admin::class, 'editserveItem']);
+
+/* Post request for adding services and editing existing */
+$routes->post('/admin/about/add', [Admin::class, 'addaboutItem']);
+$routes->post('/admin/about/delete', [Admin::class, 'delaboutItem']);
+$routes->post('/admin/about/edit', [Admin::class, 'editaboutItem']);
+$routes->post('/admin/employee/add', [Admin::class, 'addemployeeItem']);
+
+

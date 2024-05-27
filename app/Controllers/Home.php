@@ -47,6 +47,36 @@ class Home extends BaseController
             $data = array_merge($data, $addInf);
             return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
         }
+
+        if ($page == 'services') {
+            $addInf = [
+                'services' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+            if ($page == 'success') {
+                return view('user/' . $page);
+            }
+            $data['title'] = ucfirst($page);
+
+            $data = array_merge($data, $addInf);
+            return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
+        }
+
+        if ($page == 'about') {
+            $addInf = [
+                'about' => $this->records->getAnnouncements($page)->paginate(10),
+                'employee' => $this->records->getAnnouncements('emp')->paginate(10)
+            ];
+            if ($page == 'success') {
+                return view('user/' . $page);
+            }
+            $data['title'] = ucfirst($page);
+
+            $data = array_merge($data, $addInf);
+            return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
+        }
+
+        $data['title'] = ucfirst($page);
+        return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
     }
 
     public function terms()
