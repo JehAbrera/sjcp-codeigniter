@@ -37,21 +37,18 @@
                 'gender' => '',
                 'dob' => '',
                 'pob' => '',
-                'addr' => '',
-                'num' => '',
+                'plcBap' => '',
+                'datBap' => '',
                 'fatN' => '',
-                'fatPob' => '',
                 'motN' => '',
-                'motPob' => '',
-                'mrgTp' => '',
+                'num' => '',
+                'addr' => '',
                 'gFatN' => '',
-                'gFatAd' => '',
                 'gMotN' => '',
-                'gMotAd' => '',
             ];
             break;
         case 'Wedding':
-            $view = 'templates/recordforms/confirmation';
+            $view = 'templates/recordforms/wedding';
             $values = [
                 'date' => '',
                 'time' => '',
@@ -75,7 +72,7 @@
             ];
             break;
         case 'Funeral Mass':
-            $view = 'templates/recordforms/confirmation';
+            $view = 'templates/recordforms/funeral';
             $values = [
                 'date' => '',
                 'time' => '',
@@ -293,25 +290,22 @@
                                     "Godmother's Name" => $rec['gMotN'],
                                 ];
                                 $values = [
-                                    'date' => '',
-                                    'time' => '',
-                                    'fn' => '',
-                                    'mn' => '',
-                                    'ln' => '',
-                                    'gender' => '',
-                                    'dob' => '',
-                                    'pob' => '',
-                                    'addr' => '',
-                                    'num' => '',
-                                    'fatN' => '',
-                                    'fatPob' => '',
-                                    'motN' => '',
-                                    'motPob' => '',
-                                    'mrgTp' => '',
-                                    'gFatN' => '',
-                                    'gFatAd' => '',
-                                    'gMotN' => '',
-                                    'gMotAd' => '',
+                                    'date' => date('F d, Y', strtotime($rec['date'])),
+                                    'time' => date('h:i a', strtotime($rec['time'])),
+                                    'fn' => $rec['fn'],
+                                    'mn' => $rec['mn'],
+                                    'ln' => $rec['ln'],
+                                    'gender' => $rec['gender'],
+                                    'dob' => $rec['dob'],
+                                    'pob' => $rec['pob'],
+                                    'plcBap' => $rec['plcBap'],
+                                    'datBap' => $rec['datBap'],
+                                    'fatN' => $rec['fatN'],
+                                    'motN' => $rec['motN'],
+                                    'num' => $rec['num'],
+                                    'addr' => $rec['addr'],
+                                    'gFatN' => $rec['gFatN'],
+                                    'gMotN' => $rec['gMotN'],
                                 ];
                             ?>
                                 <td class=" py-1"><?= $rec['fn'] . ' ' . $rec['ln'] ?></td>

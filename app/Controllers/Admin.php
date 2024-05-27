@@ -7,6 +7,7 @@ use App\Models\Count;
 
 use App\Libraries\EmailSender;
 use App\Models\Announcement;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Admin extends BaseController
@@ -125,16 +126,33 @@ class Admin extends BaseController
                     'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
                     'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
                 ];
-
-                if ($record->save($values)) {
-                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully added!');
-                } else {
-                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to add record!');
-                }
                 break;
 
             case 'Confirmation':
-                # code...
+                $dob = strval($this->request->getPost('bday'));
+                $bday = Time::parse($dob);
+                $now = Time::now();
+                $age = $bday->difference($now)->getYears();
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'age' => $age,
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'plcBap' => ucfirst(strval($this->request->getPost('plcBap'))),
+                    'datBap' => strval($this->request->getPost('datBap')),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'num' => "+63" . strval($this->request->getPost('num')),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'gFatN' => ucwords(strval($this->request->getPost('gFatN'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gMotN'))),
+                ];
                 break;
 
             case 'Wedding':
@@ -145,6 +163,11 @@ class Admin extends BaseController
                 # code...
                 break;
         }
+        if ($record->save($values)) {
+            return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully added!');
+        } else {
+            return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to add record!');
+        }
     }
     public function editRec($type)
     {
@@ -153,10 +176,9 @@ class Admin extends BaseController
                 $record = new \App\Models\Records\Baptism();
 
                 $id = (int) $this->request->getPost('id');
-                $date = strval($this->request->getPost('bapD'));
                 $values = [
-                    'date' => strval($this->request->getPost('bapD')),
-                    'time' => $this->request->getPost('bapT'),
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => $this->request->getPost('time'),
                     'fn' => ucwords(strval($this->request->getPost('fn'))),
                     'mn' => ucwords(strval($this->request->getPost('mn'))),
                     'ln' => ucwords(strval($this->request->getPost('ln'))),
@@ -175,15 +197,37 @@ class Admin extends BaseController
                     'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
                     'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
                 ];
-                if ($record->update($id, $values)) {
-                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully updated!');
-                } else {
-                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to update record!');
-                }
                 break;
 
             case 'Confirmation':
-                # code...
+                $record = new \App\Models\Records\Confirmation();
+
+                $dob = strval($this->request->getPost('bday'));
+                $bday = Time::parse($dob);
+                $now = Time::now();
+                $age = $bday->difference($now)->getYears();
+
+                $id = (int) $this->request->getPost('id');
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'age' => $age,
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'plcBap' => ucfirst(strval($this->request->getPost('plcBap'))),
+                    'datBap' => strval($this->request->getPost('datBap')),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'num' => "+63" . strval($this->request->getPost('num')),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'gFatN' => ucwords(strval($this->request->getPost('gFatN'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gMotN'))),
+                ];
                 break;
 
             case 'Wedding':
@@ -193,6 +237,11 @@ class Admin extends BaseController
             case 'Funeral Mass':
                 # code...
                 break;
+        }
+        if ($record->update($id, $values)) {
+            return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully updated!');
+        } else {
+            return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to update record!');
         }
     }
 

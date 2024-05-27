@@ -1,11 +1,11 @@
 <div class=" w-full grid grid-cols-2 gap-1">
     <div class=" w-full form-control">
         <label class=" label-text-alt" for="">Baptism Date</label>
-        <input type="date" name="bapD" <?= !empty(set_value('bapD', $date)) ? 'value="' . esc(set_value('bapD', date('Y-m-d', strtotime($date)))) . '"' : '' ?> id="" class=" input input-bordered">
+        <input type="date" name="date" <?= !empty(set_value('bapD', $date)) ? 'value="' . esc(set_value('bapD', date('Y-m-d', strtotime($date)))) . '"' : '' ?> id="" class=" input input-bordered">
     </div>
     <div class=" w-full form-control">
         <label class=" label-text-alt" for="">Time</label>
-        <input type="time" name="bapT" <?= !empty(set_value('bapT', $time)) ? 'value="' . esc(set_value('bapT', date('H:i', strtotime($time)))) . '"' : '' ?> id="" class=" input input-bordered">
+        <input type="time" name="time" <?= !empty(set_value('bapT', $time)) ? 'value="' . esc(set_value('bapT', date('H:i', strtotime($time)))) . '"' : '' ?> id="" class=" input input-bordered">
     </div>
 </div>
 <label for="">Participant's Name</label>
@@ -75,7 +75,7 @@
         <label class=" label-text-alt" for="">Parent/Guardian's Contact Number</label>
         <div class="join w-full">
             <label for="" class=" join-item btn btn-disabled">+63</label>
-            <input type="text" name="num" id="" value="<?= set_value('num', $num) ?>" class=" input input-bordered w-full join-item">
+            <input type="text" name="num" id="" value="<?= set_value('num', trim($num, '+63')) ?>" class=" input input-bordered w-full join-item">
         </div>
     </div>
     <div class=" w-full form-control">
