@@ -103,6 +103,5 @@ $routes->post('/admin/services/edit', [Admin::class, 'editserveItem']);
 $routes->post('/admin/about/add', [Admin::class, 'addaboutItem']);
 $routes->post('/admin/about/delete', [Admin::class, 'delaboutItem']);
 $routes->post('/admin/about/edit', [Admin::class, 'editaboutItem']);
-$routes->post('/admin/employee/add', [Admin::class, 'addemployeeItem']);
 
 
