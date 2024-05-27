@@ -14,7 +14,7 @@
                     <option disabled selected value="">Select Event</option>
                     <option value="Wedding">Wedding</option>
                     <option value="Baptism">Baptism</option>
-                    <option value="Funeral Mass/Blessing">Funeral</option>
+                    <option value="Funeral Mass/Blessing">Funeral Mass/Blessing</option>
                     <option value="Mass Intention">Mass Intention</option>
                     <option value="Blessing">Blessing</option>
                     <option value="Document Request">Document Request</option>
@@ -45,6 +45,7 @@
                                 data-lucide="chevron-left"></i> Back</button>
                 <?= form_close() ?>
                     </div>
+                    
                     <div class="w-full">
                         <p>Step 2 of 2:</p>
                         <b class="card-title">Select Date to Reserve</b>
@@ -87,7 +88,7 @@
                                                 class="inline-flex items-center justify-between w-fit p-1 text-black bg-white rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-zinc-100 hover:bg-slate-950">
                                                 <p><?= session()->get('message') ?></p>
                                             </label>
-                                <?php } else if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral" || session()->get('event') == "Mass Intention") {
+                                <?php } else if (session()->get('event') == "Wedding" || session()->get('event') == "Baptism" || session()->get('event') == "Funeral Mass/Blessing" || session()->get('event') == "Mass Intention") {
                                         $time = session()->get('try');
                                         $timeArray = explode(',', $time, -1);
                                         if (count($timeArray) != 0) {

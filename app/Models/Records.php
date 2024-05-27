@@ -94,6 +94,8 @@ class Records extends Model
             $this->table = 'recfun';
         } elseif ($value == 'announcements') {
             $this->table = 'detannou';
+        } elseif ($value == 'faqs') {
+            $this->table = 'faqscont';
         }
     }
 }

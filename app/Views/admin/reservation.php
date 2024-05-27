@@ -22,7 +22,7 @@
     <section role="table-area" class=" flex flex-col">
         <p class=" text-xl font-semibold p-4"><?= $type ?> </p>
         <?php $viewArray = []; ?>
-        
+
         <?php
         if (session()->has('SucMess')) { ?>
             <div class="alert alert-success">
@@ -155,6 +155,9 @@
                                         'Contact Number' => $det['num'],
                                         'Purpose' => $det['purp'],
                                         'Address' => $det['addr'],
+                                        'Birth Certificate' => $det['birthC'],
+                                        'Barangay Certificate' => $det['brgyC'],
+                                        'Kawan Certificate' => $det['kawanC'],
                                     ]
                                         ?>
 
@@ -164,32 +167,71 @@
 
                             <td colspan="2" class=" py-1 flex">
                                 <div class="tooltip" data-tip="View">
-                                    <label for="view<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="eye" class=""></i></label>
+                                    <label for="view<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="eye"
+                                            class=""></i></label>
                                     <input type="checkbox" id="view<?= $res['id'] ?>" class="modal-toggle" />
+                                    <!-- modal for viewing details -->
                                     <div class="modal" role="dialog">
                                         <div class="modal-box">
                                             <h3 class="font-bold text-lg"><?= $res['refN'] ?> Details</h3>
+                                            <label for="view<?= $res['id'] ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i
+                                        data-lucide="X"></i></label>
                                             <div class=" flex flex-col w-full gap-2">
                                                 <?php
-                                                foreach ($viewArray as $key => $value) { ?>
-                                                    <div class=" form-control w-full items-start">
-                                                        <span class=" label-text-alt"><?= $key ?></span>
-                                                        <span
-                                                            class=" outline outline-1 outline-zinc-300 p-2 rounded w-full"><?= $value ?></span>
-                                                    </div>
-                                                <?php }
+                                                foreach ($viewArray as $key => $value) {
+                                                    if ($value == " ") {
+                                                        break;
+                                                    } else {
+                                                        if ($key == "Birth Certificate" || $key == "Kawan Certificate" || $key == "Barangay Certificate") { ?>
+                                                            <div class="form-control w-full items-start">
+                                                                <span><?= $key ?></span>
+                                                                <span
+                                                                    class=" outline outline-1 outline-zinc-300 p-2 rounded w-full flex justify-between">
+                                                                    <?php
+                                                                    $array = explode('/', $value);
+                                                                    $filename = end($array);
+                                                                    ?>
+                                                                    <p><?= $filename ?></p>
+                                                                    <div class="tooltip" data-tip="View Image">
+                                                                        <label for="modal_viewImage<?= $value ?>"><i
+                                                                                data-lucide="external-link"></i></label>
+                                                                        <!-- modal for viewing image -->
+                                                                        <div>
+                                                                            <input type="checkbox" id="modal_viewImage<?= $value ?>"
+                                                                                class="modal-toggle" />
+                                                                            <div class="modal" role="dialog">
+                                                                                <div class="modal-box">
+                                                                                    <h3 class="font-bold text-lg"><?= $key ?></h3>
+                                                                                    <label for="modal_viewImage<?= $value ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
+                                                                                    <div class=" flex flex-col w-full gap-2">
+                                                                                        <br>
+                                                                                        <div class=" form-control w-full items-start">
+                                                                                            <img src="<?= base_url(' /' . $value) ?>" alt="<?= $filename ?>" width="500" height="500">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class=" form-control w-full items-start">
+                                                                <span class=" label-text-alt"><?= $key ?></span>
+                                                                <span
+                                                                    class=" outline outline-1 outline-zinc-300 p-2 rounded w-full"><?= $value ?></span>
+                                                            </div>
+                                                        <?php }
+                                                    }
+                                                }
                                                 ?>
                                             </div>
-                                        </div>
-                                        <div class="modal-action justify-center fixed top-4 right-10 z-[99]">
-                                            <label for="view<?= $res['id'] ?>" class="btn btn-error btn-circle"><i
-                                                    data-lucide="X"></i></label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- modal for reason -->
-                            <?= form_open('/admin/reservations/update') ?>
+                                <?= form_open('/admin/reservations/update') ?>
                                 <?php
                                 if ($res['status'] == "Pending" || $res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Decline">
@@ -267,15 +309,15 @@
                                 <input type="hidden" name="id" value="<?= $res['id'] ?>">
                                 <input type="hidden" name="email" value="<?= $res['email'] ?>">
                                 <input type="hidden" name="refn" value="<?= $res['refN'] ?>">
-                            <?= form_close() ?>
+                                <?= form_close() ?>
 
 
-                            <!-- modal for approving the reservation -->
-                            <?php
+                                <!-- modal for approving the reservation -->
+                                <?php
                                 if ($res['status'] == "Pending") { ?>
                                     <div class="tooltip" data-tip="Approve">
-                                        <label for="modal_approve<?= $res['id'] ?>" class="btn bg-blue-500"><i data-lucide="calendar-check"
-                                                class=""></i></label>
+                                        <label for="modal_approve<?= $res['id'] ?>" class="btn bg-blue-500"><i
+                                                data-lucide="calendar-check" class=""></i></label>
                                         <input type="checkbox" id="modal_approve<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
@@ -304,12 +346,12 @@
 
 
                                 <!-- modal for complete -->
-                            <?= form_open('/admin/reservations/update') ?>
+                                <?= form_open('/admin/reservations/update') ?>
                                 <?php
                                 if ($res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Complete">
-                                        <label for="modal_comp<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-check"
-                                                class="bg-green-500 text-white"></i></label>
+                                        <label for="modal_comp<?= $res['id'] ?>" class="btn bg-zinc-300"><i
+                                                data-lucide="square-check" class="bg-green-500 text-white"></i></label>
                                         <input type="checkbox" id="modal_comp<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
