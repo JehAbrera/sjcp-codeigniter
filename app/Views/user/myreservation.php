@@ -310,9 +310,8 @@
                                 </div>
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to reschedule this reservation?
                                 </h3>
-                                <p class="py-1 text-center text-sm">This reservation will be removed and will appear as
-                                    cancelled in
-                                    your appointment history.</p>
+                                <p class="py-1 text-center text-sm">You will need to select a new date and time for
+                                    this reservation.</p>
                                 <div class="modal-action justify-center m-1">
                                     <label for="modal_resched<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
                                     <button type="submit" name="submit" value="submitform"

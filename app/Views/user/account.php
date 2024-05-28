@@ -128,9 +128,51 @@
                                 <label class="label">
                                     <span class="label-text">Password</span>
                                 </label>
+                                <script>
+                                        function validate_password() 
+                                        {
+                                        let pass = document.getElementById('pass').value;
+                                        let confirm_pass = document.getElementById('conpass').value;
+                                        var paswnum=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+                                        var paswsym=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                                        
+                                        if (confirm_pass=="") 
+                                        {
+                                            document.getElementById('error_msg').style.color = 'green';
+                                            document.getElementById('error_msg').innerHTML =
+                                                '';
+                                            document.getElementById('create').disabled = false;
+                                            document.getElementById('create').style.opacity = (1);
+                                        }
+                                        else if (pass != confirm_pass) 
+                                        {
+                                            document.getElementById('error_msg').style.color = 'red';
+                                            document.getElementById('error_msg').innerHTML
+                                                = 'Password and Confirm Password do not match';
+                                            document.getElementById('create').disabled = true;
+                                            document.getElementById('create').style.opacity = (0.4);
+                                        }
+                                        else if (pass.match(paswnum)||pass.match(paswsym)&&confirm_pass.match(paswnum)||confirm_pass.match(paswsym)) 
+                                        {
+                                            document.getElementById('error_msg').style.color = 'green';
+                                            document.getElementById('error_msg').innerHTML =
+                                                '';
+                                            document.getElementById('create').disabled = false;
+                                            document.getElementById('create').style.opacity = (1);
+                                        }
+                                        else 
+                                        {
+                                            document.getElementById('error_msg').style.color = 'red';
+                                            document.getElementById('error_msg').innerHTML
+                                                = 'Password must contain at least 8 characters, a combination of uppercase and lowercase letters, and at least one or more number or special character';
+                                            document.getElementById('create').disabled = true;
+                                            document.getElementById('create').style.opacity = (0.4);
+                                        }
+                                        }
+                                </script>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="password" name="pass" id="pass"
-                                        class="input input-bordered w-full" />
+                                    <input type="password" placeholder="password" name="pass" id="pass" 
+                                        class="input input-bordered w-full" onkeyup="validate_password()"/>
                                     <i data-lucide="eye" id="passicon" onclick="toggle(pass, passicon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
                                 </div>
                             </div>
@@ -139,10 +181,11 @@
                                     <span class="label-text">Confirm Password</span>
                                 </label>
                                 <div class=" w-full relative flex">
-                                    <input type="password" placeholder="confirm password" name="conpass" id="conpass"
-                                        class="input input-bordered w-full" />
+                                    <input type="password" placeholder="confirm password" name="conpass" id="conpass" 
+                                        class="input input-bordered w-full" onkeyup="validate_password()"/>
                                     <i data-lucide="eye" id="conpassicon" onclick="toggle(conpass, conpassicon)" class=" absolute top-1/2 left-[calc(100%-2em)] -translate-y-1/2 cursor-pointer"></i>
                                 </div>
+                                 <span id="error_msg"></span>
                             </div>
                             <div class="form-control">
                                 <label class="cursor-pointer label">
