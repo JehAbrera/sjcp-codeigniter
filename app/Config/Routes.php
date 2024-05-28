@@ -81,7 +81,8 @@ $routes->post('admin/records/(:segment)', [Admin::class, 'getName']);
 $routes->post('admin/records/(:segment)/add', [Admin::class, 'addRec']);
 $routes->post('admin/records/(:segment)/edit', [Admin::class, 'editRec']);
 
-$routes->get('/admin/reservations/status/(:segment)', [Admin::class, 'getStatus']);
+/* Post request for displaying resevations */
+$routes->get('/admin/reservations/status/(:segment)/(:segment)', [Admin::class, 'getStatus']);
 $routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
 
 /* Post request for adding announcement and editing existing */

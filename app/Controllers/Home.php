@@ -15,10 +15,12 @@ class Home extends BaseController
     public function index(): string
     {
         $data['title'] = "Home";
+        session()->remove('step');
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');
     }
     public function user($page)
     {
+        session()->remove('step');
         if ($page == "logout") {
             if (session()->has('isLogged')) {
                 session()->remove('isLogged');

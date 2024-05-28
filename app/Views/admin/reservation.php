@@ -6,17 +6,17 @@
     <div class=" flex justify-between items-center">
         <p class=" text-xl font-semibold">Filter by: </p>
         <div class="flex py-4">
-            <button onclick="location.href='/admin/reservations/status/Pending'" class="btn">Pending</button>
-            <button onclick="location.href='/admin/reservations/status/Accepted'" class="btn">Accepted</button>
-            <button onclick="location.href='/admin/reservations/status/Completed'" class="btn">Completed</button>
-            <button onclick="location.href='/admin/reservations/status/Declined'" class="btn">Declined</button>
-            <button onclick="location.href='/admin/reservations/status/Canceled'" class="btn">Canceled</button>
+            <button onclick="location.href='/admin/reservations/status/Pending/<?= $order ?>'" class="btn">Pending</button>
+            <button onclick="location.href='/admin/reservations/status/Accepted/<?= $order ?>'" class="btn">Accepted</button>
+            <button onclick="location.href='/admin/reservations/status/Completed/<?= $order ?>'" class="btn">Completed</button>
+            <button onclick="location.href='/admin/reservations/status/Declined/<?= $order ?>'" class="btn">Declined</button>
+            <button onclick="location.href='/admin/reservations/status/Canceled/<?= $order ?>'" class="btn">Canceled</button>
         </div>
 
         <p class=" text-xl font-semibold">Order by: </p>
         <div class="flex py-4">
-            <button onclick="location.href='/admin/reservations/status/Pending'" class="btn">Newest</button>
-            <button onclick="location.href='/admin/reservations/status/Accepted'" class="btn">Oldes</button>
+            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/ASC'" class="btn">Newest</button>
+            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/DESC'" class="btn">Oldes</button>
         </div>
     </div>
     <section role="table-area" class=" flex flex-col">
@@ -35,10 +35,10 @@
             <thead>
                 <tr class=" border-b-slate-900">
                     <th class="text-left">Reference #</th>
-                    <th class="text-left">Name</th>
-                    <th class="text-left" colspan="2">Email</th>
+                    <th colspan="2" class="text-left">Name</th>
+                    <th colspan="2" class="text-left">Email</th>
                     <th class="text-left">Date</th>
-                    <th class="text-left">Time of Reservation</th>
+                    <th class="text-left">Time </th>
                     <th class="text-left">Reservation</th>
                     <th colspan="2" class="text-left">Actions</th>
                 </tr>
@@ -53,7 +53,7 @@
                     foreach ($reservations as $res) { ?>
                         <tr>
                             <td class=" py-1 text-left"><?= $res['refN'] ?></td>
-                            <td class=" py-1 text-left"><?= $res['name'] ?></td>
+                            <td colspan="2" class=" py-1 text-left"><?= $res['name'] ?></td>
                             <td colspan="2" class=" py-1 text-left"><?= $res['email'] ?></td>
                             <td class=" py-1 text-left"><?= date('F d, Y', strtotime($res['apDate'])) ?></td>
                             <td class=" py-1 text-left"><?= date('h:i a', strtotime($res['apTime'])) ?></td>
@@ -80,6 +80,8 @@
                                         "Godfather's Address" => $det['gFatAd'],
                                         "Godmother's Name" => $det['gMotN'],
                                         "Godmother's Address" => $det['gMotAd'],
+                                        "Child's Birth Certificate" => $det['PSA'],
+                                        "Parents Marriage Contract" => $det['marCont'],
                                     ]
                                         ?>
                                 <?php } else if ($res['type'] == 'Wedding') {
@@ -95,6 +97,11 @@
                                         "Groom's Father's Name" => $det['gFat'],
                                         "Groom's Mother's Name" => $det['gMot'],
                                         "Groom's Religion" => $det['gRel'],
+                                        "Groom's 2x2 Picture" => $det['gID'],
+                                        "Groom's Birth Certificate" => $det['gPSA'],
+                                        "Groom's Cenomar" => $det['gCEN'],
+                                        "Groom's Baptismal Certificate" => $det['gBapC'],
+                                        "Groom's Confirmation Certificate" => $det['gConC'],
                                         "<h3 class='font-bold text-lg'>Bride's Information</h3>" => '',
                                         "Bride's Name" => $det['bFn'] . " " . $det['bMn'] . " " . $det['bLn'],
                                         "Bride's Contact" => $det['bNum'],
@@ -104,6 +111,11 @@
                                         "Bride's Father's Name" => $det['bFat'],
                                         "Bride's Mother's Name" => $det['bMot'],
                                         "Bride's Religion" => $det['bRel'],
+                                        "Bride's 2x2 Picture" => $det['bID'],
+                                        "Bride's Birth Certificate" => $det['bPSA'],
+                                        "Bride's Cenomar" => $det['bCEN'],
+                                        "Bride's Baptismal Certificate" => $det['bBapC'],
+                                        "Bride's Confirmation Certificate" => $det['bConC'],
                                     ]
                                         ?>
                                 <?php } else if ($res['type'] == 'Funeral Mass/Blessing') {
@@ -122,6 +134,7 @@
                                         "Address" => $det['addr'],
                                         "Sacrament Received" => $det['sacr'],
                                         "Burial Type" => $det['burial'],
+                                        "Death Certificate" => $det['dCert'],
                                     ]
                                         ?>
 
@@ -182,7 +195,9 @@
                                                     if ($value == " ") {
                                                         break;
                                                     } else {
-                                                        if ($key == "Birth Certificate" || $key == "Kawan Certificate" || $key == "Barangay Certificate") { ?>
+                                                        if ($key == "Birth Certificate" || $key == "Kawan Certificate" || $key == "Barangay Certificate"|| $key == "Death Certificate" || $key == "Child's Birth Certificate" || $key == "Parents Marriage Contract" 
+                                                        || $key == "Bride's 2x2 Picture" || $key == "Bride's Baptismal Certificate"|| $key == "Bride's Cenomar" || $key == "Bride's Confirmation Certificate" || $key == "Bride's Birth Certificate"
+                                                        || $key == "Groom's 2x2 Picture" || $key == "Groom's Baptismal Certificate"|| $key == "Groom's Cenomar" || $key == "Groom's Confirmation Certificate" || $key == "Groom's Birth Certificate") { ?>
                                                             <div class="form-control w-full items-start">
                                                                 <span><?= $key ?></span>
                                                                 <span
@@ -249,21 +264,21 @@
                                                     <div class="flex">
                                                         <div class="text-left">
                                                             <input type="radio" id="1" name="reason"
-                                                                value="Unable to handle the event  " onclick="hideinput()">
+                                                                value="Unable to handle the event  " onclick="hideinput('otherinput')">
                                                             <label for="1">Unable to handle the event</label><br>
                                                             <input type="radio" id="2" name="reason"
-                                                                value="Non-compliance with requirements" onclick="hideinput()">
+                                                                value="Non-compliance with requirements" onclick="hideinput('otherinput')">
                                                             <label for="2">Non-compliance with requirements</label><br>
                                                             <input type="radio" id="4" name="reason"
-                                                                value="Conflict with existing schedule" onclick="hideinput()">
+                                                                value="Conflict with existing schedule" onclick="hideinput('otherinput')">
                                                             <label for="4">Conflict with existing schedule</label><br>
                                                         </div>
-                                                        <div>
+                                                        <div class="text-left">
                                                             <input type="radio" id="3" name="reason" value="Others"
-                                                                onclick="showinput()">
+                                                                onclick="showinput('otherinput')">
                                                             <label for="3">Others:</label>
                                                             <input type="text" id="otherinput" name="otherinput"
-                                                                class="input input-bordered input-sm w-full max-w-xs hidden">
+                                                                class="input input-bordered input-sm w-full max-w-xs" placeholder="Enter here" disabled>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -272,7 +287,7 @@
                                                     <label for="modal_reason<?= $res['id'] ?>"
                                                         class="btn btn-error btn-outline">Cancel</label>
                                                     <label for="modal_cancel<?= $res['id'] ?>" for
-                                                        class="btn btn-succes btn-outline">Send</label>
+                                                        class="btn btn-success text-white">Send</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -350,8 +365,8 @@
                                 <?php
                                 if ($res['status'] == "Accepted") { ?>
                                     <div class="tooltip" data-tip="Complete">
-                                        <label for="modal_comp<?= $res['id'] ?>" class="btn bg-zinc-300"><i
-                                                data-lucide="square-check" class="bg-green-500 text-white"></i></label>
+                                        <label for="modal_comp<?= $res['id'] ?>" class="btn bg-green-500"><i
+                                                data-lucide="square-check"></i></label>
                                         <input type="checkbox" id="modal_comp<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
@@ -379,6 +394,7 @@
                                 <input type="hidden" name="id" value="<?= $res['id'] ?>">
                                 <input type="hidden" name="email" value="<?= $res['email'] ?>">
                                 <input type="hidden" name="refn" value="<?= $res['refN'] ?>">
+                                <input type="hidden" name="event" value="<?= $res['type'] ?>">
                                 <?= form_close() ?>
                             </td>
 
@@ -400,14 +416,11 @@
 </script>
 <script>
     function showinput(id) {
-        var text = document.getElementById('otherinput');
-        text.className = "block input input-bordered";
-        text.placeholder = "Enter other reason here";
+        var text = document.getElementById(id);
         text.disabled = false;
     }
     function hideinput(id) {
-        var text = document.getElementById('otherinput');
-        text.className = "hidden";
+        var text = document.getElementById(id);
         text.disabled = true;
     }
 </script>

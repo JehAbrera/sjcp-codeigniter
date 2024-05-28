@@ -156,7 +156,7 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
                 if ($this->setres->setinWedDet($forId, $evDate, $evTSt, $evTEd, $gln, $gfn, $gmn, $gcn, $gdob, $gpob, $gadd, $gfather, $gmother, $grelig, $gid, $gpsa, $gcen, $gbapcert, $gconcert, $bln, $bfn, $bmn, $bcn, $bdob, $bpob, $badd, $bfather, $bmother, $brelig, $bid, $bpsa, $bcen, $bbapcert, $bconcert, $cml)) {
                     unset($_SESSION['step']);
-                    return redirect()->to('/home');
+                    return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
                 }
             }
         }
@@ -209,7 +209,7 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
                 if ($this->setres->setinBapDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dob, $pob, $add, $contact, $father, $fatherpob, $mother, $motherpob, $marriage, $gfather, $gfatherAdd, $gmother, $gmotherAdd, $psacert, $mccert)) {
                     unset($_SESSION['step']);
-                    return redirect()->to('/home');
+                    return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
                 }
             }
         }
@@ -259,7 +259,7 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
                 if ($this->setres->setinFunDet($forId, $evDate, $evTSt, $evTEd, $fn, $mn, $ln, $gender, $dod, $age, $cod, $doi, $cemetery, $ifn, $imn, $iln, $num, $add, $sacrament, $burial, $deathcert)) {
                     unset($_SESSION['step']);
-                    return redirect()->to('/home');
+                    return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
                 }
             }
         }
@@ -296,7 +296,7 @@ class Reserve extends BaseController
                     unset($_SESSION['step']);
                     unset($_SESSION['message']);
                     unset($_SESSION['isClose']);
-                    return redirect()->to('/home');
+                    return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
                 }
             }
         }
@@ -331,7 +331,7 @@ class Reserve extends BaseController
                 $forId = $getlastId[0]['id'];
                 if ($this->setres->setinBlessdet($forId, $num, $evDate, $evTSt, $purpose, $add)) {
                     unset($_SESSION['step']);
-                    return redirect()->to('/home');
+                    return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
                 }
             }
         }
@@ -385,7 +385,7 @@ class Reserve extends BaseController
                 //inserting values in detdocu table
                 $this->setres->setinDocudet($forId, $evDate, $docu, $fn, $mn, $ln, $dob, $fatN, $motN, $num, $purp, $addr, $birthCert, $brgyCert, $kawanCert);
                 unset($_SESSION['step']);
-                return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your request has been submitted.');
+                return redirect()->to('/myreservation/status/Pending')->with('SucMess', 'Your Reservation request has been submitted.');
             }
         }
     }
