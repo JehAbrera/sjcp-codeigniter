@@ -120,7 +120,7 @@ class Signup extends BaseController
         if ($this->create->index($fn, $mn, $ln, $em, $hashed)) {
             $array = ['step', 'fn', 'mn', 'ln', 'email', 'pass'];
             session()->remove($array);
-            return redirect()->to('/account/login');
+            return redirect()->to('/account/login')->with("SucMess", "Congratulations, ". $fn ."! You're all set up \n Thank you for creating an account. Log-in now to discover and explore all of the SJCP’s features.");
         } else {
             session()->setFlashdata('otpErr', "Account creation failed, please try again later.");
             return redirect()->to('/account/signup');

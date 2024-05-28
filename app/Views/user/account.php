@@ -32,7 +32,7 @@
 
                         <?php
                         if (session()->has('SucMess')) { ?>
-                            <div role="alert" class="alert alert-error label-text-alt p-2 text-center mb-2">
+                            <div role="alert" class="alert alert-success label-text-alt p-2 text-center mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-control items-center mt-10 gap-2">
                             <button class="btn btn-success" type="submit">Login</button>
-                            <a href="/termsandservices/view" class="link">Forgot Password</a>
+                            <a href="/account/forgotpass" class="link">Forgot Password</a>
                         </div>
                         <?= form_close() ?>
                     <?php } elseif ($mode == "signup") {
