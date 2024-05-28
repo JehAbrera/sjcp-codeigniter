@@ -76,10 +76,10 @@
                 <div class="modal" role="dialog">
                     <div class="modal-box gap-2">
                         <div class=" flex justify-center">
-                            <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                            <i data-lucide="save" class=" w-16 h-16"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
-                        <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                        <h3 class="font-bold text-lg text-center">Are you sure you want to save changes?</h3>
+                        <p class="py-4 text-center text-balance">Saving your changes will update your current information.</p>
                         <div class="modal-action mt-0 justify-center">
                             <label for="saveEdit" class="btn btn-error btn-outline">No</label>
                             <button class=" btn btn-success" type="submit">Yes</button>
@@ -124,10 +124,10 @@
                     <div class="modal" role="dialog">
                         <div class="modal-box gap-2">
                             <div class=" flex justify-center">
-                                <i data-lucide="circle-x" class=" w-16 h-16"></i>
+                                <i data-lucide="save" class=" w-16 h-16"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
-                            <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                            <h3 class="font-bold text-lg text-center">Are you sure you want to save changes?</h3>
+                            <p class="py-4 text-center text-balance">Saving your changes will update your current information.</p>
                             <div class="modal-action mt-0 justify-center">
                                 <label for="savePass" class="btn btn-error btn-outline">No</label>
                                 <button class=" btn btn-success" type="submit">Yes</button>

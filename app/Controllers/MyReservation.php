@@ -57,7 +57,7 @@ class MyReservation extends BaseController
             $reason = $this->request->getPost('otherinput');
         }
         $this->updateres->updateReserv($id, $reason, $status);
-        return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled your reservation');
+        return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled!');
 
     }
 
