@@ -36,6 +36,8 @@ $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
 
+$routes->get('/account/forgotpass', [Signup::class, 'index']);
+
 /* Form route area for calendar */
 $routes->get('/calendar/index', [Calendar::class, 'index']);
 $routes->post('/calendar/back', [Calendar::class, 'back']);
