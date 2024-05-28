@@ -148,7 +148,7 @@
                                         {
                                             document.getElementById('error_msg').style.color = 'red';
                                             document.getElementById('error_msg').innerHTML
-                                                = ' Password and Confirm Password Should be matched';
+                                                = 'Password and Confirm Password do not match';
                                             document.getElementById('create').disabled = true;
                                             document.getElementById('create').style.opacity = (0.4);
                                         }
@@ -164,7 +164,7 @@
                                         {
                                             document.getElementById('error_msg').style.color = 'red';
                                             document.getElementById('error_msg').innerHTML
-                                                = 'The Password Must Contain at least 8 characters, combination of uppercase and lowercase and must contain one or more number/symbol';
+                                                = 'Password must contain at least 8 characters, a combination of uppercase and lowercase letters, and at least one or more number or special character';
                                             document.getElementById('create').disabled = true;
                                             document.getElementById('create').style.opacity = (0.4);
                                         }

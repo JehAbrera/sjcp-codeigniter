@@ -99,24 +99,89 @@
                     </div>
                 <?php }
                 ?>
-                <div class="flex flex-row justify-between">
+                <script>
+                    function toggle(input,icon) 
+                    {
+                        var pass = document.getElementById(input.id);
+                        var eye = document.getElementById(icon.id);
+                        if (pass.type == "password") 
+                        {
+                            pass.type = "text";
+                            eye.className = "fa-solid fa-eye-slash";
+                        } 
+                        else 
+                        {
+                            pass.type = "password";
+                            eye.className = "fa-solid fa-eye";
+                        }
+                    }
+                    
+                    function validate_password() 
+                    {
+                        let pass = document.getElementById('newpass').value;
+                        let confirm_pass = document.getElementById('conpass').value;
+                        var paswnum=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+                        var paswsym=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                                        
+                        if (confirm_pass=="") 
+                        {
+                            document.getElementById('error_msg').style.color = 'green';
+                            document.getElementById('error_msg').innerHTML =
+                            '';
+                            document.getElementById('create').disabled = false;
+                            document.getElementById('create').style.opacity = (1);
+                        }
+                        else if (pass != confirm_pass) 
+                        {
+                            document.getElementById('error_msg').style.color = 'red';
+                            document.getElementById('error_msg').innerHTML
+                            = 'Password and Confirm Password do not match';
+                            document.getElementById('create').disabled = true;
+                            document.getElementById('create').style.opacity = (0.4);
+                        }
+                        else if (pass.match(paswnum)||pass.match(paswsym)&&confirm_pass.match(paswnum)||confirm_pass.match(paswsym)) 
+                        {
+                            document.getElementById('error_msg').style.color = 'green';
+                            document.getElementById('error_msg').innerHTML =
+                            '';
+                            document.getElementById('create').disabled = false;
+                            document.getElementById('create').style.opacity = (1);
+                        }
+                        else 
+                        {
+                            document.getElementById('error_msg').style.color = 'red';
+                            document.getElementById('error_msg').innerHTML
+                            = 'Password must contain at least 8 characters, a combination of uppercase and lowercase letters, and at least one or more number or special character';
+                            document.getElementById('create').disabled = true;
+                            document.getElementById('create').style.opacity = (0.4);
+                         }
+                    }
+                </script>
+                <div class="flex flex-row justify-between" style="position: relative;width: fit-content;">
                     <label class="label">
                         <span class="label-text">Old Password</span>
                     </label>
-                    <input type="password" name="oldpass" class="input input-bordered" required />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="password" id="oldpass" name="oldpass" class="input input-bordered" required />
+                    <i data-lucide="eye" id="oldpassicon" onclick="toggle(oldpass, oldpassicon)"  style="position: absolute;top: 50%;right: 10px;transform: translateY(-50%);cursor: pointer;"></i>
                 </div>
-                <div class="flex flex-row justify-between">
+                <div class="flex flex-row justify-between " style="position: relative;width: fit-content;">
                     <label class="label">
                         <span class="label-text">New Password</span>
                     </label>
-                    <input type="password" name="newpass" class="input input-bordered" required />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="password" id="newpass" name="newpass" class="input input-bordered" onkeyup="validate_password()"required />
+                    <i data-lucide="eye" id="newpassicon" onclick="toggle(newpass, newpassicon)" style="position: absolute;top: 50%;right: 10px;transform: translateY(-50%);cursor: pointer;"></i>
                 </div>
-                <div class="flex flex-row justify-between">
+                <div class="flex flex-row justify-between" style="position: relative;width: fit-content;">
                     <label class="label">
                         <span class="label-text">Confirm New Password</span>
                     </label>
-                    <input type="password" name="conpass" class="input input-bordered" required />
+                    &nbsp;
+                    <input type="password" id="conpass" name="conpass" class="input input-bordered" onkeyup="validate_password()"required />
+                    <i data-lucide="eye" id="conpassicon" onclick="toggle(conpass, conpassicon)"  style="position: absolute;top: 50%;right: 10px;transform: translateY(-50%);cursor: pointer;"></i>
                 </div>
+                <span id="error_msg"></span>
                 <div class=" flex justify-center gap-2">
                     <label for="cancel" class="btn btn-outline btn-error">Cancel</label>
                     <label for="savePass" class="btn btn-success">Save Changes</label>
@@ -127,7 +192,7 @@
                                 <i data-lucide="save" class=" w-16 h-16"></i>
                             </div>
                             <h3 class="font-bold text-lg text-center">Are you sure you want to save changes?</h3>
-                            <p class="py-4 text-center text-balance">Saving your changes will update your current information.</p>
+                            <p class="py-4 text-center text-balance">Your password will be changed, and you will be immediately logged out. You must log in again with your new password.</p>
                             <div class="modal-action mt-0 justify-center">
                                 <label for="savePass" class="btn btn-error btn-outline">No</label>
                                 <button class=" btn btn-success" type="submit">Yes</button>
