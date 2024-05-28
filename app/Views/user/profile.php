@@ -204,7 +204,7 @@
             <?php } elseif ($mode == 'delete') { ?>
                 <span class=" text-xl font-bold">Account Deletion</span>
                 </div>
-                <form action="" method="post" class=" w-4/5 flex flex-col gap-4">
+                <form action="user/delAcc" method="post" class=" w-4/5 flex flex-col gap-4">
                     <p class=" text-center">
                         Enter "CONFIRM" below to proceed with account deletion.
                     </p>
@@ -218,8 +218,8 @@
                                 <div class=" flex justify-center">
                                     <i data-lucide="circle-x" class=" w-16 h-16"></i>
                                 </div>
-                                <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
-                                <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
+                                <h3 class="font-bold text-lg text-center">Are you sure you want to delete you account?</h3>
+                                <p class="py-4 text-center text-balance">Please note that this action cannot be undone.</p>
                                 <div class="modal-action mt-0 justify-center">
                                     <label for="saveDel" class="btn btn-error btn-outline">No</label>
                                     <button class=" btn btn-success" type="submit">Yes</button>
