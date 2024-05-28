@@ -11,6 +11,7 @@ use App\Models\Count;
 
 use App\Libraries\EmailSender;
 use App\Models\Announcement;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Admin extends BaseController
@@ -152,16 +153,33 @@ class Admin extends BaseController
                     'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
                     'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
                 ];
-
-                if ($record->save($values)) {
-                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully added!');
-                } else {
-                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to add record!');
-                }
                 break;
 
             case 'Confirmation':
-                # code...
+                $dob = strval($this->request->getPost('bday'));
+                $bday = Time::parse($dob);
+                $now = Time::now();
+                $age = $bday->difference($now)->getYears();
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'age' => $age,
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'plcBap' => ucfirst(strval($this->request->getPost('plcBap'))),
+                    'datBap' => strval($this->request->getPost('datBap')),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'num' => "+63" . strval($this->request->getPost('num')),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'gFatN' => ucwords(strval($this->request->getPost('gFatN'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gMotN'))),
+                ];
                 break;
 
             case 'Wedding':
@@ -172,6 +190,11 @@ class Admin extends BaseController
                 # code...
                 break;
         }
+        if ($record->save($values)) {
+            return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully added!');
+        } else {
+            return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to add record!');
+        }
     }
     public function editRec($type)
     {
@@ -180,10 +203,9 @@ class Admin extends BaseController
                 $record = new \App\Models\Records\Baptism();
 
                 $id = (int) $this->request->getPost('id');
-                $date = strval($this->request->getPost('bapD'));
                 $values = [
-                    'date' => strval($this->request->getPost('bapD')),
-                    'time' => $this->request->getPost('bapT'),
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => $this->request->getPost('time'),
                     'fn' => ucwords(strval($this->request->getPost('fn'))),
                     'mn' => ucwords(strval($this->request->getPost('mn'))),
                     'ln' => ucwords(strval($this->request->getPost('ln'))),
@@ -202,15 +224,37 @@ class Admin extends BaseController
                     'gMotN' => ucwords(strval($this->request->getPost('gmN'))),
                     'gMotAd' => ucfirst(strval($this->request->getPost('gmAdd'))),
                 ];
-                if ($record->update($id, $values)) {
-                    return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully updated!');
-                } else {
-                    return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to update record!');
-                }
                 break;
 
             case 'Confirmation':
-                # code...
+                $record = new \App\Models\Records\Confirmation();
+
+                $dob = strval($this->request->getPost('bday'));
+                $bday = Time::parse($dob);
+                $now = Time::now();
+                $age = $bday->difference($now)->getYears();
+
+                $id = (int) $this->request->getPost('id');
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => ucwords(strval($this->request->getPost('gender'))),
+                    'dob' => $this->request->getPost('bday'),
+                    'age' => $age,
+                    'pob' => ucfirst(strval($this->request->getPost('pob'))),
+                    'plcBap' => ucfirst(strval($this->request->getPost('plcBap'))),
+                    'datBap' => strval($this->request->getPost('datBap')),
+                    'fatN' => ucwords(strval($this->request->getPost('fatN'))),
+                    'motN' => ucwords(strval($this->request->getPost('motN'))),
+                    'num' => "+63" . strval($this->request->getPost('num')),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'gFatN' => ucwords(strval($this->request->getPost('gFatN'))),
+                    'gMotN' => ucwords(strval($this->request->getPost('gMotN'))),
+                ];
                 break;
 
             case 'Wedding':
@@ -221,18 +265,22 @@ class Admin extends BaseController
                 # code...
                 break;
         }
+        if ($record->update($id, $values)) {
+            return redirect()->to('/admin/records/' . $type)->with('recSuc', 'Record successfully updated!');
+        } else {
+            return redirect()->to('/admin/records/' . $type)->with('recErr', 'Failed to update record!');
+        }
     }
 
 
     //functions for admin reservation page
-    public function getStatus($status)
+    public function getStatus($status, $order)
     {
-        $reserv = $this->getres->adminQueryAll($status)->paginate(50);
+        $reserv = $this->getres->adminQueryAll($status, $order)->paginate(50);
         foreach ($reserv as &$res) {
             $add = [];
-            $tbl = $this->table($res['type']);
             $add = [
-                'det' => $this->viewDetails($tbl, $res['id'])
+                'det' => $this->viewDetails($res['type'], $res['id'])
             ];
             $res = array_merge($res, $add);
         }
@@ -240,6 +288,7 @@ class Admin extends BaseController
             'title' => 'Reservation',
             'type' => $status,
             'reservations' => $reserv,
+            'order' => $order,
             'pager' => $this->getres->pager,
         ];
 
@@ -258,7 +307,7 @@ class Admin extends BaseController
 
                 // Call email sender library - declare purpose and target as parameters //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
-                return redirect()->to('/admin/reservations/status/Accepted')->with('SucMess', 'Reservation successfully accepted!');
+                return redirect()->to('/admin/reservations/status/Accepted/ASC')->with('SucMess', 'Reservation successfully accepted!');
             }
         } else if ($this->request->getPost('submit') == 'Decline') {
             $reason = $this->request->getPost('reason');
@@ -271,16 +320,40 @@ class Admin extends BaseController
 
                 // Call email sender library - declare purpose and target as parameters //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Declined', $reason);
-                return redirect()->to('/admin/reservations/status/Declined')->with('SucMess', 'Reservation successfully declined!');
+                return redirect()->to('/admin/reservations/status/Declined/ASC')->with('SucMess', 'Reservation successfully declined!');
             }
         } else if ($this->request->getPost('submit') == 'Complete') {
+            $event = $this->request->getPost('event');
             $status = "Completed";
             if ($this->updateres->acceptReserv($id, $status)) {
                 //if the query is successfull
-
                 // Call email sender library - declare purpose and target as parameters //
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Completed');
-                return redirect()->to('/admin/reservations/status/Completed')->with('SucMess', 'Reservation successfully completed!');
+
+                //saving to records if wedding, baptism
+                if($event == 'Wedding'){
+                    $details =  $this->viewDetails($event, $id);
+                    if($this->saveWed($details)){
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucMess', 'Reservation successfully completed!');
+                    } else {
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucErr', 'Reservation not successfully completed!');
+                    }
+                } elseif($event == 'Baptism'){
+                    $details =  $this->viewDetails($event, $id);
+                    if($this->saveBap($details)){
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucMess', 'Reservation successfully completed!');
+                    } else {
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucErr', 'Reservation not successfully completed!');
+                    }
+                } elseif($event == 'Funeral Mass/Blessing'){
+                    $details =  $this->viewDetails($event, $id);
+                    if($this->saveFun($details)){
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucMess', 'Reservation successfully completed!');
+                    } else {
+                        return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucErr', 'Reservation not successfully completed!');
+                    }
+                } 
+                return redirect()->to('/admin/reservations/status/Completed/ASC')->with('SucMess', 'Reservation successfully completed!');
             }
         }
     }
@@ -291,23 +364,104 @@ class Admin extends BaseController
         $reserv = $this->getres->getDetails($tbl, $id);
         return $reserv;
     }
-
-    public function table($type)
-    {
-        if ($type == "Wedding") {
-            return $this->table = 'detwed';
-        } else if ($type == "Baptism") {
-            return $this->table = 'detbap';
-        } else if ($type == "Funeral Mass/Blessing") {
-            return $this->table = 'detfun';
-        } else if ($type == "Mass Intention") {
-            return $this->table = 'detmass';
-        } else if ($type == "Blessing") {
-            return $this->table = 'detbls';
+    //saving the completed event
+    public function saveBap($det){
+        $recBap = new \App\Models\Records\Baptism();
+        foreach($det as $details){
+            $values = [
+                'date' => $details['date'],
+                'time' => $details['tSt'],
+                'fn' => $details['fn'],
+                'mn' => $details['mn'],
+                'ln' => $details['ln'],
+                'gender' => $details['gender'],
+                'dob' => $details['dob'],
+                'pob' => $details['pob'],
+                'addr' => $details['addr'],
+                'num' => $details['num'],
+                'fatN' => $details['fatN'],
+                'fatPob' => $details['fatPob'],
+                'motN' => $details['motN'],
+                'motPob' => $details['motPob'],
+                'mrgTp' => $details['mrgTp'],
+                'gFatN' => $details['gFatN'],
+                'gFatAd' => $details['gFatAd'],
+                'gMotN' => $details['gMotN'],
+                'gMotAd' => $details['gMotAd'],
+            ];
+        }
+        if($recBap->save($values)){
+            return true;
         } else {
-            return $this->table = 'detdocu';
+            return false;
         }
     }
+    public function saveWed($det){
+        $recWed = new \App\Models\Records\Wedding();
+        foreach($det as $details){
+            $values = [
+                'date' => $details['date'],
+                'time' => $details['tSt'],
+                'gFn' => $details['gFn'],
+                'gMn' => $details['gMn'],
+                'gLn' => $details['gLn'],
+                'gNum' => $details['gNum'],
+                'gDob' => $details['gDob'],
+                'gPob' => $details['gPob'],
+                'gAddr' => $details['gAddr'],
+                'gFat' => $details['gFat'],
+                'gMot' => $details['gMot'],
+                'gRel' => $details['gRel'],
+                'bFn' => $details['bFn'],
+                'bMn' => $details['bMn'],
+                'bLn' => $details['bLn'],
+                'bNum' => $details['bNum'],
+                'bDob' => $details['bDob'],
+                'bPob' => $details['bPob'],
+                'bAddr' => $details['bAddr'],
+                'bFat' => $details['bFat'],
+                'bMot' => $details['bMot'],
+                'bRel' => $details['bRel'],
+            ];
+        }
+        if($recWed->save($values)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function saveFun($det){
+        $recFun = new \App\Models\Records\Funeral();
+        foreach($det as $details){
+            $values = [
+                'date' => $details['date'],
+                'time' => $details['tSt'],
+                'fn' => $details['fn'],
+                'mn' => $details['mn'],
+                'ln' => $details['ln'],
+                'gender' => $details['gender'],
+                'dDate' => $details['dDate'],
+                'age' => $details['age'],
+                'dCause' => $details['dCause'],
+                'intDate' => $details['intDate'],
+                'cem' => $details['cem'],
+                'infFn' => $details['infFn'],
+                'infMn' => $details['infMn'],
+                'infLn' => $details['infLn'],
+                'num' => $details['num'],
+                'addr' => $details['addr'],
+                'sacr' => $details['sacr'],
+                'burial' => $details['burial'],
+            ];
+        }
+        if($recFun->save($values)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

@@ -7,10 +7,10 @@
                         $path = $item['img'];
                     ?>
                     <figure><img src="<?= base_url('./'.$path) ?>" alt="Image" class=" object-cover w-full h-full" /></figure>
-                    <label for="modal1" class="card-body items-center justify-center text-center cursor-pointer">
+                    <label for="modal<?=$item['id']?>" class="card-body items-center justify-center text-center cursor-pointer">
                         <h2 class="card-title"><?=$item['name']?></h2>
                     </label>
-                    <input type="checkbox" id="modal1" class="modal-toggle" />
+                    <input type="checkbox" id="modal<?=$item['id']?>" class="modal-toggle" />
                     <div class="modal" role="dialog">
                         <div class="modal-box max-w-[50rem]">
                             <h3 class="font-bold text-lg text-center"><?=$item['name']?></h3>
@@ -26,7 +26,7 @@
                                 <?=$item['notes']?>
                             </div>
                             <div class="modal-action justify-center">
-                                <label for="modal1" class="btn btn-outline btn-error">Close</label>
+                                <label for="modal<?=$item['id']?>" class="btn btn-outline btn-error">Close</label>
                             </div>
                         </div>
                     </div>
