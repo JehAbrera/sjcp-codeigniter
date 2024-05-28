@@ -92,7 +92,7 @@ class Records extends Model
             $this->table = 'recwed';
         } elseif ($value == 'Funeral Mass') {
             $this->table = 'recfun';
-        } elseif ($value == 'announcements') {
+        } elseif ($value == 'announcement') {
             $this->table = 'detannou';
         } elseif ($value == 'faqs') {
             $this->table = 'faqscont';

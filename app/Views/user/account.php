@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-control items-center mt-10 gap-2">
                             <button class="btn btn-success" type="submit">Login</button>
-                            <a href="/account/forgotpass" class="link">Forgot Password</a>
+                            <a href="/forgotpass/index" class="link">Forgot Password</a>
                         </div>
                         <?= form_close() ?>
                     <?php } elseif ($mode == "signup") {

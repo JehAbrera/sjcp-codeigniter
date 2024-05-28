@@ -8,6 +8,7 @@ use App\Controllers\Calendar;
 use App\Controllers\Reserve;
 use App\Controllers\MyReservation;
 use App\Controllers\Profile;
+use App\Controllers\ForgotPass;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
@@ -36,7 +37,10 @@ $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
 
-$routes->get('/account/forgotpass', [Signup::class, 'index']);
+$routes->get('/forgotpass/index', [ForgotPass::class, 'index']);
+$routes->post('/forgotpass/step1', [ForgotPass::class, 'step1']);
+$routes->post('/forgotpass/step2', [ForgotPass::class, 'step2']);
+
 
 /* Form route area for calendar */
 $routes->get('/calendar/index', [Calendar::class, 'index']);
