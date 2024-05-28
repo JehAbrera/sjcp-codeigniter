@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\FaqsCont;
+use App\Models\ServicesCont;
+use App\Models\AboutusCont;
+use App\Models\Employee;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
 
@@ -13,7 +16,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 class Admin extends BaseController
 {
     protected $count, $pager, $records, $getres, $announce;
-    protected $updateres, $email, $faqs;
+    protected $updateres, $email, $faqs, $services, $about, $employee;
 
     public function __construct()
     {
@@ -25,6 +28,9 @@ class Admin extends BaseController
         $this->pager = \Config\Services::pager();
         $this->announce = new Announcement();
         $this->faqs = new FaqsCont();
+        $this->services = new ServicesCont();
+        $this->about = new AboutusCont();
+        $this->employee = new Employee();
     }
 
     public function admin($page)
@@ -68,6 +74,19 @@ class Admin extends BaseController
                 'faqs' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
+
+        if ($page == 'services') {
+            $addInf = [
+                'services' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+        }
+
+        if ($page == 'about') {
+            $addInf = [
+                'about' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+        }
+
         $data = array_merge($data, $addInf);
         return view('templates/navadmin', $data) . view('admin/' . $page, $data);
     }
@@ -290,6 +309,10 @@ class Admin extends BaseController
         }
     }
 
+
+
+
+
     // Functions for faqs 
     public function addfaqItem()
     {
@@ -325,7 +348,6 @@ class Admin extends BaseController
             return redirect()->to('/admin/faqs')->with('faqsErr', "Failed to delete Frequently Asked Question Item, please try again.");
         }
     }
-
     // Edit faqs
     public function editfaqItem() {
         $id = $this->request->getPost('id');
@@ -335,12 +357,259 @@ class Admin extends BaseController
             'question' => $ques,
             'answer' => $ans,
         ];
-        if ($this->faqs->save($data)) {
+        if ($this->faqs->update($id, $data)) {
             return redirect()->to('/admin/faqs')->with('faqsSuc', "Frequently Asked Question successfully updated!");
         } else {
             return redirect()->to('/admin/faqs')->with('faqsErr', "Failed to update Frequently Asked Question Item, please try again");
         }
     }
+
+
+
+
+
+
+
+
+    // Functions for services 
+    public function addserveItem()
+    {
+        $name = $this->request->getPost('name');
+        $img = $this->request->getFile('upload');
+        $schedule = $this->request->getPost('schedule');
+        $req = $this->request->getPost('req');
+        $notes = $this->request->getPost('notes');
+        if ($this->validateUpload($img)) {
+            $image = $this->uploadserve($img);
+            $data = [
+                'img' => $image,
+                'name' => $name,
+                'schedule' => $schedule,
+                'req' => $req,
+                'notes' => $notes
+            ];
+            if ($this->services->save($data)) {
+                return redirect()->to('/admin/services')->with('serveSuc', "Services successfully created!");
+            } else {
+                return redirect()->to('/admin/services')->with('serveSuc', "Failed to create services, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/services')->with('serveSuc', "Invalid format, please try again");
+        }
+    }
+    // Set upload path for services
+    public function uploadserve($file)
+    {
+        $filename = $file->getname();
+        // Define the directory to save the file
+        $uploadPath = 'images/services/';
+
+        // Move the file to the upload directory
+        $file->move($uploadPath);
+
+        return $uploadPath . $filename;
+    }
+    // Delete an services
+    public function delserveItem()
+    {
+        $id = $this->request->getPost('id');
+
+        $row = $this->services->find($id);
+
+        if ($row) {
+            $file = $row['img'];
+
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
+            $this->services->delete($id);
+
+            return redirect()->to('/admin/services')->with('serveSuc', "Service deleted successfully!");
+        } else {
+            return redirect()->to('/admin/services')->with('serveErr', "Failed to delete service, please try again.");
+        }
+    }
+    // Edit services
+    public function editserveItem()
+    {
+        $id = $this->request->getPost('id');
+        $name = $this->request->getPost('name');
+        $img = $this->request->getFile('upload');
+        $schedule = $this->request->getPost('schedule');
+        $req = $this->request->getPost('req');
+        $notes = $this->request->getPost('notes');
+        if($img == ""){
+            $data = [
+                'name' => $name,
+                'schedule' => $schedule,
+                'req' => $req,
+                'notes' => $notes
+            ];
+            if ($this->services->update($id, $data)) {
+                return redirect()->to('/admin/services')->with('serveSuc', "Services successfully updated!");
+            } else {
+                return redirect()->to('/admin/services')->with('serveErr', "Failed to update services, please try again");
+            }
+        }
+        if ($this->validateUpload($img)) {
+            $image = $this->uploadserve($img);
+            $data = [
+                'img' => $image,
+                'name' => $name,
+                'schedule' => $schedule,
+                'req' => $req,
+                'notes' => $notes
+            ];
+            if ($this->services->update($id, $data)) {
+                return redirect()->to('/admin/services')->with('serveSuc', "Services successfully updated!");
+            } else {
+                return redirect()->to('/admin/services')->with('serveErr', "Failed to update services, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/services')->with('serveErr', "Invalid format, please try again");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Functions for aboutus 
+    public function addaboutItem()
+    {
+        $title = $this->request->getPost('title');
+        $img = $this->request->getFile('upload');
+        $des = $this->request->getPost('des');
+        if ($this->validateUpload($img)) {
+            $image = $this->uploadabout($img);
+            $data = [
+                'img' => $image,
+                'title' => $title,
+                'des' => $des,
+            ];
+            if ($this->about->save($data)) {
+                return redirect()->to('/admin/about')->with('aboutSuc', "Content successfully created!");
+            } else {
+                return redirect()->to('/admin/about')->with('aboutErr', "Failed to create content, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/about')->with('aboutErr', "Invalid format, please try again");
+        }
+    }
+    public function addemployeeItem()
+    {
+        $name = $this->request->getPost('name');
+        $img = $this->request->getFile('upload');
+        $role = $this->request->getPost('role');
+        if ($this->validateUpload($img)) {
+            $image = $this->uploadabout($img);
+            $data = [
+                'img' => $image,
+                'name' => $name,
+                'role' => $role,
+            ];
+            if ($this->employee->save($data)) {
+                return redirect()->to('/admin/about')->with('aboutSuc', "Employee successfully added!");
+            } else {
+                return redirect()->to('/admin/about')->with('aboutErr', "Failed to add employee, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/about')->with('aboutErr', "Invalid format, please try again");
+        }
+    }
+    // Set upload path for aboutus
+    public function uploadabout($file)
+    {
+        $filename = $file->getname();
+        // Define the directory to save the file
+        $uploadPath = 'images/aboutus/';
+
+        // Move the file to the upload directory
+        $file->move($uploadPath);
+
+        return $uploadPath . $filename;
+    }
+    // Delete an aboutus
+    public function delaboutItem()
+    {
+        $id = $this->request->getPost('id');
+
+        $row = $this->services->find($id);
+
+        if ($row) {
+            $file = $row['img'];
+
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
+            $this->services->delete($id);
+
+            return redirect()->to('/admin/aboutus')->with('serveSuc', "Service deleted successfully!");
+        } else {
+            return redirect()->to('/admin/aboutus')->with('serveErr', "Failed to delete service, please try again.");
+        }
+    }
+    // Edit aboutus
+    public function editaboutItem()
+    {
+        $id = $this->request->getPost('id');
+        $name = $this->request->getPost('name');
+        $img = $this->request->getFile('upload');
+        $schedule = $this->request->getPost('schedule');
+        $req = $this->request->getPost('req');
+        $notes = $this->request->getPost('notes');
+        if($img == ""){
+            $data = [
+                'name' => $name,
+                'schedule' => $schedule,
+                'req' => $req,
+                'notes' => $notes
+            ];
+            if ($this->services->update($id, $data)) {
+                return redirect()->to('/admin/aboutus')->with('serveSuc', "Services successfully updated!");
+            } else {
+                return redirect()->to('/admin/aboutus')->with('serveErr', "Failed to update services, please try again");
+            }
+        }
+        if ($this->validateUpload($img)) {
+            $image = $this->uploadserve($img);
+            $data = [
+                'img' => $image,
+                'name' => $name,
+                'schedule' => $schedule,
+                'req' => $req,
+                'notes' => $notes
+            ];
+            if ($this->services->update($id, $data)) {
+                return redirect()->to('/admin/aboutus')->with('serveSuc', "Services successfully updated!");
+            } else {
+                return redirect()->to('/admin/aboutus')->with('serveErr', "Failed to update services, please try again");
+            }
+        } else {
+            return redirect()->to('/admin/aboutus')->with('serveErr', "Invalid format, please try again");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     // Functions for announcements 
     public function addItem()
@@ -368,7 +637,6 @@ class Admin extends BaseController
             return redirect()->to('/admin/announcements')->with('announceErr', "Invalid format, please try again");
         }
     }
-
     // Validate for announcements 
     //function to validate the file type
     public function validateUpload($img)
