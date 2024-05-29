@@ -65,7 +65,37 @@ class UpdateProfile extends Model
     // Move account details to archive table //
     public function deleteAcc()
     {
+        $userInfo = [];
+        $query = $this->db->table('liuser')
+        ->select('*')
+        ->where('email', session()->user)
+        ->limit(1)
+        ->get();
+        $result = $query->getResult();
+        if (!empty($result)) 
+        {
+            array_push($userInfo, $result[0]->role, $result[0]->fn, $result[0]->mn, $result[0]->ln, $result[0]->email, $result[0]->pass);
+        }
+        $data = array
+        (
+            'role'    => strval($userInfo[0]),
+            'fn'   => strval($userInfo[1]),
+            'mn' => strval($userInfo[2]),
+            'ln' => strval($userInfo[3]),
+            'email' => strval($userInfo[4]),
+            'pass' => strval($userInfo[5]),
+        );
+        $this->db->table('archacc')
+            ->where('email', session()->user)
+            ->limit(1)
+            ->insert($data);
+        $this -> db ->table('liuser') 
+        -> where('email',session()->user)
+        ->limit(1)
+        -> delete();
+        
     }
+
     // For update query - check if account change input is the same as save details //
     public function isEqual($data = [])
     {
