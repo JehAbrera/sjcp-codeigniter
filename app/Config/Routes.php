@@ -111,4 +111,7 @@ $routes->post('/admin/about/add', [Admin::class, 'addaboutItem']);
 $routes->post('/admin/about/delete', [Admin::class, 'delaboutItem']);
 $routes->post('/admin/about/edit', [Admin::class, 'editaboutItem']);
 
+/* Route for downloading the stat report */
+$routes->get('/admin/stat/download', [Admin::class, 'downloadPDF']);
+
 

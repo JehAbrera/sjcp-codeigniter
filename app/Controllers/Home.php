@@ -19,7 +19,7 @@ class Home extends BaseController
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');
     }
     public function user($page)
-    {
+    {   
         session()->remove('step');
         if ($page == "logout") {
             if (session()->has('isLogged')) {
