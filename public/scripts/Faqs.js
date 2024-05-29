@@ -31,13 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const checkbox = document.getElementById('clear2-' + itemId);
             const add = document.getElementById('edit-' + itemId);
             const form = document.getElementById('editForm-' + itemId);
-            let imagePreview = document.getElementById('imagePreview-' + itemId);
 
-            if (checkbox && add && form && imagePreview) {
+            if (checkbox && add && form) {
                 checkbox.checked = !checkbox.checked;
                 form.reset();
                 add.checked = !add.checked;
-                imagePreview.innerHTML = '';
             } else {
                 console.error('One or more elements not found for item ID:', itemId);
             }

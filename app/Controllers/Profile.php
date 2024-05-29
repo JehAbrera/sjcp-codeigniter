@@ -114,7 +114,7 @@ class Profile extends BaseController
             {
                 !$this->profile->deleteAcc();
                 session()->remove('isLogged');
-                return redirect()->to('/home');
+                return redirect()->to('/');
             }
             else
             {
