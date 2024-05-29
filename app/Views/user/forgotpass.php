@@ -66,7 +66,7 @@
                         </div>
                         <div class=" flex gap-2 justify-center mt-6">
                             <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i data-lucide="chevron-left"></i> Back</button>
-                            <button type="submit" class=" btn btn-success w-fit" value="Submit">Next <i data-lucide="chevron-right"></i></button>
+                            <button type="submit" class=" btn btn-success w-fit" value="Submit">Submit </button>
                         </div>
                     </form>
                     <div class=" flex justify-center p-5">

@@ -218,7 +218,7 @@
                                 <div class=" flex justify-center">
                                     <i data-lucide="circle-x" class=" w-16 h-16"></i>
                                 </div>
-                                <h3 class="font-bold text-lg text-center">Are you sure you want to delete you account?</h3>
+                                <h3 class="font-bold text-lg text-center">Are you sure you want to delete your account?</h3>
                                 <p class="py-4 text-center text-balance">Please note that this action cannot be undone.</p>
                                 <div class="modal-action mt-0 justify-center">
                                     <label for="saveDel" class="btn btn-error btn-outline">No</label>

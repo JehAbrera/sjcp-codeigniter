@@ -107,9 +107,22 @@ class Profile extends BaseController
     }
     public function deleteAcc()
     {
-        if ($this->request->getMethod() === 'POST') {
-            session()->set('profileMode', 'view');
-        } else {
+        $confirm = $this->request->getPost('confirm');
+        if ($this->request->getMethod() === 'POST') 
+        {
+            if ($confirm=="CONFIRM")
+            {
+                !$this->profile->deleteAcc();
+                session()->remove('isLogged');
+                return redirect()->to('/home');
+            }
+            else
+            {
+                session()->setFlashdata('conErr', "Incorrect keyword.");
+            }
+        } 
+        else 
+        {
             session()->set('profileMode', 'delete');
         }
         return redirect()->to('/user/profile');

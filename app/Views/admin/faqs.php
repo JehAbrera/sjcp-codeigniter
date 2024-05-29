@@ -1,10 +1,10 @@
 <main class=" flex flex-[4.5] flex-col p-4 bg-zinc-100 max-h-screen overflow-auto text-slate-950 gap-4">
     <div class=" flex flex-row items-center gap-2 justify-end">
         <span class=" card shadow-lg p-2 bg-success"><i data-lucide="blocks" class=" w-8 aspect-square"></i></span>
-        <span class=" text-lg font-semibold">Frequenty Asked Questions</span>
+        <span class=" text-lg font-semibold">Frequently Asked Questions</span>
     </div>
     <div class=" flex justify-between items-center">
-        <span class=" badge badge-success badge-outline p-4 font-bold text-2xl">Frequenty Asked Questions List</span>
+        <span class=" badge badge-success badge-outline p-4 font-bold text-2xl">Frequently Asked Questions List</span>
         <form action="/admin/faqs/add" id="addform" method="post">
             <label for="add" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add FAQs</label>
             <input type="checkbox" id="add" class="modal-toggle" />
