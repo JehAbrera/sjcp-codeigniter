@@ -37,6 +37,7 @@ $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
 
+/* Form route area for forgot password */
 $routes->get('/forgotpass/index', [ForgotPass::class, 'index']);
 $routes->post('/forgotpass/step1', [ForgotPass::class, 'step1']);
 $routes->post('/forgotpass/step2', [ForgotPass::class, 'step2']);
