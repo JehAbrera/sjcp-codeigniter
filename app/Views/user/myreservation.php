@@ -29,7 +29,6 @@
                     <p>No Reservations Found</p>
                 </div>
             <?php } else {
-                //print_r($reservations);
                 foreach ($reservations as $res) { ?>
                     <div class="bg-zinc-100 w-full p-6 grid grid-cols-2">
                         <div>
@@ -75,6 +74,8 @@
                                 "Godfather's Address" => $det['gFatAd'],
                                 "Godmother's Name" => $det['gMotN'],
                                 "Godmother's Address" => $det['gMotAd'],
+                                "Child's Birth Certificate" => $det['PSA'],
+                                "Parents Marriage Contract" => $det['marCont'],
                             ]
                                 ?>
                         <?php } else if ($res['type'] == 'Wedding') {
@@ -90,6 +91,11 @@
                                 "Groom's Father's Name" => $det['gFat'],
                                 "Groom's Mother's Name" => $det['gMot'],
                                 "Groom's Religion" => $det['gRel'],
+                                "Groom's 2x2 Picture" => $det['gID'],
+                                "Groom's Birth Certificate" => $det['gPSA'],
+                                "Groom's Cenomar" => $det['gCEN'],
+                                "Groom's Baptismal Certificate" => $det['gBapC'],
+                                "Groom's Confirmation Certificate" => $det['gConC'],
                                 "<h3 class='font-bold text-lg'>Bride's Information</h3>" => '',
                                 "Bride's Name" => $det['bFn'] . " " . $det['bMn'] . " " . $det['bLn'],
                                 "Bride's Contact" => $det['bNum'],
@@ -99,6 +105,11 @@
                                 "Bride's Father's Name" => $det['bFat'],
                                 "Bride's Mother's Name" => $det['bMot'],
                                 "Bride's Religion" => $det['bRel'],
+                                "Bride's 2x2 Picture" => $det['bID'],
+                                "Bride's Birth Certificate" => $det['bPSA'],
+                                "Bride's Cenomar" => $det['bCEN'],
+                                "Bride's Baptismal Certificate" => $det['bBapC'],
+                                "Bride's Confirmation Certificate" => $det['bConC'],
                             ]
                                 ?>
                         <?php } else if ($res['type'] == 'Funeral Mass/Blessing') {
@@ -117,6 +128,7 @@
                                 "Address" => $det['addr'],
                                 "Sacrament Received" => $det['sacr'],
                                 "Burial Type" => $det['burial'],
+                                "Death Certificate" => $det['dCert'],
                             ]
                                 ?>
 
@@ -172,51 +184,56 @@
                                 <label for="view<?= $res['id'] ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i
                                         data-lucide="X"></i></label>
                                 <div class=" flex flex-col w-full gap-2">
-                                    <?php
-                                    foreach ($viewArray as $key => $value) {
-                                        if($value == " "){
-                                            break;
-                                        } else {
-                                            if ($key == "Birth Certificate" || $key == "Kawan Certificate" || $key == "Barangay Certificate") { ?>
-                                                <div class="form-control w-full items-start">
-                                                    <span><?= $key ?></span>
-                                                    <span class=" outline outline-1 outline-zinc-300 p-2 rounded w-full flex justify-between">
-                                                        <?php 
-                                                            $array = explode('/', $value);
-                                                            $filename = end($array);
-                                                        ?>
-                                                        <p><?= $filename ?></p>
-                                                        <div class="tooltip" data-tip="View Image">
-                                                        <label for="modal_viewImage<?=$value?>"><i data-lucide="external-link"></i></label>
+                                <?php
+                                foreach ($viewArray as $key => $value) {
+                                    if ($value == " ") {
+                                        break;
+                                    } else {
+                                        if ($key == "Birth Certificate" || $key == "Kawan Certificate" || $key == "Barangay Certificate"|| $key == "Death Certificate" || $key == "Child's Birth Certificate" || $key == "Parents Marriage Contract" 
+                                        || $key == "Bride's 2x2 Picture" || $key == "Bride's Baptismal Certificate"|| $key == "Bride's Cenomar" || $key == "Bride's Confirmation Certificate" || $key == "Bride's Birth Certificate"
+                                        || $key == "Groom's 2x2 Picture" || $key == "Groom's Baptismal Certificate"|| $key == "Groom's Cenomar" || $key == "Groom's Confirmation Certificate" || $key == "Groom's Birth Certificate") { ?>
+                                            <div class="form-control w-full items-start">
+                                                <span><?= $key ?></span>
+                                                <span
+                                                    class=" outline outline-1 outline-zinc-300 p-2 rounded w-full flex justify-between">
+                                                    <?php
+                                                    $array = explode('/', $value);
+                                                    $filename = end($array);
+                                                    ?>
+                                                    <p><?= $filename ?></p>
+                                                    <div class="tooltip" data-tip="View Image">
+                                                        <label for="modal_viewImage<?= $value ?>"><i
+                                                                data-lucide="external-link"></i></label>
                                                         <!-- modal for viewing image -->
-                                                            <div>
-                                                                <input type="checkbox" id="modal_viewImage<?=$value?>" class="modal-toggle" />
-                                                                <div class="modal" role="dialog">
-                                                                    <div class="modal-box">
-                                                                        <h3 class="font-bold text-lg"><?= $key ?></h3>
-                                                                        <label for="modal_viewImage<?= $value ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
-                                                                        <div class=" flex flex-col w-full gap-2">
-                                                                            <br>
-                                                                            <div class=" form-control w-full items-start">
-                                                                                <img src="<?= base_url(' /' . $value) ?>" alt="<?= $filename ?>" width="500" height="500">
-                                                                            </div>
+                                                        <div>
+                                                            <input type="checkbox" id="modal_viewImage<?= $value ?>"
+                                                                class="modal-toggle" />
+                                                            <div class="modal" role="dialog">
+                                                                <div class="modal-box">
+                                                                    <h3 class="font-bold text-lg"><?= $key ?></h3>
+                                                                    <label for="modal_viewImage<?= $value ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
+                                                                    <div class=" flex flex-col w-full gap-2">
+                                                                        <br>
+                                                                        <div class=" form-control w-full items-start">
+                                                                            <img src="<?= base_url(' /' . $value) ?>" alt="<?= $filename ?>" width="500" height="500">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </span>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class=" form-control w-full items-start">
-                                                    <span class=" label-text-alt"><?= $key ?></span>
-                                                    <span
-                                                        class=" outline outline-1 outline-zinc-300 p-2 rounded w-full"><?= $value ?></span>
-                                                </div>
-                                            <?php }
-                                        }
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class=" form-control w-full items-start">
+                                                <span class=" label-text-alt"><?= $key ?></span>
+                                                <span
+                                                    class=" outline outline-1 outline-zinc-300 p-2 rounded w-full"><?= $value ?></span>
+                                            </div>
+                                        <?php }
                                     }
-                                    ?>
+                                }
+                                ?>
                                 </div>
                             </div>
                         </div>
@@ -293,9 +310,8 @@
                                 </div>
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to reschedule this reservation?
                                 </h3>
-                                <p class="py-1 text-center text-sm">This reservation will be removed and will appear as
-                                    cancelled in
-                                    your appointment history.</p>
+                                <p class="py-1 text-center text-sm">You will need to select a new date and time for
+                                    this reservation.</p>
                                 <div class="modal-action justify-center m-1">
                                     <label for="modal_resched<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
                                     <button type="submit" name="submit" value="submitform"

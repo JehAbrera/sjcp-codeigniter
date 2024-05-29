@@ -32,9 +32,8 @@ class MyReservation extends BaseController
         $reserv = $this->getres->queryAll($status, $email)->paginate(10);
         foreach ($reserv as &$res) {
             $add = [];
-            $tbl = $this->table($res['type']);
             $add = [
-                'det' => $this->viewDetails($tbl, $res['id'])
+                'det' => $this->viewDetails($res['type'], $res['id'])
             ];
             $res = array_merge($res, $add);
         }
@@ -58,7 +57,7 @@ class MyReservation extends BaseController
             $reason = $this->request->getPost('otherinput');
         }
         $this->updateres->updateReserv($id, $reason, $status);
-        return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled your reservation');
+        return redirect()->to('/myreservation/status/Canceled')->with('SucMess', 'Reservation successfully canceled!');
 
     }
 
@@ -82,23 +81,6 @@ class MyReservation extends BaseController
             $class = "text-red-800";
         }
         return $class;
-    }
-
-    public function table($type)
-    {
-        if ($type == "Wedding") {
-            return $this->table = 'detwed';
-        } else if ($type == "Baptism") {
-            return $this->table = 'detbap';
-        } else if ($type == "Funeral Mass/Blessing") {
-            return $this->table = 'detfun';
-        } else if ($type == "Mass Intention") {
-            return $this->table = 'detmass';
-        } else if ($type == "Blessing") {
-            return $this->table = 'detbls';
-        } else {
-            return $this->table = 'detdocu';
-        }
     }
 
 }

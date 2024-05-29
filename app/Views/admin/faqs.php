@@ -6,11 +6,11 @@
     <div class=" flex justify-between items-center">
         <span class=" badge badge-success badge-outline p-4 font-bold text-2xl">Frequenty Asked Questions List</span>
         <form action="/admin/faqs/add" id="addform" method="post">
-            <label for="add" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add Faqs</label>
+            <label for="add" class=" btn bg-zinc-300"><i data-lucide="plus"></i>&nbsp;Add FAQs</label>
             <input type="checkbox" id="add" class="modal-toggle" />
             <div class="modal" role="dialog">
                 <div class="modal-box max-w-2xl">
-                    <h3 class="font-bold text-lg text-center">Add Faqs</h3>
+                    <h3 class="font-bold text-lg text-center">Add FAQs</h3>
                     <label for="discard" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
                     <div class="gap-1">
                         <div class=" col-span-2 form-control">
@@ -103,12 +103,12 @@
                     <span><strong><?= $item['question'] ?></strong></span>
                 </div>
                 <div class="col-span-1 flex justify-end items-center gap-2">
-                    <form action="/admin/faqs/edit" method="post" id="editForm-<?= $item['id'] ?>" enctype="multipart/form-data">
+                    <form action="/admin/faqs/edit" method="post" id="editForm-<?=$item['id']?>" enctype="multipart/form-data">
                         <label for="edit-<?= $item['id'] ?>" class="btn"><i data-lucide="pen-line"></i></label>
                         <input type="checkbox" id="edit-<?= $item['id'] ?>" class="modal-toggle" />
                         <div class="modal" role="dialog">
                             <div class="modal-box max-w-2xl">
-                                <h3 class="font-bold text-lg text-center">Edit Faqs</h3>
+                                <h3 class="font-bold text-lg text-center">Edit FAQs</h3>
                                 <label for="disc-<?= $item['id'] ?>" class="btn btn-error btn-circle fixed top-4 right-4"><i data-lucide="X"></i></label>
                                 <div class="gap-1">
                                     <div class="col-span-2 form-control">
@@ -156,8 +156,8 @@
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
                                 <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
                                 <div class="modal-action justify-center">
-                                    <label for="clear2-<?= $item['id'] ?>" class="btn btn-error btn-outline">No</label>
-                                    <button type="button" class="btn btn-success toggleAndResetButton" data-id="<?= $item['id'] ?>">Yes</button>
+                                    <label for="clear2-<?=$item['id']?>" class="btn btn-error btn-outline">No</label>
+                                    <button type="button" class="btn btn-success toggleAndResetButton" data-id="<?=$item['id']?>">Yes</button>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                                 <h3 class="font-bold text-lg text-center">Are you sure you want to discard changes?</h3>
                                 <p class="py-4 text-center text-balance">Changes you made so far will not be saved.</p>
                                 <div class="modal-action justify-center">
-                                    <label for="discard-<?= $item['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                    <label for="disc-<?= $item['id'] ?>" class="btn btn-error btn-outline">No</label>
                                     <button type="button" class="btn btn-success toggleCloseButton" data-id="<?= $item['id'] ?>">Yes</button>
                                 </div>
                             </div>
@@ -214,10 +214,12 @@
         add.checked = !add.checked;
         imagePreview.innerHTML = '';
     });
+
     document.getElementById('toggleClose').addEventListener('click', function() {
         // Reset the form
         document.getElementById('addform').reset();
     });
+
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.toggleAndResetButton').forEach(button => {
             button.addEventListener('click', function() {
@@ -250,6 +252,7 @@
                 }
             });
         });
+
         // Function to handle image preview
         function handleImagePreview(event) {
             const input = event.target;

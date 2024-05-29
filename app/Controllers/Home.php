@@ -15,10 +15,12 @@ class Home extends BaseController
     public function index(): string
     {
         $data['title'] = "Home";
+        session()->remove('step');
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');
     }
     public function user($page)
     {   
+        session()->remove('step');
         if ($page == "logout") {
             if (session()->has('isLogged')) {
                 session()->remove('isLogged');
@@ -51,6 +53,19 @@ class Home extends BaseController
         if ($page == 'services') {
             $addInf = [
                 'services' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+            if ($page == 'success') {
+                return view('user/' . $page);
+            }
+            $data['title'] = ucfirst($page);
+
+            $data = array_merge($data, $addInf);
+            return view('templates/navbar', $data) . view('templates/header', $data) . view('user/' . $page) . view('templates/footer');
+        }
+
+        if ($page == 'announcement') {
+            $addInf = [
+                'announce' => $this->records->getAnnouncements($page)->paginate(10)
             ];
             if ($page == 'success') {
                 return view('user/' . $page);
