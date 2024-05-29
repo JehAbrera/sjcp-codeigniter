@@ -199,7 +199,7 @@
 <!-- Production version -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<script src="<?= base_url('./scripts/Admin.js') ?>"></script>
+<script src="<?= base_url('./scripts/Faqs.js') ?>"></script>
 </body>
 
 </html>
