@@ -91,7 +91,7 @@ class UpdateProfile extends Model
             ->insert($data);
         $this -> db ->table('liuser') 
         -> where('email',session()->user)
-        ->limit(1)
+        -> limit(1)
         -> delete();
         
     }

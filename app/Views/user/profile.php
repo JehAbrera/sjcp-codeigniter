@@ -204,8 +204,15 @@
             <?php } elseif ($mode == 'delete') { ?>
                 <span class=" text-xl font-bold">Account Deletion</span>
                 </div>
-                <form action="user/delAcc" method="post" class=" w-4/5 flex flex-col gap-4">
-                    <p class=" text-center">
+                <form action="/user/delAcc" method="post" class=" w-4/5 flex flex-col gap-4">
+                <?php
+                    if (session()->has('conErr')) { ?>
+                    <div class=" p-2 bg-red-200 text-error rounded-md w-full label-text-alt text-center">
+                        <?= session()->conErr ?>
+                    </div>
+                <?php }
+                ?>
+                <p class=" text-center">
                         Enter "CONFIRM" below to proceed with account deletion.
                     </p>
                     <input type="text" name="confirm" class="input input-bordered" />
