@@ -49,6 +49,9 @@
                             <canvas class=" w-full h-full absolute inset-0 mx-auto" id="wedChart"></canvas>
                         </div>
                     </div>
+                    <div class=" w-full flex justify-end">
+                        <button class=" btn bg-slate-950 text-white w-fit" id="downloadPdf">Generate Report</button>
+                    </div>
                 </div>
                 <div class=" col-span-1 flex flex-col gap-16 px-2">
                     <div class=" w-full flex flex-col gap-2">
@@ -73,7 +76,7 @@
                         <?php
                         if (empty($upcoming)) { ?>
                             <div class=" flex justify-center">
-                                <span class=" text-center">No events for today.</span>
+                                <span class=" text-center">No upcoming events.</span>
                             </div>
                             <?php } else {
                             foreach ($upcoming as $up) : ?>
@@ -158,6 +161,31 @@
                         }
                     }
                 },
+            });
+
+            document.getElementById('downloadPdf').addEventListener('click', function() {
+                // Open a new tab or window with the view URL
+                window.open('/admin/pdf', '_blank');
+
+                fetch('/admin/stat/download')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.blob(); // Get the response as a blob
+                    })
+                    .then(blob => {
+                        // Create a link element
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = 'StatReport.pdf'; // The filename of the downloaded PDF
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    })
+                    .catch(error => console.error('Fetch error:', error));
             });
         </script>
         </body>

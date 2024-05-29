@@ -6,5 +6,26 @@ use CodeIgniter\Model;
 
 class Funeral extends Model
 {
-    // Model properties and methods go here
+    protected $table = 'recfun';
+    protected $primaryKey = 'id';
+    protected $allowedFields = [
+        'date',
+        'time',
+        'fn',
+        'mn',
+        'ln',
+        'gender',
+        'dDate',
+        'age',
+        'dCause',
+        'intDate',
+        'cem',
+        'infFn',
+        'infMn',
+        'infLn',
+        'num',
+        'addr',
+        'sacr',
+        'burial',
+    ];
 }

@@ -23,7 +23,7 @@
         <input type="text" name="ln" id="" value="<?= set_value('ln', $ln) ?>" class=" input input-bordered" />
     </div>
 </div>
-<div class=" w-full grid grid-cols-2 gap-1">
+<div class=" w-full grid grid-cols-3 gap-1">
     <div class=" form-control">
         <label class=" label-text-alt" for="">Gender</label>
         <div class="flex justify-between items-center h-full px-8">
@@ -40,6 +40,10 @@
     <div class=" form-control">
         <label class=" label-text-alt" for="">Date of Death</label>
         <input type="date" name="dDate" id="" <?= !empty(set_value('dDate', $dDate)) ? 'value="' . esc(set_value('dDate', date('Y-m-d', strtotime($dDate)))) . '"' : '' ?> class=" input input-bordered">
+    </div>
+    <div class=" w-full form-control">
+        <label class=" label-text-alt" for="">Age</label>
+        <input type="text" name="age" id="" value="<?= set_value('age', $age) ?>" class=" input input-bordered">
     </div>
 </div>
 <div class=" w-full grid grid-cols-2 gap-1">

@@ -8,6 +8,7 @@ use App\Models\AboutusCont;
 use App\Models\Employee;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\Count;
+use Dompdf\Dompdf;
 
 use App\Libraries\EmailSender;
 use App\Models\Announcement;
@@ -36,6 +37,61 @@ class Admin extends BaseController
 
     public function admin($page)
     {
+        if ($page == 'pdf') {
+            $stat = new \App\Models\Stats();
+            $data = [
+                // Counts for reservations
+                'totRes' => $stat->findCount('allevents'),
+                'resBap' => $stat->findCount('allevents', ['type' => 'Baptism']),
+                'resWed' => $stat->findCount('allevents', ['type' => 'Wedding']),
+                'resFun' => $stat->findCount('allevents', ['type' => 'Funeral Mass/Blessing']),
+                'resMas' => $stat->findCount('allevents', ['type' => 'Mass Intention']),
+                'resBle' => $stat->findCount('allevents', ['type' => 'Blessing']),
+                'resDoc' => $stat->findCount('allevents', ['type' => 'Document Request']),
+                'resPen' => $stat->findCount('allevents', ['status' => 'Pending']),
+                'resAcc' => $stat->findCount('allevents', ['status' => 'Accepted']),
+                'resCom' => $stat->findCount('allevents', ['status' => 'Completed']),
+                'resDec' => $stat->findCount('allevents', ['status' => 'Declined']),
+                'resCan' => $stat->findCount('allevents', ['status' => 'Canceled']),
+                // Counts for Declined Reservations
+                'dec1' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Unable to handle the event']),
+                'dec2' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Non-compliance with requirements']),
+                'dec3' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Conflict with existing schedule']),
+                'dec4' => $stat->findCount('allevents', ['status' => 'Declined'], ['reason' => [
+                    'Unable to handle the event',
+                    'Non-compliance with requirements',
+                    'Conflict with existing schedule'
+                ]]),
+                // Counts for canceled
+                'can1' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Change of plans']),
+                'can2' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Incorrect information submitted']),
+                'can3' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Conflicting schedules']),
+                'can4' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Lack of preparation']),
+                'can5' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Emergency']),
+                'can6' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Personal matters']),
+                // for admin cancelation
+                'can7' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Unexpected staff unavailability']),
+                'can8' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Wedding banns objection']),
+                'can9' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'More urgent event scheduled']),
+                'can10' => $stat->findCount('allevents', ['status' => 'Canceled'], ['reason' => [
+                    'Unexpected staff unavailability',
+                    'Wedding banns objection',
+                    'More urgent event scheduled',
+                    'Change of plans',
+                    'Incorrect information submitted',
+                    'Conflicting schedules',
+                    'Lack of preparation',
+                    'Emergency',
+                    'Personal matters'
+                ]]),
+                // Counts for baptism
+                'bapT' => $stat->findCount('recbap'),
+                'bapM' => $stat->findCount('recbap', ['gender' => 'Male']),
+                'bapF' => $stat->findCount('recbap', ['gender' => 'Female']),
+
+            ];
+            return view('pdf/statrep', $data);
+        }
         if (!is_file(APPPATH . 'Views/admin/' . $page . '.php')) {
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
@@ -156,6 +212,8 @@ class Admin extends BaseController
                 break;
 
             case 'Confirmation':
+                $record = new \App\Models\Records\Confirmation();
+
                 $dob = strval($this->request->getPost('bday'));
                 $bday = Time::parse($dob);
                 $now = Time::now();
@@ -183,11 +241,57 @@ class Admin extends BaseController
                 break;
 
             case 'Wedding':
-                # code...
+                $record = new \App\Models\Records\Wedding();
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'gFn' => ucwords(strval($this->request->getPost('gFn'))),
+                    'gMn' => ucwords(strval($this->request->getPost('gMn'))),
+                    'gLn' => ucwords(strval($this->request->getPost('gLn'))),
+                    'gNum' => "+63" . $this->request->getPost('gNum'),
+                    'gDob' => strval($this->request->getPost('gDob')),
+                    'gPob' => ucfirst(strval($this->request->getPost('gPob'))),
+                    'gAddr' => ucfirst(strval($this->request->getPost('gAddr'))),
+                    'gFat' => ucwords(strval($this->request->getPost('gFat'))),
+                    'gMot' => ucwords(strval($this->request->getPost('gMot'))),
+                    'gRel' => strval($this->request->getPost('gRel')),
+                    'bFn' => ucwords(strval($this->request->getPost('bFn'))),
+                    'bMn' => ucwords(strval($this->request->getPost('bMn'))),
+                    'bLn' => ucwords(strval($this->request->getPost('bLn'))),
+                    'bNum' => "+63" . $this->request->getPost('bNum'),
+                    'bDob' => strval($this->request->getPost('bDob')),
+                    'bPob' => ucfirst(strval($this->request->getPost('bPob'))),
+                    'bAddr' => ucfirst(strval($this->request->getPost('bAddr'))),
+                    'bFat' => ucwords(strval($this->request->getPost('bFat'))),
+                    'bMot' => ucwords(strval($this->request->getPost('bMot'))),
+                    'bRel' => strval($this->request->getPost('bRel')),
+                ];
                 break;
 
             case 'Funeral Mass':
-                # code...
+                $record = new \App\Models\Records\Funeral();
+
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => strval($this->request->getPost('gender')),
+                    'dDate' => strval($this->request->getPost('dDate')),
+                    'age' => strval($this->request->getPost('age')),
+                    'dCause' => ucwords(strval($this->request->getPost('dCause'))),
+                    'intDate' => strval($this->request->getPost('intDate')),
+                    'cem' => ucfirst(strval($this->request->getPost('cem'))),
+                    'infFn' => ucwords(strval($this->request->getPost('infFn'))),
+                    'infMn' => ucwords(strval($this->request->getPost('infMn'))),
+                    'infLn' => ucwords(strval($this->request->getPost('infLn'))),
+                    'num' => "+63" . $this->request->getPost('num'),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'sacr' => strval($this->request->getPost('sacr')),
+                    'burial' => strval($this->request->getPost('burial')),
+                ];
                 break;
         }
         if ($record->save($values)) {
@@ -231,8 +335,8 @@ class Admin extends BaseController
 
                 $dob = strval($this->request->getPost('bday'));
                 $bday = Time::parse($dob);
-                $now = Time::now();
-                $age = $bday->difference($now)->getYears();
+                $eventdate = Time::parse(strval($this->request->getPost('date')));
+                $age = $bday->difference($eventdate)->getYears();
 
                 $id = (int) $this->request->getPost('id');
 
@@ -258,11 +362,59 @@ class Admin extends BaseController
                 break;
 
             case 'Wedding':
-                # code...
+                $record = new \App\Models\Records\Wedding();
+
+                $id = (int) $this->request->getPost('id');
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'gFn' => ucwords(strval($this->request->getPost('gFn'))),
+                    'gMn' => ucwords(strval($this->request->getPost('gMn'))),
+                    'gLn' => ucwords(strval($this->request->getPost('gLn'))),
+                    'gNum' => "+63" . $this->request->getPost('gNum'),
+                    'gDob' => strval($this->request->getPost('gDob')),
+                    'gPob' => ucfirst(strval($this->request->getPost('gPob'))),
+                    'gAddr' => ucfirst(strval($this->request->getPost('gAddr'))),
+                    'gFat' => ucwords(strval($this->request->getPost('gFat'))),
+                    'gMot' => ucwords(strval($this->request->getPost('gMot'))),
+                    'gRel' => strval($this->request->getPost('gRel')),
+                    'bFn' => ucwords(strval($this->request->getPost('bFn'))),
+                    'bMn' => ucwords(strval($this->request->getPost('bMn'))),
+                    'bLn' => ucwords(strval($this->request->getPost('bLn'))),
+                    'bNum' => "+63" . $this->request->getPost('bNum'),
+                    'bDob' => strval($this->request->getPost('bDob')),
+                    'bPob' => ucfirst(strval($this->request->getPost('bPob'))),
+                    'bAddr' => ucfirst(strval($this->request->getPost('bAddr'))),
+                    'bFat' => ucwords(strval($this->request->getPost('bFat'))),
+                    'bMot' => ucwords(strval($this->request->getPost('bMot'))),
+                    'bRel' => strval($this->request->getPost('bRel')),
+                ];
                 break;
 
             case 'Funeral Mass':
-                # code...
+                $record = new \App\Models\Records\Funeral();
+
+                $id = (int) $this->request->getPost('id');
+                $values = [
+                    'date' => strval($this->request->getPost('date')),
+                    'time' => strval($this->request->getPost('time')),
+                    'fn' => ucwords(strval($this->request->getPost('fn'))),
+                    'mn' => ucwords(strval($this->request->getPost('mn'))),
+                    'ln' => ucwords(strval($this->request->getPost('ln'))),
+                    'gender' => strval($this->request->getPost('gender')),
+                    'dDate' => strval($this->request->getPost('dDate')),
+                    'age' => strval($this->request->getPost('age')),
+                    'dCause' => ucwords(strval($this->request->getPost('dCause'))),
+                    'intDate' => strval($this->request->getPost('intDate')),
+                    'cem' => ucfirst(strval($this->request->getPost('cem'))),
+                    'infFn' => ucwords(strval($this->request->getPost('infFn'))),
+                    'infMn' => ucwords(strval($this->request->getPost('infMn'))),
+                    'infLn' => ucwords(strval($this->request->getPost('infLn'))),
+                    'num' => "+63" . $this->request->getPost('num'),
+                    'addr' => ucfirst(strval($this->request->getPost('addr'))),
+                    'sacr' => strval($this->request->getPost('sacr')),
+                    'burial' => strval($this->request->getPost('burial')),
+                ];
                 break;
         }
         if ($record->update($id, $values)) {
@@ -378,7 +530,8 @@ class Admin extends BaseController
         }
     }
     // Delete an faqs
-    public function delfaqItem() {
+    public function delfaqItem()
+    {
         $id = $this->request->getPost('id');
 
         $row = $this->faqs->find($id);
@@ -398,7 +551,8 @@ class Admin extends BaseController
         }
     }
     // Edit faqs
-    public function editfaqItem() {
+    public function editfaqItem()
+    {
         $id = $this->request->getPost('id');
         $ques = ucfirst($this->request->getPost('question'));
         $ans = ucfirst($this->request->getPost('answer'));
@@ -488,7 +642,7 @@ class Admin extends BaseController
         $schedule = $this->request->getPost('schedule');
         $req = $this->request->getPost('req');
         $notes = $this->request->getPost('notes');
-        if($img == ""){
+        if ($img == "") {
             $data = [
                 'name' => $name,
                 'schedule' => $schedule,
@@ -617,7 +771,7 @@ class Admin extends BaseController
         $schedule = $this->request->getPost('schedule');
         $req = $this->request->getPost('req');
         $notes = $this->request->getPost('notes');
-        if($img == ""){
+        if ($img == "") {
             $data = [
                 'name' => $name,
                 'schedule' => $schedule,
@@ -760,5 +914,81 @@ class Admin extends BaseController
         } else {
             return redirect()->to('/admin/announcements')->with('announceErr', "Invalid format, please try again");
         }
+    }
+
+    // For downloading stat report //
+    public function downloadPDF()
+    {
+        $stat = new \App\Models\Stats();
+        $data = [
+            // Counts for reservations
+            'totRes' => $stat->findCount('allevents'),
+            'resBap' => $stat->findCount('allevents', ['type' => 'Baptism']),
+            'resWed' => $stat->findCount('allevents', ['type' => 'Wedding']),
+            'resFun' => $stat->findCount('allevents', ['type' => 'Funeral Mass/Blessing']),
+            'resMas' => $stat->findCount('allevents', ['type' => 'Mass Intention']),
+            'resBle' => $stat->findCount('allevents', ['type' => 'Blessing']),
+            'resDoc' => $stat->findCount('allevents', ['type' => 'Document Request']),
+            'resPen' => $stat->findCount('allevents', ['status' => 'Pending']),
+            'resAcc' => $stat->findCount('allevents', ['status' => 'Accepted']),
+            'resCom' => $stat->findCount('allevents', ['status' => 'Completed']),
+            'resDec' => $stat->findCount('allevents', ['status' => 'Declined']),
+            'resCan' => $stat->findCount('allevents', ['status' => 'Canceled']),
+            // Counts for Declined Reservations
+            'dec1' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Unable to handle the event']),
+            'dec2' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Non-compliance with requirements']),
+            'dec3' => $stat->findCount('allevents', ['status' => 'Declined', 'reason' => 'Conflict with existing schedule']),
+            'dec4' => $stat->findCount('allevents', ['status' => 'Declined'], ['reason' => [
+                'Unable to handle the event',
+                'Non-compliance with requirements',
+                'Conflict with existing schedule'
+            ]]),
+            // Counts for canceled
+            'can1' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Change of plans']),
+            'can2' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Incorrect information submitted']),
+            'can3' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Conflicting schedules']),
+            'can4' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Lack of preparation']),
+            'can5' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Emergency']),
+            'can6' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Personal matters']),
+            // for admin cancelation
+            'can7' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Unexpected staff unavailability']),
+            'can8' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'Wedding banns objection']),
+            'can9' => $stat->findCount('allevents', ['status' => 'Canceled', 'reason' => 'More urgent event scheduled']),
+            'can10' => $stat->findCount('allevents', ['status' => 'Canceled'], ['reason' => [
+                'Unexpected staff unavailability',
+                'Wedding banns objection',
+                'More urgent event scheduled',
+                'Change of plans',
+                'Incorrect information submitted',
+                'Conflicting schedules',
+                'Lack of preparation',
+                'Emergency',
+                'Personal matters'
+            ]]),
+            // Counts for baptism
+            'bapT' => $stat->findCount('recbap'),
+            'bapM' => $stat->findCount('recbap', ['gender' => 'Male']),
+            'bapF' => $stat->findCount('recbap', ['gender' => 'Female']),
+
+        ];
+
+        $html = view('pdf/statrep', $data);
+
+        // Initialize Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set paper size
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF (1 = download and 0 = preview)
+        $dompdf->stream("StatReport.pdf", array("Attachment" => 1));
+
+        return redirect()->to('/admin/dashboard');
     }
 }
