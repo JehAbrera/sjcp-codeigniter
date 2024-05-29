@@ -88,7 +88,62 @@ class Admin extends BaseController
                 'bapT' => $stat->findCount('recbap'),
                 'bapM' => $stat->findCount('recbap', ['gender' => 'Male']),
                 'bapF' => $stat->findCount('recbap', ['gender' => 'Female']),
-
+                //wedding
+                'w1' => $stat->findCount('recwed'),
+                'w2' => $this->count->getCount('recwed', [true]),
+                'w3' => $this->count->getCount('recwed', [false]),
+                //groom
+                'g1' => $stat->findCount('recwed', ['bRel' => 'Roman Catholic']),
+                'g2' => $stat->findCount('recwed', ['bRel' => 'Catholic']),
+                'g3' => $stat->findCount('recwed', ['bRel' => 'Protestant']),
+                'g4' => $stat->findCount('recwed', ['bRel' => 'Iglesia ni Cristo']),
+                'g5' => $stat->findCount('recwed', ['bRel' => "Jehovah's Witness"]),
+                'g6' => $stat->findCount('recwed', ['bRel' => 'Seventh Day Adventist']),
+                'g7' => $stat->findCount('recwed', ['bRel' => 'Islam']),
+                //bride
+                'b1' => $stat->findCount('recwed', ['gRel' => 'Roman Catholic']),
+                'b2' => $stat->findCount('recwed', ['gRel' => 'Catholic']),
+                'b3' => $stat->findCount('recwed', ['gRel' => 'Protestant']),
+                'b4' => $stat->findCount('recwed', ['gRel' => 'Iglesia ni Cristo']),
+                'b5' => $stat->findCount('recwed', ['gRel' => "Jehovah's Witness"]),
+                'b6' => $stat->findCount('recwed', ['gRel' => 'Seventh Day Adventist']),
+                'b7' => $stat->findCount('recwed', ['gRel' => 'Islam']),
+                //funeral
+                'f1' => $stat->findCount('recfun'),
+                'f2' => $stat->findCount('recfun', ['burial' => 'Casket']),
+                'f3' => $stat->findCount('recfun', ['burial' => 'Urn']),
+                'f4' => $stat->findCount('recfun', ['gender' => 'Male']),
+                'f5' => $stat->findCount('recfun', ['gender' => 'Female']),
+                //mass
+                'm1' => $stat->findCount('detmass'),
+                'm2' => $stat->findCount('detmass', ['purpose' => 'thanksgiving']),
+                'm3' => $stat->findCount('detmass', ['purpose' => 'healing/recovery']),
+                'm4' => $stat->findCount('detmass', ['purpose' => 'special intention']),
+                'm5' => $stat->findCount('detmass', ['purpose' => 'soul']),
+                //blessing
+                'bl1' => $stat->findCount('detbls'),
+                'bl2' => $stat->findCount('detbls', ['type' => 'house blessing']),
+                'bl3' => $stat->findCount('detbls', ['type' => 'car blessing']),
+                'bl4' => $stat->findCount('detbls', ['type' => 'store blessing']),
+                'bl5' => $stat->findCount('detbls', ['type' => 'motorcycle blessing']),
+                //Documents Requests
+                'd1' => $stat->findCount('detdocu'),
+                'd2' => $stat->findCount('detdocu', ['type' => 'baptismal certificate']),
+                'd3' => $stat->findCount('detdocu', ['type' => 'wedding certificate']),
+                'd4' => $stat->findCount('detdocu', ['type' => 'confirmation certificate']),
+                'd5' => $stat->findCount('detdocu', ['type' => 'good moral certificate']),
+                'd6' => $stat->findCount('detdocu', ['type' => 'permit and no record']),
+                //Registration
+                'r1' => $stat->findCount('liuser'),
+                //Records
+                're2' => $stat->findCount('recwed'),
+                're3' => $stat->findCount('recbap'),
+                're4' => $stat->findCount('recfun'),
+                're5' => $stat->findCount('recconf'),
+                //Confirmation
+                'c1' => $stat->findCount('recconf'),
+                'c2' => $stat->findCount('recbap', ['Gender' => 'Male']),
+                'c3' => $stat->findCount('recfun', ['Gender' => 'Female']),
             ];
             return view('pdf/statrep', $data);
         }
@@ -113,16 +168,16 @@ class Admin extends BaseController
                 'bapM' => $this->count->getCount('recbap', ['gender', 'Male']),
                 'bapF' => $this->count->getCount('recbap', ['gender', 'Female']),
                 'conM' => $this->count->getCount('recconf', ['gender', 'Male']),
-                'conF' => $this->count->getCount('recconf', ['gender', 'Male']),
+                'conF' => $this->count->getCount('recconf', ['gender', 'Female']),
                 'wedS' => $this->count->getCount('recwed', [true]),
                 'wedD' => $this->count->getCount('recwed', [false]),
                 'current' => $this->count->getCurrent(),
                 'upcoming' => $this->count->getUpcoming(),
             ];
         }
-        if ($page == 'announcement') {
+        if ($page == 'announcements') {
             $addInf = [
-                'announcement' => $this->records->getAnnouncements($page)->paginate(10)
+                'announcements' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
 
@@ -141,12 +196,6 @@ class Admin extends BaseController
         if ($page == 'about') {
             $addInf = [
                 'about' => $this->records->getAnnouncements($page)->paginate(10)
-            ];
-        }
-
-        if ($page == 'home') {
-            $addInf = [
-                'misvis' => $this->records->getAnnouncements('misvis')->paginate(10)
             ];
         }
 
@@ -467,13 +516,9 @@ class Admin extends BaseController
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
                 return redirect()->to('/admin/reservations/status/Accepted/ASC')->with('SucMess', 'Reservation successfully accepted!');
             }
-        } else if ($this->request->getPost('submit') == 'Decline' || $this->request->getPost('submit') == 'Cancel') {
+        } else if ($this->request->getPost('submit') == 'Decline') {
             $reason = $this->request->getPost('reason');
-            $status = $this->request->getPost('submit');
-            $stat = "Declined";
-            if($status == "Cancel"){
-                $stat = "Canceled";
-            }
+            $status = "Declined";
             if ($reason == "Others") {
                 $reason = $this->request->getPost('otherinput');
             }
@@ -481,7 +526,7 @@ class Admin extends BaseController
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
-                $this->email->send('updateStat', 'Status', $email, $refn, $stat, $reason);
+                $this->email->send('updateStat', 'Status', $email, $refn, 'Declined', $reason);
                 return redirect()->to('/admin/reservations/status/Declined/ASC')->with('SucMess', 'Reservation successfully declined!');
             }
         } else if ($this->request->getPost('submit') == 'Complete') {
@@ -1084,7 +1129,62 @@ class Admin extends BaseController
             'bapT' => $stat->findCount('recbap'),
             'bapM' => $stat->findCount('recbap', ['gender' => 'Male']),
             'bapF' => $stat->findCount('recbap', ['gender' => 'Female']),
-
+            //wedding
+            'w1' => $stat->findCount('recwed'),
+            'w2' => $this->count->getCount('recwed', [true]),
+            'w3' => $this->count->getCount('recwed', [false]),
+            //groom
+            'g1' => $stat->findCount('recwed', ['bRel' => 'Roman Catholic']),
+            'g2' => $stat->findCount('recwed', ['bRel' => 'Catholic']),
+            'g3' => $stat->findCount('recwed', ['bRel' => 'Protestant']),
+            'g4' => $stat->findCount('recwed', ['bRel' => 'Iglesia ni Cristo']),
+            'g5' => $stat->findCount('recwed', ['bRel' => "Jehovah's Witness"]),
+            'g6' => $stat->findCount('recwed', ['bRel' => 'Seventh Day Adventist']),
+            'g7' => $stat->findCount('recwed', ['bRel' => 'Islam']),
+            //bride
+            'b1' => $stat->findCount('recwed', ['gRel' => 'Roman Catholic']),
+            'b2' => $stat->findCount('recwed', ['gRel' => 'Catholic']),
+            'b3' => $stat->findCount('recwed', ['gRel' => 'Protestant']),
+            'b4' => $stat->findCount('recwed', ['gRel' => 'Iglesia ni Cristo']),
+            'b5' => $stat->findCount('recwed', ['gRel' => "Jehovah's Witness"]),
+            'b6' => $stat->findCount('recwed', ['gRel' => 'Seventh Day Adventist']),
+            'b7' => $stat->findCount('recwed', ['gRel' => 'Islam']),
+            //funeral
+            'f1' => $stat->findCount('recfun'),
+            'f2' => $stat->findCount('recfun', ['burial' => 'Casket']),
+            'f3' => $stat->findCount('recfun', ['burial' => 'Urn']),
+            'f4' => $stat->findCount('recfun', ['gender' => 'Male']),
+            'f5' => $stat->findCount('recfun', ['gender' => 'Female']),
+            //mass
+            'm1' => $stat->findCount('detmass'),
+            'm2' => $stat->findCount('detmass', ['purpose' => 'thanksgiving']),
+            'm3' => $stat->findCount('detmass', ['purpose' => 'healing/recovery']),
+            'm4' => $stat->findCount('detmass', ['purpose' => 'special intention']),
+            'm5' => $stat->findCount('detmass', ['purpose' => 'soul']),
+            //blessing
+            'bl1' => $stat->findCount('detbls'),
+            'bl2' => $stat->findCount('detbls', ['type' => 'house blessing']),
+            'bl3' => $stat->findCount('detbls', ['type' => 'car blessing']),
+            'bl4' => $stat->findCount('detbls', ['type' => 'store blessing']),
+            'bl5' => $stat->findCount('detbls', ['type' => 'motorcycle blessing']),
+            //Documents Requests
+            'd1' => $stat->findCount('detdocu'),
+            'd2' => $stat->findCount('detdocu', ['type' => 'baptismal certificate']),
+            'd3' => $stat->findCount('detdocu', ['type' => 'wedding certificate']),
+            'd4' => $stat->findCount('detdocu', ['type' => 'confirmation certificate']),
+            'd5' => $stat->findCount('detdocu', ['type' => 'good moral certificate']),
+            'd6' => $stat->findCount('detdocu', ['type' => 'permit and no record']),
+            //Registration
+            'r1' => $stat->findCount('liuser'),
+            //Records
+            're2' => $stat->findCount('recwed'),
+            're3' => $stat->findCount('recbap'),
+            're4' => $stat->findCount('recfun'),
+            're5' => $stat->findCount('recconf'),
+            //Confirmation
+            'c1' => $stat->findCount('recconf'),
+            'c2' => $stat->findCount('recbap', ['Gender' => 'Male']),
+            'c3' => $stat->findCount('recfun', ['Gender' => 'Female']),
         ];
 
         $html = view('pdf/statrep', $data);
