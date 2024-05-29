@@ -2,8 +2,8 @@
 
 /*
 *
-* Validate data, send otp for confirmations, and create accounts here
-* For email configuration check 
+* Validate email if existing in the users, 
+send otp for confirmations, and and update password here
 *
 */
 
@@ -29,7 +29,7 @@ class ForgotPass extends BaseController
         $this->upass = new UpdatePassword();
     }
 
-    // Steps are the process of account creation, different steps collect different info //
+    
     public function index()
     {
         $step = session()->get('step');
@@ -46,8 +46,9 @@ class ForgotPass extends BaseController
         } 
         return view('templates/navbar', $data) . view('user/forgotpass', $data);
     }
+
     // Step 1 //
-    // To add: input formatting //
+    // heck email if existing and send otp //
     public function step1()
     {
         $mail = $this->request->getPost('email');
@@ -104,5 +105,12 @@ class ForgotPass extends BaseController
             session()->setFlashdata('otpErr', "The email you entered is not correct.");
             return redirect()->to('/forgotpass/index');
         }
+    }
+
+    public function resendOtp(){
+        // Call email sender library - declare purpose and target as parameters //
+        $this->email->send('otp', 'Forget Password', session()->get('email'));
+        session()->set('step', 2);
+        return redirect()->to('/forgotpass/index');
     }
 }

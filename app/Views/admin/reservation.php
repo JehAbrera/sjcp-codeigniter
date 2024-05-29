@@ -15,8 +15,8 @@
 
         <p class=" text-xl font-semibold">Order by: </p>
         <div class="flex py-4">
-            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/ASC'" class="btn">Newest</button>
-            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/DESC'" class="btn">Oldes</button>
+            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/DESC'" class="btn">Newest</button>
+            <button onclick="location.href='/admin/reservations/status/<?= $type ?>/ASC'" class="btn">Oldes</button>
         </div>
     </div>
     <section role="table-area" class=" flex flex-col">
@@ -35,12 +35,15 @@
             <thead>
                 <tr class=" border-b-slate-900">
                     <th class="text-left">Reference #</th>
-                    <th colspan="2" class="text-left">Name</th>
-                    <th colspan="2" class="text-left">Email</th>
+                    <th class="text-left">Name</th>
                     <th class="text-left">Date</th>
                     <th class="text-left">Time </th>
                     <th class="text-left">Reservation</th>
-                    <th colspan="2" class="text-left">Actions</th>
+                    <?php if($type == "Declined" || $type == "Canceled"){ ?>
+                        <th class="text-left">Reason</th>
+                    <?php }
+                    ?>
+                    <th class="text-left">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,11 +56,14 @@
                     foreach ($reservations as $res) { ?>
                         <tr>
                             <td class=" py-1 text-left"><?= $res['refN'] ?></td>
-                            <td colspan="2" class=" py-1 text-left"><?= $res['name'] ?></td>
-                            <td colspan="2" class=" py-1 text-left"><?= $res['email'] ?></td>
+                            <td class=" py-1 text-left"><?= $res['name'] ?></td>
                             <td class=" py-1 text-left"><?= date('F d, Y', strtotime($res['apDate'])) ?></td>
                             <td class=" py-1 text-left"><?= date('h:i a', strtotime($res['apTime'])) ?></td>
                             <td class=" py-1 text-left"><?= $res['type'] ?></td>
+                            <?php if($type == "Declined" || $type == "Canceled"){ ?>
+                                <td class=" py-1 text-left"><?= $res['reason'] ?></td>
+                            <?php }
+                            ?>
 
                             <?php
                             foreach ($res['det'] as $det) {
@@ -178,7 +184,7 @@
                             }
                             ?>
 
-                            <td colspan="2" class=" py-1 flex">
+                            <td class=" py-1 flex">
                                 <div class="tooltip" data-tip="View">
                                     <label for="view<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="eye"
                                             class=""></i></label>
@@ -245,20 +251,17 @@
                                     </div>
                                 </div>
 
-                                <!-- modal for reason -->
+                                <!-- modal for decline reason -->
                                 <?= form_open('/admin/reservations/update') ?>
                                 <?php
-                                if ($res['status'] == "Pending" || $res['status'] == "Accepted") { ?>
+                                if ($res['status'] == "Pending") { ?>
                                     <div class="tooltip" data-tip="Decline">
-                                        <label for="modal_reason<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-x"
-                                                class="text-red-500"></i></label>
-                                        <input type="checkbox" id="modal_reason<?= $res['id'] ?>" class="modal-toggle" />
+                                        <label for="modal_reasondec<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-x" class="text-red-500"></i></label>
+                                        <input type="checkbox" id="modal_reasondec<?= $res['id'] ?>" class="modal-toggle" />
                                         <div class="modal" role="dialog">
                                             <div class="modal-box">
                                                 <h3 class="font-bold text-lg text-center">Reason</h3>
-                                                <p class="py-1 text-center text-sm">Please provide a reason for the cancellation of
-                                                    your
-                                                    appointment.</p>
+                                                <p class="py-1 text-center text-sm">Please provide a reason for the declining of the appointment.</p>
                                                 <div class="flex flex-col">
                                                     <br>
                                                     <div class="flex">
@@ -277,17 +280,58 @@
                                                             <input type="radio" id="3" name="reason" value="Others"
                                                                 onclick="showinput('otherinput')">
                                                             <label for="3">Others:</label>
-                                                            <input type="text" id="otherinput" name="otherinput"
-                                                                class="input input-bordered input-sm w-full max-w-xs" placeholder="Enter here" disabled>
+                                                            <input type="text" id="otherinput" name="otherinput" class="input input-bordered input-sm w-full max-w-xs" placeholder="Enter here" disabled>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="modal-action justify-center m-1">
-                                                    <label for="modal_reason<?= $res['id'] ?>"
-                                                        class="btn btn-error btn-outline">Cancel</label>
-                                                    <label for="modal_cancel<?= $res['id'] ?>" for
-                                                        class="btn btn-success text-white">Send</label>
+                                                    <label for="modal_reasondec<?= $res['id'] ?>" class="btn btn-error btn-outline">Cancel</label>
+                                                    <label for="modal_decline<?= $res['id'] ?>" class="btn btn-success text-white">Send</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                                ?>
+
+                                <!-- modal for cancel reason -->
+                                <?php
+                                if ($res['status'] == "Accepted") { ?>
+                                    <div class="tooltip" data-tip="Cancel">
+                                        <label for="modal_reasoncan<?= $res['id'] ?>" class="btn bg-zinc-300"><i data-lucide="square-x"
+                                                class="text-red-500"></i></label>
+                                        <input type="checkbox" id="modal_reasoncan<?= $res['id'] ?>" class="modal-toggle" />
+                                        <div class="modal" role="dialog">
+                                            <div class="modal-box">
+                                                <h3 class="font-bold text-lg text-center">Reason</h3>
+                                                <p class="py-1 text-center text-sm">Please provide a reason for the cancellation of the appointment.</p>
+                                                <div class="flex flex-col">
+                                                    <br>
+                                                    <div class="flex">
+                                                        <div class="text-left">
+                                                            <input type="radio" id="1" name="reason"
+                                                                value="Unexpected staff unavailability " onclick="hideinput('otherinput')">
+                                                            <label for="1">Unexpected staff unavailability</label><br>
+                                                            <input type="radio" id="2" name="reason"
+                                                                value="Wedding banns objection" onclick="hideinput('otherinput')">
+                                                            <label for="2">Wedding banns objection</label><br>
+                                                            <input type="radio" id="4" name="reason"
+                                                                value="More urgent event scheduled" onclick="hideinput('otherinput')">
+                                                            <label for="4">More urgent event scheduled</label><br>
+                                                        </div>
+                                                        <div class="text-left">
+                                                            <input type="radio" id="3" name="reason" value="Others"
+                                                                onclick="showinput('otherinput')">
+                                                            <label for="3">Others:</label>
+                                                            <input type="text" id="otherinput" name="otherinput" class="input input-bordered input-sm w-full max-w-xs" placeholder="Enter here" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="modal-action justify-center m-1">
+                                                    <label for="modal_reasoncan<?= $res['id'] ?>" class="btn btn-error btn-outline">Cancel</label>
+                                                    <label for="modal_cancel<?= $res['id'] ?>" class="btn btn-success text-white">Send</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -307,15 +351,31 @@
                                                 reservation?
                                                 <?= $res['refN'] ?>
                                             </h3>
-                                            <p class="py-1 text-center text-sm">This reservation will be removed and will appear
-                                                as
-                                                cancelled in
-                                                your appointment history.</p>
+                                            <p class="py-1 text-center text-sm">Cancelling the reservation will inform the requester and the reservation status will be updated accordingly.</p>
                                             <div class="modal-action justify-center m-1">
-                                                <label for="modal_cancel<?= $res['id'] ?>"
-                                                    class="btn btn-error btn-outline">No</label>
-                                                <button type="submit" name="submit" value="Decline"
-                                                    class="btn btn-success text-white">Yes</button>
+                                                <label for="modal_cancel<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                <button type="submit" name="submit" value="Cancel" class="btn btn-success text-white">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- modal for declining -->
+                                <div>
+                                    <input type="checkbox" id="modal_decline<?= $res['id'] ?>" class="modal-toggle" />
+                                    <div class="modal" role="dialog">
+                                        <div class="modal-box">
+                                            <div class="flex justify-center"><i data-lucide="circle-x"
+                                                    class="text-center w-16 h-16"></i>
+                                            </div>
+                                            <h3 class="font-bold text-lg text-center">Are you sure you want to decline this
+                                                reservation?
+                                                <?= $res['refN'] ?>
+                                            </h3>
+                                            <p class="py-1 text-center text-sm">Declining the reservation will inform the requester and the reservation status will be updated accordingly.</p>
+                                            <div class="modal-action justify-center m-1">
+                                                <label for="modal_cancel<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                <button type="submit" name="submit" value="Decline" class="btn btn-success text-white">Yes</button>
                                             </div>
                                         </div>
                                     </div>
@@ -327,10 +387,10 @@
                                 <?= form_close() ?>
 
 
-                                <!-- modal for approving the reservation -->
+                                <!-- modal for accepting the reservation -->
                                 <?php
                                 if ($res['status'] == "Pending") { ?>
-                                    <div class="tooltip" data-tip="Approve">
+                                    <div class="tooltip" data-tip="Accept">
                                         <label for="modal_approve<?= $res['id'] ?>" class="btn bg-blue-500"><i
                                                 data-lucide="calendar-check" class=""></i></label>
                                         <input type="checkbox" id="modal_approve<?= $res['id'] ?>" class="modal-toggle" />
@@ -339,12 +399,8 @@
                                                 <div class="flex justify-center"><i data-lucide="circle-check"
                                                         class="text-center w-16 h-16"></i>
                                                 </div>
-                                                <h3 class="font-bold text-lg text-center">Are you sure you want to Approve this
-                                                    reservation?
-                                                </h3>
-                                                <p class="py-1 text-center text-sm">Accepting the reservation will inform the
-                                                    requester
-                                                    and the reservation status will be updated accordingly.</p>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to accept this reservation? </h3>
+                                                <p class="py-1 text-center text-sm">Accepting the reservation will inform the requester and the reservation status will be updated accordingly.</p>
                                                 <div class="modal-action justify-center m-1">
                                                     <label for="modal_approve<?= $res['id'] ?>"
                                                         class="btn btn-error btn-outline">No</label>
@@ -373,17 +429,11 @@
                                                 <div class="flex justify-center"><i data-lucide="circle-check"
                                                         class="text-center w-16 h-16"></i>
                                                 </div>
-                                                <h3 class="font-bold text-lg text-center">Are you sure you want to Complete this
-                                                    reservation?
-                                                </h3>
-                                                <p class="py-1 text-center text-sm">Accepting the reservation will inform the
-                                                    requester
-                                                    and the reservation status will be updated accordingly.</p>
+                                                <h3 class="font-bold text-lg text-center">Are you sure you want to Complete this reservation? </h3>
+                                                <p class="py-1 text-center text-sm">Completing the reservation will inform the requester and the reservation status will be updated accordingly.</p>
                                                 <div class="modal-action justify-center m-1">
-                                                    <label for="modal_comp<?= $res['id'] ?>"
-                                                        class="btn btn-error btn-outline">No</label>
-                                                    <button type="submit" name="submit" value="Complete"
-                                                        class="btn btn-success text-white">Yes</button>
+                                                    <label for="modal_comp<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
+                                                    <button type="submit" name="submit" value="Complete" class="btn btn-success text-white">Yes</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -411,19 +461,8 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <!-- Production version -->
 <script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    lucide.createIcons();
-</script>
-<script>
-    function showinput(id) {
-        var text = document.getElementById(id);
-        text.disabled = false;
-    }
-    function hideinput(id) {
-        var text = document.getElementById(id);
-        text.disabled = true;
-    }
-</script>
+<!-- to call the js file of enabling and diabling the input text for other reason -->
+<script src="<?= base_url('./scripts/Reason.js') ?>"></script>
 </body>
 
 </html>

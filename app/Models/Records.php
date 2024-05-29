@@ -102,6 +102,8 @@ class Records extends Model
             $this->table = 'aboutuscont';
         } elseif ($value == 'emp') {
             $this->table = 'employee';
+        } elseif ($value == 'misvis') {
+            $this->table = 'misvis';
         }
     }
 }

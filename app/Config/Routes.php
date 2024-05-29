@@ -36,11 +36,13 @@ $routes->get('/account/login', [Login::class, 'index']);
 $routes->post('/signup/step2', [Signup::class, 'step1']);
 $routes->post('/signup/step3', [Signup::class, 'step2']);
 $routes->post('/signup/finish', [Signup::class, 'step3']);
+$routes->get('/signup/resend', [Signup::class, 'resendOtp']);
 
 /* Form route area for forgot password */
 $routes->get('/forgotpass/index', [ForgotPass::class, 'index']);
 $routes->post('/forgotpass/step1', [ForgotPass::class, 'step1']);
 $routes->post('/forgotpass/step2', [ForgotPass::class, 'step2']);
+$routes->get('/forgotpass/resend', [ForgotPass::class, 'resendOtp']);
 
 
 /* Form route area for calendar */
@@ -93,9 +95,9 @@ $routes->get('/admin/reservations/status/(:segment)/(:segment)', [Admin::class, 
 $routes->post('/admin/reservations/update', [Admin::class, 'updateReserve']);
 
 /* Post request for adding announcement and editing existing */
-$routes->post('/admin/announcements/add', [Admin::class, 'addItem']);
-$routes->post('/admin/announcements/delete', [Admin::class, 'delItem']);
-$routes->post('/admin/announcements/edit', [Admin::class, 'editItem']);
+$routes->post('/admin/announcement/add', [Admin::class, 'addItem']);
+$routes->post('/admin/announcement/delete', [Admin::class, 'delItem']);
+$routes->post('/admin/announcement/edit', [Admin::class, 'editItem']);
 
 /* Post request for adding faqs and editing existing */
 $routes->post('/admin/faqs/add', [Admin::class, 'addfaqItem']);

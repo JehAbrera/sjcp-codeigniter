@@ -120,9 +120,9 @@ class Admin extends BaseController
                 'upcoming' => $this->count->getUpcoming(),
             ];
         }
-        if ($page == 'announcements') {
+        if ($page == 'announcement') {
             $addInf = [
-                'announcements' => $this->records->getAnnouncements($page)->paginate(10)
+                'announcement' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
 
@@ -141,6 +141,12 @@ class Admin extends BaseController
         if ($page == 'about') {
             $addInf = [
                 'about' => $this->records->getAnnouncements($page)->paginate(10)
+            ];
+        }
+
+        if ($page == 'home') {
+            $addInf = [
+                'misvis' => $this->records->getAnnouncements('misvis')->paginate(10)
             ];
         }
 
@@ -461,9 +467,13 @@ class Admin extends BaseController
                 $this->email->send('updateStat', 'Status', $email, $refn, 'Accepted');
                 return redirect()->to('/admin/reservations/status/Accepted/ASC')->with('SucMess', 'Reservation successfully accepted!');
             }
-        } else if ($this->request->getPost('submit') == 'Decline') {
+        } else if ($this->request->getPost('submit') == 'Decline' || $this->request->getPost('submit') == 'Cancel') {
             $reason = $this->request->getPost('reason');
-            $status = "Declined";
+            $status = $this->request->getPost('submit');
+            $stat = "Declined";
+            if($status == "Cancel"){
+                $stat = "Canceled";
+            }
             if ($reason == "Others") {
                 $reason = $this->request->getPost('otherinput');
             }
@@ -471,7 +481,7 @@ class Admin extends BaseController
                 //if the query is successfull
 
                 // Call email sender library - declare purpose and target as parameters //
-                $this->email->send('updateStat', 'Status', $email, $refn, 'Declined', $reason);
+                $this->email->send('updateStat', 'Status', $email, $refn, $stat, $reason);
                 return redirect()->to('/admin/reservations/status/Declined/ASC')->with('SucMess', 'Reservation successfully declined!');
             }
         } else if ($this->request->getPost('submit') == 'Complete') {

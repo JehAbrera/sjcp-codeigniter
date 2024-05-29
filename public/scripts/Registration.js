@@ -1,6 +1,8 @@
 
 // currently copy pasted from old work; revise accordingly based on new code
 
+lucide.createIcons();
+
 const submit = document.getElementById('submit');
 const clear = document.getElementById('clear');
 inputArray = document.getElementsByTagName("input");
@@ -63,7 +65,7 @@ const checkPass = () => {
     }
 
     // password requirement 2
-    if(password.value.match(passReq2)) {
+    if (password.value.match(passReq2)) {
         for (var index = 0; index < req2.length; index++)
             req2[index].style.color = "green";
         if (req2[1].className == "fa-solid fa-circle-exclamation req2" || req2[1].className == "fa-solid fa-xmark req2") {
@@ -78,7 +80,7 @@ const checkPass = () => {
     }
 
     // pass req 3
-    if(password.value.match(passReq3)) {
+    if (password.value.match(passReq3)) {
         for (var index = 0; index < req3.length; index++)
             req3[index].style.color = "green";
         if (req3[1].className == "fa-solid fa-circle-exclamation req3" || req3[1].className == "fa-solid fa-xmark req3") {
@@ -113,7 +115,7 @@ const isNumber = evt => {
     return true;
 }
 
-function toggle(input,icon) {
+function toggle(input, icon) {
     var pass = document.getElementById(input.id);
     var eye = document.getElementById(icon.id);
     if (pass.type == "password") {
@@ -133,5 +135,49 @@ function checkReq(id) {
         openForm(id);
     } else {
         alert("Invalid Password!");
+    }
+}
+
+
+function toggleSide() {
+    let sidenav = document.getElementById('sidenav');
+
+    sidenav.classList.toggle('hidden');
+    sidenav.classList.toggle('flex');
+}
+
+function validate_password() {
+    let pass = document.getElementById('pass').value;
+    let confirm_pass = document.getElementById('conpass').value;
+    var paswnum = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    var paswsym = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (confirm_pass == "") {
+        document.getElementById('error_msg').style.color = 'green';
+        document.getElementById('error_msg').innerHTML =
+            '';
+        document.getElementById('create').disabled = false;
+        document.getElementById('create').style.opacity = (1);
+    }
+    else if (pass != confirm_pass) {
+        document.getElementById('error_msg').style.color = 'red';
+        document.getElementById('error_msg').innerHTML
+            = 'Password and Confirm Password do not match';
+        document.getElementById('create').disabled = true;
+        document.getElementById('create').style.opacity = (0.4);
+    }
+    else if (pass.match(paswnum) || pass.match(paswsym) && confirm_pass.match(paswnum) || confirm_pass.match(paswsym)) {
+        document.getElementById('error_msg').style.color = 'green';
+        document.getElementById('error_msg').innerHTML =
+            '';
+        document.getElementById('create').disabled = false;
+        document.getElementById('create').style.opacity = (1);
+    }
+    else {
+        document.getElementById('error_msg').style.color = 'red';
+        document.getElementById('error_msg').innerHTML
+            = 'Password must contain at least 8 characters, a combination of uppercase and lowercase letters, and at least one or more number or special character';
+        document.getElementById('create').disabled = true;
+        document.getElementById('create').style.opacity = (0.4);
     }
 }

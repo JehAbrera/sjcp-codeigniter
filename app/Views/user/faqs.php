@@ -8,7 +8,7 @@
                         <b><?=$item['question']?></b>
                     </div>
                     <div class="collapse-content">
-                        <p class=" text-justify pl-8 pt-4"><?=$item['answer']?></p>
+                        <p class=" text-justify pl-8 pt-4 whitespace-pre-line"><?=$item['answer']?></p>
                     </div>
                 </div>
             <?php } ?>

@@ -35,15 +35,17 @@
                             <b><?= $res['refN'] ?></b>
                             <span class="pl-4 <?= $class ?>"><?= $type ?></span>
                             <p><?= $res['type'] ?></p>
+                            <?php if($type == "Declined" || $type == "Canceled"){ ?>
+                                <p>Reason: <?= $res['reason'] ?></p>
+                            <?php }
+                            ?>
                             <label for="view<?= $res['id'] ?>" class="text-blue-700">View More</label>
                         </div>
                         <div class="text-right pr-10">
                             <p>Date of Event: </p>
                             <p><?= date('F d, Y', strtotime($res['evDate'])) ?></p>
                             <?php
-                            if ($type == "Declined" || $type == "Canceled") { ?>
-                                <label for="modal_resched<?= $res['id'] ?>" class="text-blue-700">Reschedule</label>
-                            <?php } else if ($type == "Pending" || $type == "Accepted") { ?>
+                                if ($type == "Pending" || $type == "Accepted") { ?>
                                     <label for="modal_reason<?= $res['id'] ?>" class="text-red-700">Cancel</label>
                             <?php } else {
 
@@ -247,31 +249,36 @@
                         <div class="modal" role="dialog">
                             <div class="modal-box">
                                 <h3 class="font-bold text-lg text-center">Reason</h3>
-                                <p class="py-1 text-center text-sm">Please provide a reason for the cancellation of your
-                                    appointment.</p>
-                                <div>
-                                    <input type="radio" id="1" name="reason" value="Change of plans" onclick="hideinput()">
-                                    <label for="1">Change of plans</label><br>
-                                    <input type="radio" id="2" name="reason" value="Lack of preparation" onclick="hideinput()">
-                                    <label for="2">Lack of preparation</label><br>
-                                    <input type="radio" id="3" name="reason" value="Others" onclick="showinput()">
-                                    <label for="3">Others:</label>
-                                    <input type="radio" id="4" name="reason" value="Incorrect information submitted"
-                                        onclick="hideinput()">
-                                    <label for="4">Incorrect information submitted</label><br>
-                                    <input type="radio" id="5" name="reason" value="Emergency" onclick="hideinput()">
-                                    <label for="5">Emergency</label><br>
-                                    <input type="radio" id="6" name="reason" value="Conflicting schedules"
-                                        onclick="hideinput()">
-                                    <label for="6">Conflicting schedules</label>
-                                    <input type="radio" id="7" name="reason" value="Personal matters" onclick="hideinput()">
-                                    <label for="7">Personal matters</label>
-                                    <input type="text" id="otherinput" name="otherinput" class="">
+                                <p class="py-1 text-center text-sm">Please provide a reason for the cancellation of your appointment.</p>
+                                <div class="flex flex-col">
+                                    <div class="flex">
+                                        <div class="text-left">
+                                            <input type="radio" id="1" name="reason" value="Change of plans" onclick="hideinput()" required>
+                                            <label for="1">Change of plans</label><br>
+
+                                            <input type="radio" id="2" name="reason" value="Lack of preparation" onclick="hideinput()">
+                                            <label for="2">Lack of preparation</label><br>
+
+                                            <input type="radio" id="4" name="reason" value="Incorrect information submitted" onclick="hideinput()">
+                                            <label for="4">Incorrect information submitted</label><br>
+
+                                            <input type="radio" id="5" name="reason" value="Emergency" onclick="hideinput()">
+                                            <label for="5">Emergency</label><br>
+                                        </div>
+                                        <div class="text-left">
+                                            <input type="radio" id="6" name="reason" value="Conflicting schedules" onclick="hideinput()">
+                                            <label for="6">Conflicting schedules</label><br>
+                                            <input type="radio" id="7" name="reason" value="Personal matters" onclick="hideinput()">
+                                            <label for="7">Personal matters</label><br>
+                                            <input type="radio" id="3" name="reason" value="Others" onclick="showinput()">
+                                            <label for="3">Others:</label><br>
+                                            <input type="text" id="otherinput" name="otherinput" class="input input-bordered" placeholder="Enter here" disabled required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-action justify-center m-1">
                                     <label for="modal_reason<?= $res['id'] ?>" class="btn btn-error btn-outline">Cancel</label>
-                                    <label for="modal_cancel<?= $res['id'] ?>" for
-                                        class="btn btn-succes btn-outline">Send</label>
+                                    <label for="modal_cancel<?= $res['id'] ?>" class="btn btn-success text-white">Send</label>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +297,7 @@
                                 <p class="py-1 text-center text-sm">This reservation will be removed and will appear as
                                     cancelled in
                                     your appointment history.</p>
-                                <div class="modal-action justify-center m-1">
+                                <diclass="modal-action justify-center m-1">
                                     <label for="modal_cancel<?= $res['id'] ?>" class="btn btn-error btn-outline">No</label>
                                     <input type="hidden" name="id" value="<?= $res['id'] ?>">
                                     <button type="submit" name="cancel" value="cancel"
@@ -332,16 +339,5 @@
     </section>
 </main>
 
-<script>
-    function showinput(id) {
-        var text = document.getElementById('otherinput');
-        text.className = "block input input-bordered";
-        text.placeholder = "Enter other reason here";
-        text.disabled = false;
-    }
-    function hideinput(id) {
-        var text = document.getElementById('otherinput');
-        text.className = "hidden";
-        text.disabled = true;
-    }
-</script>
+<!-- to call the js file of enabling and diabling the input text for other reason -->
+<script src="<?= base_url('./scripts/Reason.js') ?>"></script>

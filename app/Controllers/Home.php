@@ -14,7 +14,12 @@ class Home extends BaseController
 
     public function index(): string
     {
+        $addInf = [
+            'misvis' => $this->records->getAnnouncements('misvis')->paginate(10),
+        ];
         $data['title'] = "Home";
+        $data = array_merge($data, $addInf);
+
         session()->remove('step');
         return view('templates/navbar', $data) . view('templates/header', $data) . view('user/home') . view('templates/footer');
     }
@@ -24,12 +29,12 @@ class Home extends BaseController
         if ($page == "logout") {
             if (session()->has('isLogged')) {
                 session()->remove('isLogged');
-                return redirect()->to('/home');
+                return redirect()->to('/');
             } elseif (session()->has('adminLog')) {
                 session()->remove('adminLog');
                 return redirect()->to('/admin/login');
             } else {
-                return redirect()->to('/home');
+                return redirect()->to('/');
             }
         }
         if (!is_file(APPPATH . 'Views/user/' . $page . '.php')) {
@@ -41,9 +46,7 @@ class Home extends BaseController
             $addInf = [
                 'faqs' => $this->records->getAnnouncements($page)->paginate(10)
             ];
-            if ($page == 'success') {
-                return view('user/' . $page);
-            }
+            
             $data['title'] = ucfirst($page);
 
             $data = array_merge($data, $addInf);
@@ -54,9 +57,7 @@ class Home extends BaseController
             $addInf = [
                 'services' => $this->records->getAnnouncements($page)->paginate(10)
             ];
-            if ($page == 'success') {
-                return view('user/' . $page);
-            }
+            
             $data['title'] = ucfirst($page);
 
             $data = array_merge($data, $addInf);
@@ -67,9 +68,7 @@ class Home extends BaseController
             $addInf = [
                 'announce' => $this->records->getAnnouncements($page)->paginate(10)
             ];
-            if ($page == 'success') {
-                return view('user/' . $page);
-            }
+            
             $data['title'] = ucfirst($page);
 
             $data = array_merge($data, $addInf);
@@ -81,9 +80,7 @@ class Home extends BaseController
                 'about' => $this->records->getAnnouncements($page)->paginate(10),
                 'employee' => $this->records->getAnnouncements('emp')->paginate(10)
             ];
-            if ($page == 'success') {
-                return view('user/' . $page);
-            }
+            
             $data['title'] = ucfirst($page);
 
             $data = array_merge($data, $addInf);

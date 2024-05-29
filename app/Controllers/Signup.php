@@ -126,4 +126,10 @@ class Signup extends BaseController
             return redirect()->to('/account/signup');
         }
     }
+
+    public function resendOtp(){
+        // Call email sender library - declare purpose and target as parameters //
+        $this->email->send('otp', 'Registration', session()->get('email'));
+        return redirect()->to('/account/signup');
+    }
 }

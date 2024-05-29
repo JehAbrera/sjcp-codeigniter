@@ -107,43 +107,29 @@
     </section>
     <section role="misvis" class=" flex items-center justify-center py-8 bg-zinc-100">
         <div class=" join join-vertical w-[90%] md:w-3/5 bg-slate-950 text-zinc-100">
-            <div class="collapse collapse-arrow join-item border border-base-300">
-                <input type="checkbox" />
-                <div class="collapse-title text-xl font-medium">
-                    Mission of the Parish
+            <?php
+            foreach ($misvis as $item) {
+                $title = "";
+                if($item['title'] == "Mission"){
+                    $title = "Mission of the Church";
+                } elseif ($item['title'] == "Vision"){
+                    $title = "Vision of the Church";
+                } else {
+                    $title = "Vision of Archdiocese";
+                }
+            ?>
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="checkbox" />
+                    <div class="collapse-title text-xl font-medium">
+                        <?=$title?>
+                    </div>
+                    <div class="collapse-content whitespace-pre-line">
+                        <p class=" text-justify">
+                            <?=$item['content']?>
+                        </p>
+                    </div>
                 </div>
-                <div class="collapse-content">
-                    <p class=" text-justify">
-                        People of faith who received God's calling to the Parish of St. John of the Cross, serve to achieve the following:
-                        (1) Continuous study of the Word of God, live it and spread it in modern evangelization to be an example to others towards the kingdom of God in the context of the Small Christian Community.
-                        (2) Let the will of God be fulfilled to all by proper teaching, doing, administering and promoting all the parish programs.
-                        (3) Strengthen the good relationship between the Church, the community, and various Organizations in society in order to provide proper service, and meet the needs of the people, especially the poor.
-                        (4) Continue the renovation and upgrading of the church and chapels by having modern facilities that are tailored to the needs of the members of the Parish of St. John of the Cross.
-                    </p>
-                </div>
-            </div>
-            <div class="collapse collapse-arrow join-item border border-base-300">
-                <input type="checkbox" />
-                <div class="collapse-title text-xl font-medium">
-                    Vision of the Archdiocese
-                </div>
-                <div class="collapse-content">
-                    <p class=" text-justify">
-                        A country called by the Father to Jesus Christ to be a community of people with life events. Witnessing the reign of God living the Paschal Mystery in the power of the Holy Spirit along with the Blessed Mother, the Virgin Mary.
-                    </p>
-                </div>
-            </div>
-            <div class="collapse collapse-arrow join-item border border-base-300">
-                <input type="checkbox" />
-                <div class="collapse-title text-xl font-medium">
-                    Vision of the Parish
-                </div>
-                <div class="collapse-content">
-                    <p class=" text-justify">
-                        A faithful Christian community called by the Father, in communion with Jesus Christ and guided by the Holy Spirit to become a model of love for the word and deed rooted in deep faith, continually shaped by Christian wisdom, and spreading the word of God in modern evangelization. A community thriving in all aspects of life, actively engaging with society towards the fulfillment of life with the help of Mother Mary and San Juan de la Cruz.
-                    </p>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </section>
     <script>

@@ -16,14 +16,15 @@
                             <h3 class="font-bold text-lg text-center"><?=$item['name']?></h3>
                             <div class=" text-justify flex flex-col">
                                 <span><strong>Schedule:</strong></span>
-                                <span> <?=$item['schedule']?></span>
+                                <span class="whitespace-pre-line"> <?=$item['schedule']?></span>
+                                <br>
                             </div>
                             <div class=" flex flex-col text-justify whitespace-pre-line">
                                 <strong>Requirements:</strong>
-                                <?=$item['req']?>
-
+                                <span class="whitespace-pre-line"> <?=$item['req']?></span>
+                                <br>
                                 <strong>Notes:</strong>
-                                <?=$item['notes']?>
+                                <span class="whitespace-pre-line"> <?=$item['notes']?></span>
                             </div>
                             <div class="modal-action justify-center">
                                 <label for="modal<?=$item['id']?>" class="btn btn-outline btn-error">Close</label>

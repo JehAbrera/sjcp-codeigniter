@@ -44,48 +44,7 @@
                                 <label class="label">
                                     <span class="label-text">New Password</span>
                                 </label>
-                                <script>
-                                        function validate_password() 
-                                        {
-                                        let pass = document.getElementById('pass').value;
-                                        let confirm_pass = document.getElementById('conpass').value;
-                                        var paswnum=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
-                                        var paswsym=  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                                        
-                                        if (confirm_pass=="") 
-                                        {
-                                            document.getElementById('error_msg').style.color = 'green';
-                                            document.getElementById('error_msg').innerHTML =
-                                                '';
-                                            document.getElementById('create').disabled = false;
-                                            document.getElementById('create').style.opacity = (1);
-                                        }
-                                        else if (pass != confirm_pass) 
-                                        {
-                                            document.getElementById('error_msg').style.color = 'red';
-                                            document.getElementById('error_msg').innerHTML
-                                                = 'Password and Confirm Password do not match';
-                                            document.getElementById('create').disabled = true;
-                                            document.getElementById('create').style.opacity = (0.4);
-                                        }
-                                        else if (pass.match(paswnum)||pass.match(paswsym)&&confirm_pass.match(paswnum)||confirm_pass.match(paswsym)) 
-                                        {
-                                            document.getElementById('error_msg').style.color = 'green';
-                                            document.getElementById('error_msg').innerHTML =
-                                                '';
-                                            document.getElementById('create').disabled = false;
-                                            document.getElementById('create').style.opacity = (1);
-                                        }
-                                        else 
-                                        {
-                                            document.getElementById('error_msg').style.color = 'red';
-                                            document.getElementById('error_msg').innerHTML
-                                                = 'Password must contain at least 8 characters, a combination of uppercase and lowercase letters, and at least one or more number or special character';
-                                            document.getElementById('create').disabled = true;
-                                            document.getElementById('create').style.opacity = (0.4);
-                                        }
-                                        }
-                                </script>
+                                
                                 <div class=" w-full relative flex">
                                     <input type="password" placeholder="Password" name="pass" id="pass"
                                         class="input input-bordered w-full" onkeyup="validate_password()" />
@@ -109,30 +68,20 @@
                             <button type="submit" class=" btn btn-error btn-outline w-fit" name="submit" value="Back"><i data-lucide="chevron-left"></i> Back</button>
                             <button type="submit" class=" btn btn-success w-fit" value="Submit">Next <i data-lucide="chevron-right"></i></button>
                         </div>
-                        <div class=" flex justify-center p-5">
-                            <span class=" text-primary link">Resend Code</span>
-                        </div>
                     </form>
+                    <div class=" flex justify-center p-5">
+                        <a href="/forgotpass/resend" class="text-primary link">Resend Code</a>
+                    </div>
             <?php } ?>
             </div>
         </div>
     </section>
 </main>
-<script src="<?= base_url('./scripts/Registration.js') ?>"></script>
 <!-- Development version -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <!-- Production version -->
 <script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    lucide.createIcons();
-
-    function toggleSide() {
-        let sidenav = document.getElementById('sidenav');
-
-        sidenav.classList.toggle('hidden');
-        sidenav.classList.toggle('flex');
-    }
-</script>
+<script src="<?= base_url('./scripts/Registration.js') ?>"></script>
 </body>
 
 </html>

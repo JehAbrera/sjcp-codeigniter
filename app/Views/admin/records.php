@@ -504,41 +504,7 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <!-- Production version -->
 <script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    lucide.createIcons();
-
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.toggleAndResetButton').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.dataset.id;
-                const checkbox = document.getElementById('clear-' + itemId);
-                const open = document.getElementById('open-' + itemId);
-                const form = document.getElementById('form-' + itemId);
-
-                if (checkbox && open && form) {
-                    checkbox.checked = !checkbox.checked;
-                    form.reset();
-                    open.checked = !open.checked;
-                } else {
-                    console.error('One or more elements not found for item ID:', itemId);
-                }
-            });
-        });
-
-        document.querySelectorAll('.toggleCloseButton').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.dataset.id;
-                const form = document.getElementById('form-' + itemId);
-
-                if (form) {
-                    form.reset();
-                } else {
-                    console.error('Form element not found for item ID:', itemId);
-                }
-            });
-        });
-    });
-</script>
+<script src="<?= base_url('./scripts/Admin.js') ?>"></script>
 </body>
 
 </html>

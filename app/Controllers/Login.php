@@ -37,7 +37,7 @@ class Login extends BaseController
         if ($this->valid->index($user,$pass)) {
             session()->set('user', $user);
             session()->set('isLogged', true);
-            return redirect()->to('/home');
+            return redirect()->to('/');
         }
         return redirect()->to('/account/login')->with('loginErr', "Invalid login details, make sure your details are correct!");
     }

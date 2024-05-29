@@ -251,16 +251,8 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <!-- Production version -->
 <script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    lucide.createIcons();
 
-    function toggleSide() {
-        let sidenav = document.getElementById('sidenav');
-
-        sidenav.classList.toggle('hidden');
-        sidenav.classList.toggle('flex');
-    }
-</script>
+<script src="<?= base_url('./scripts/Registration.js') ?>"></script>
 </body>
 
 </html>
