@@ -175,9 +175,9 @@ class Admin extends BaseController
                 'upcoming' => $this->count->getUpcoming(),
             ];
         }
-        if ($page == 'announcements') {
+        if ($page == 'announcement') {
             $addInf = [
-                'announcements' => $this->records->getAnnouncements($page)->paginate(10)
+                'announcement' => $this->records->getAnnouncements($page)->paginate(10)
             ];
         }
 
