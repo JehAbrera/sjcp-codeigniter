@@ -199,6 +199,12 @@ class Admin extends BaseController
             ];
         }
 
+        if ($page == 'home') {
+            $addInf = [
+                'misvis' => $this->records->getAnnouncements('misvis')->paginate(10)
+            ];
+        }
+
         $data = array_merge($data, $addInf);
         return view('templates/navadmin', $data) . view('admin/' . $page, $data);
     }
