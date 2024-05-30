@@ -5,10 +5,11 @@
 
 lucide.createIcons();
 
-//for faqs
+//for home
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.toggleAndResetButton').forEach(button => {
         button.addEventListener('click', function() {
+
             const itemId = this.dataset.id;
             const checkbox = document.getElementById('clear-' + itemId);
             const edit = document.getElementById('edit-' + itemId);
@@ -16,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (checkbox && add && form) {
                 checkbox.checked = !checkbox.checked;
-                edit.checked = !edit.checked;
                 form.reset();
+                edit.checked = !edit.checked;
             } else {
                 console.error('One or more elements not found for item ID:', itemId);
             }

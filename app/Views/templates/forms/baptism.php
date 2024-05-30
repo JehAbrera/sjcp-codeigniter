@@ -143,7 +143,7 @@
                         <span class="label-text">Parent/Guardian's Contact Number</span>
                     </div>
                     <div class="join">
-                        <input type="text" name="mobile1" class="input input-bordered join-item w-1/4"
+                        <input type="text" name="mobile1" class="input input-bordered join-item w-1/4" value="+63"
                             disabled>
                         <input type="tel" id="contactNum" name="contactNum" maxlength="10"
                             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
