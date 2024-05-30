@@ -244,8 +244,8 @@ class Admin extends BaseController
                 $record = new \App\Models\Records\Baptism();
 
                 $values = [
-                    'date' => $this->request->getPost('bapD'),
-                    'time' => $this->request->getPost('bapT'),
+                    'date' => $this->request->getPost('date'),
+                    'time' => $this->request->getPost('time'),
                     'fn' => ucwords(strval($this->request->getPost('fn'))),
                     'mn' => ucwords(strval($this->request->getPost('mn'))),
                     'ln' => ucwords(strval($this->request->getPost('ln'))),
