@@ -94,7 +94,7 @@ class Profile extends BaseController
                 } else {
                     if ($this->profile->changePass($new)) {
                         session()->remove('isLogged');
-                        return redirect()->to('/home');
+                        return redirect()->to('/');
                     } else {
                         session()->getFlashdata('passErr', "Password update failed, please try again later");
                     }

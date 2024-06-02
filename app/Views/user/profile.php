@@ -32,7 +32,7 @@
                 <div class=" w-4/5 flex justify-between"><strong>Middle Name:</strong><span><?= $info[1] ?></span></div>
                 <div class=" w-4/5 flex justify-between"><strong>Last Name:</strong><span><?= $info[2] ?></span></div>
                 <div class=" w-4/5 flex justify-between"><strong>Email:</strong><span><?= $info[3] ?></span></div>
-                <button class=" btn bg-slate-950 text-zinc-100">My Reservations</button>
+                <a href="/myreservation/index" class=" btn bg-slate-950 text-zinc-100">My Reservations</a>
             </div>
         <?php } elseif ($mode == 'edit') { ?>
             <span class=" text-xl font-bold">Edit Profile</span>
